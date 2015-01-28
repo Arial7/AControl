@@ -28,14 +28,15 @@ public class Images {
 	public static BufferedImage W_R_0_R = null;
 	public static BufferedImage W_R_180_L = null;
 	public static BufferedImage W_R_180_R = null;
-
-	public static Image icon = null;
+	
+	public static Image MAGNIFIER = null;
+	public static Image ICON = null;
 
 	public static void loadImages() {
 		String dir = "./res/images/";
 		try {
-			icon = ImageIO.read(new File(dir + "icon.png"));
-
+			ICON = ImageIO.read(new File(dir + "icon.png"));
+			MAGNIFIER = ImageIO.read(new File(dir + "magnifier.png"));
 			
 			A_0 = ImageIO.read(new File(dir + "A_0.png"));
 			A_180 = ImageIO.read(new File(dir + "A_180.png"));

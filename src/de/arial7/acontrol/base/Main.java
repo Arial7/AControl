@@ -8,36 +8,28 @@
 
 package de.arial7.acontrol.base;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.zu.ardulink.Link;
 import org.zu.ardulink.RawDataListener;
 
 import de.arial7.acontrol.gui.AConsole;
-import de.arial7.acontrol.gui.ConnectionManagerPanel;
+import de.arial7.acontrol.gui.ConnectionPanel;
 import de.arial7.acontrol.gui.MainPane;
 
 public class Main extends JFrame {
-
-	private static final String VERSION = "2.2.0";
-	private static final int BUILD = 1;
-	private static final String statesFilePath = "./res/states.txt";
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 600;
-	private static long starttime;
 	
 	private static final long serialVersionUID = 1L;
 
 	private MainPane mainPane;
 	private static AConsole aconsole;
-	private ConnectionManagerPanel cpanel;
+	private ConnectionPanel cpanel;
 
 //	private JButton btnConnect;
 //	private JButton btnDisconnect;
@@ -46,19 +38,18 @@ public class Main extends JFrame {
 	
 
 	public static void main(String[] args) {
-		System.out.println("INFO: AControl version " + VERSION + " build "
-				+ BUILD);
-		System.out.println("INFO: © 2014 Pascal Riesinger");
-		starttime = System.currentTimeMillis();
-		System.out.println("INFO: Starting at: " + (starttime / 1000));
+		System.out.println("AControl - Version " + Reference.VERSION + " - Build "
+				+ Reference.BUILD);
+		System.out.println("© 2015 Pascal Riesinger");
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				Settings.loadAllSettings();
 				Images.loadImages();
-				States.init(statesFilePath);
+				States.init(Reference.statesFilePath);
 				States.loadStates();
 				try {
-					UIManager.setLookAndFeel(NimbusLookAndFeel.class
-							.getCanonicalName());
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					Main frame = new Main();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -73,27 +64,30 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-		setTitle("AControl 2.2");
-		setIconImage(Images.icon);
+		setTitle("AControl - Version: " + Reference.VERSION + " - © Pascal Riesinger");
+		setIconImage(Images.ICON);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				States.saveStates();
-
 			}
-
 		});
-		setBounds(10, 10, WIDTH, HEIGHT);
+		setSize(Reference.WIDTH, Reference.HEIGHT);
+		setResizable(true);
+		setLayout(new BorderLayout());
+		
+		cpanel = new ConnectionPanel();
+		add(cpanel, "North");
+		
 		mainPane = new MainPane();
-		mainPane.setBorder(new EmptyBorder(1, 1, 1, 1));
+		add(mainPane, "Center");
 		
 		aconsole = new AConsole();
-		cpanel = new ConnectionManagerPanel();
-	
-		mainPane.add(aconsole);
-		mainPane.add(cpanel);
+		add(aconsole, "South");
 		
-		setContentPane(mainPane);
+		Utils.output("AControl - Version: " + Reference.VERSION + " - © Pascal Riesinger", Utils.LVL_INFO);
+		
+		setVisible(true);
 
 		/*
 		 * Code to print to stdout messages from Arduino
@@ -117,17 +111,10 @@ public class Main extends JFrame {
 	public static void exit(boolean errorsOccured) {
 		Link.getDefaultInstance().sendCustomMessage("disconnect");
 		if (errorsOccured) {
-			System.out.println("INFO: Exiting with fatal errors at: "
-					+ (System.currentTimeMillis() / 1000));
-			System.out.println("INFO: Session duration: "
-					+ ((System.currentTimeMillis() - starttime) / 1000) + "s");
+			System.out.println("INFO: Exiting with fatal errors: ");
 			System.exit(1);
 		} else {
-			System.out.println("INFO: Exiting without any errors at: "
-					+ (System.currentTimeMillis() / 1000));
-			System.out.println("INFO: Session duration: "
-					+ ((System.currentTimeMillis() - starttime) / 1000) + "s");
-
+			System.out.println("INFO: Exiting without any errors: ");
 			System.exit(0);
 
 		}

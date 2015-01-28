@@ -106,7 +106,7 @@ public class TButton extends JButton implements ActionListener {
 		}
 		loadImage();
 		Link.getDefaultInstance().sendCustomMessage(command);
-		Utils.output("Weiche mit Nummer " + nr + " geschaltet, aktueller Status: " + States.states[statesNo].toString(), Utils.LVL_INFO);
+		Utils.output("Weiche # " + nr + " geschaltet, aktueller Status: " + States.states[statesNo].toString(), Utils.LVL_INFO);
 	}
 
 	
