@@ -15,7 +15,7 @@ public class MainPane extends JPanel {
 	 */
 	private static final long serialVersionUID = -445140737437480983L;
 
-	private TButton W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13,
+	private TButton W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13,
 			W14, W15, W16, W17, W18, W19, W20;
 
 	/**
@@ -49,8 +49,8 @@ public class MainPane extends JPanel {
 
 		add(new ACLabel(Images.G_0, 2, 0));
 
-		W1 = new TButton(ImageTag.W_L_0, 3, 0, 1);
-		add(W1);
+		//W1 = 
+		add(new TButton(ImageTag.W_L_0, 3, 0, 1));
 
 		W2 = new TButton(ImageTag.W_L_0, 4, 0, 2);
 		add(W2);

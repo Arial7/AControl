@@ -94,7 +94,16 @@ public class ConnectionPanel extends JPanel implements Linkable {
 
 		connectionStatus = new ConnectionStatus();
 		add(connectionStatus);
-
+		
+		JButton settingsButton = new JButton("Einstellungen");
+		settingsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Settings.showSettingsPanel();
+			}
+		});
+		add(settingsButton);
+		
 	}
 
 	/**

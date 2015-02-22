@@ -83,7 +83,8 @@ public class Main extends JFrame {
 		add(mainPane, "Center");
 		
 		aconsole = new AConsole();
-		add(aconsole, "South");
+		if(Settings.SHOW_CONSOLE)
+			add(aconsole, "South");
 		
 		Utils.output("AControl - Version: " + Reference.VERSION + " - © Pascal Riesinger", Utils.LVL_INFO);
 		
@@ -111,10 +112,10 @@ public class Main extends JFrame {
 	public static void exit(boolean errorsOccured) {
 		Link.getDefaultInstance().sendCustomMessage("disconnect");
 		if (errorsOccured) {
-			System.out.println("INFO: Exiting with fatal errors: ");
+			System.out.println("INFO: Exiting with fatal errors");
 			System.exit(1);
 		} else {
-			System.out.println("INFO: Exiting without any errors: ");
+			System.out.println("INFO: Exiting without any errors");
 			System.exit(0);
 
 		}

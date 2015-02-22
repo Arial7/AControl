@@ -25,7 +25,7 @@ public class Utils {
 		switch(level){
 		case LVL_INFO:
 			System.out.println("INFO: " + str);
-			Main.getConsole().append(str + "\n");
+			Main.getConsole().append("[INFO] " + str + "\n");
 			break;
 		}
 	}

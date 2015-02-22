@@ -25,21 +25,6 @@ public class TButton extends JButton implements ActionListener {
 
 	public int statesNo;
 
-	/*
-	 * public TButton(BufferedImage image, final int pin, int x, int y, char
-	 * state_) { this.setIcon(new ImageIcon(image)); this.setSize(32, 32);
-	 * this.setLocation(getCoordinate(x, y));
-	 * 
-	 * if (!(state_ == 'L' || state == 'R')) {
-	 * System.err.println("FATAL: TButton is in invalid state: ' " + state_ +
-	 * " '. Please check states.txt file"); System.exit(1); }
-	 * 
-	 * state = state_; this.addActionListener(this);
-	 * 
-	 * }
-	 */
-	
-	
 	public TButton(ImageTag tag_, int x, int y, int nr) {
 		this.tag = tag_;
 		this.nr = nr;
