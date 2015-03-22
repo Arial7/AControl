@@ -24,8 +24,10 @@ public class Utils {
 	public static void output(String str, int level){
 		switch(level){
 		case LVL_INFO:
-			System.out.println("INFO: " + str);
-			Main.getConsole().append("[INFO] " + str + "\n");
+			if (Main.getConsole() != null)
+				Main.getConsole().append("[INFO] " + str + "\n");
+			else 
+				System.out.println("INFO: " + str);
 			break;
 		}
 	}

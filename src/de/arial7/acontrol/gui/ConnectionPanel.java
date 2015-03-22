@@ -45,7 +45,7 @@ public class ConnectionPanel extends JPanel implements Linkable {
 
 		setLayout(new FlowLayout());
 
-		JLabel connectionPortLabel = new JLabel("Port (normal: /dev/ttyACM0):");
+		JLabel connectionPortLabel = new JLabel("Port:");
 		connectionPortLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		add(connectionPortLabel);
 
@@ -95,15 +95,6 @@ public class ConnectionPanel extends JPanel implements Linkable {
 		connectionStatus = new ConnectionStatus();
 		add(connectionStatus);
 		
-		JButton settingsButton = new JButton("Einstellungen");
-		settingsButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Settings.showSettingsPanel();
-			}
-		});
-		add(settingsButton);
-		
 	}
 
 	/**
@@ -137,6 +128,10 @@ public class ConnectionPanel extends JPanel implements Linkable {
 		this.link = link;
 	}
 
+	public boolean getConnectionStatus(){
+		return ConnectionStatus.isConnected;
+	}
+	
 	@Override
 	public ReplyMessageCallback getReplyMessageCallback() {
 		// TODO Auto-generated method stub

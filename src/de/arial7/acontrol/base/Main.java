@@ -10,10 +10,15 @@ package de.arial7.acontrol.base;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 
 import org.zu.ardulink.Link;
@@ -22,34 +27,30 @@ import org.zu.ardulink.RawDataListener;
 import de.arial7.acontrol.gui.AConsole;
 import de.arial7.acontrol.gui.ConnectionPanel;
 import de.arial7.acontrol.gui.MainPane;
+import de.arial7.acontrol.plan.PlanParser;
 
 public class Main extends JFrame {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MainPane mainPane;
 	private static AConsole aconsole;
-	private ConnectionPanel cpanel;
-
-//	private JButton btnConnect;
-//	private JButton btnDisconnect;
-//	private SerialConnectionPanel serialConnectionPanel;
-
-	
+	private static ConnectionPanel cpanel;
 
 	public static void main(String[] args) {
-		System.out.println("AControl - Version " + Reference.VERSION + " - Build "
-				+ Reference.BUILD);
+		System.out.println("AControl - Version " + Reference.VERSION);
 		System.out.println("© 2015 Pascal Riesinger");
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				Settings.loadAllSettings();
 				Images.loadImages();
-				States.init(Reference.statesFilePath);
+				States.init(ProjectHandler
+						.getProjectFile(ProjectHandler.STATESKEY));
 				States.loadStates();
 				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					UIManager.setLookAndFeel(UIManager
+							.getSystemLookAndFeelClassName());
 					Main frame = new Main();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -64,7 +65,8 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-		setTitle("AControl - Version: " + Reference.VERSION + " - © Pascal Riesinger");
+		setTitle("AControl - Version: " + Reference.VERSION
+				+ " - © Pascal Riesinger");
 		setIconImage(Images.ICON);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -75,19 +77,76 @@ public class Main extends JFrame {
 		setSize(Reference.WIDTH, Reference.HEIGHT);
 		setResizable(true);
 		setLayout(new BorderLayout());
-		
+
+		JMenuBar menuBar = new JMenuBar();
+		JMenu projectMenu = new JMenu("Projekt");
+		JMenuItem projectOpen = new JMenuItem("Öffnen");
+		projectOpen.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ProjectHandler.openProject();
+			}
+		});
+
+		JMenuItem projectNew = new JMenuItem("Neu");
+		projectNew.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ProjectHandler.createProject();
+			}
+		});
+
+		JMenuItem projectEdit = new JMenuItem("Gleisbild bearbeiten");
+		projectEdit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ProjectHandler.editProject();
+			}
+		});
+		projectMenu.add(projectOpen);
+		projectMenu.add(projectNew);
+		projectMenu.add(projectEdit);
+
+		JMenu optionsMenu = new JMenu("Optionen");
+		JMenuItem optionsSettings = new JMenuItem("Einstellungen");
+		optionsSettings.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Settings.showSettingsPanel();
+			}
+		});
+		optionsMenu.add(optionsSettings);
+
+		menuBar.add(projectMenu);
+		menuBar.add(optionsMenu);
+
+		setJMenuBar(menuBar);
+
 		cpanel = new ConnectionPanel();
 		add(cpanel, "North");
-		
+
 		mainPane = new MainPane();
+		PlanParser
+				.loadPlan(
+						ProjectHandler.getProjectFile(ProjectHandler.PLANKEY),
+						mainPane);
+		mainPane.init();
 		add(mainPane, "Center");
-		
+
 		aconsole = new AConsole();
-		if(Settings.SHOW_CONSOLE)
+		if (Settings.SHOW_CONSOLE)
 			add(aconsole, "South");
-		
-		Utils.output("AControl - Version: " + Reference.VERSION + " - © Pascal Riesinger", Utils.LVL_INFO);
-		
+
+		Utils.output("AControl - Version: " + Reference.VERSION
+				+ " - © Pascal Riesinger", Utils.LVL_INFO);
+
+		// remove(aconsole);
+		// pack();
+
 		setVisible(true);
 
 		/*
@@ -102,12 +161,11 @@ public class Main extends JFrame {
 				for (int i = 0; i < numBytes; i++) {
 					build.append((char) message[i]);
 				}
-				System.out.print("MSG: \t") ;
+				System.out.print("MSG: \t");
 				System.out.println(build.toString());
 			}
 		});
 	}
-
 
 	public static void exit(boolean errorsOccured) {
 		Link.getDefaultInstance().sendCustomMessage("disconnect");
@@ -120,8 +178,12 @@ public class Main extends JFrame {
 
 		}
 	}
-	
-	public static AConsole getConsole(){
+
+	public static AConsole getConsole() {
 		return aconsole;
+	}
+
+	public static ConnectionPanel getConnectionPanel() {
+		return cpanel;
 	}
 }

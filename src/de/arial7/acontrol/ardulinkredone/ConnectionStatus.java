@@ -52,6 +52,8 @@ public class ConnectionStatus extends JPanel implements ConnectionListener, Link
         
         private Link link = null;
         
+        public static boolean isConnected = false;
+        
         private static final String CONNECTED = "verbunden";
         private static final String DISCONNECTED = "getrennt";
         
@@ -90,12 +92,14 @@ public class ConnectionStatus extends JPanel implements ConnectionListener, Link
         public void connected(ConnectionEvent e) {
                 lblStatelabel.setText(CONNECTED);
                 lblStatelabel.setIcon(CONNECTED_ICON);
+                isConnected = true;
         }
 
         @Override
         public void disconnected(DisconnectionEvent e) {
                 lblStatelabel.setText(DISCONNECTED);
                 lblStatelabel.setIcon(DISCONNECTED_ICON);
+                isConnected = false;
         }
 
         public ReplyMessageCallback getReplyMessageCallback() {
