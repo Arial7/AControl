@@ -22,7 +22,7 @@ public class ProjectHandler {
 	}
 
 	public static void editProject() {
-
+		new PlanEditor();
 	}
 
 	public static String getProjectFile(String key) {

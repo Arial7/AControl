@@ -10,22 +10,18 @@ package de.arial7.acontrol.base;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 
 import org.zu.ardulink.Link;
 import org.zu.ardulink.RawDataListener;
 
+import de.arial7.acontrol.gui.ACMenuBar;
+import de.arial7.acontrol.gui.ACStatusPanel;
 import de.arial7.acontrol.gui.AConsole;
-import de.arial7.acontrol.gui.ConnectionPanel;
 import de.arial7.acontrol.gui.MainPane;
 import de.arial7.acontrol.plan.PlanParser;
 
@@ -35,7 +31,7 @@ public class Main extends JFrame {
 
 	private MainPane mainPane;
 	private static AConsole aconsole;
-	private static ConnectionPanel cpanel;
+	private static ACStatusPanel statusPanel;
 
 	public static void main(String[] args) {
 		System.out.println("AControl - Version " + Reference.VERSION);
@@ -78,56 +74,9 @@ public class Main extends JFrame {
 		setResizable(true);
 		setLayout(new BorderLayout());
 
-		JMenuBar menuBar = new JMenuBar();
-		JMenu projectMenu = new JMenu("Projekt");
-		JMenuItem projectOpen = new JMenuItem("Öffnen");
-		projectOpen.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ProjectHandler.openProject();
-			}
-		});
-
-		JMenuItem projectNew = new JMenuItem("Neu");
-		projectNew.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ProjectHandler.createProject();
-			}
-		});
-
-		JMenuItem projectEdit = new JMenuItem("Gleisbild bearbeiten");
-		projectEdit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ProjectHandler.editProject();
-			}
-		});
-		projectMenu.add(projectOpen);
-		projectMenu.add(projectNew);
-		projectMenu.add(projectEdit);
-
-		JMenu optionsMenu = new JMenu("Optionen");
-		JMenuItem optionsSettings = new JMenuItem("Einstellungen");
-		optionsSettings.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Settings.showSettingsPanel();
-			}
-		});
-		optionsMenu.add(optionsSettings);
-
-		menuBar.add(projectMenu);
-		menuBar.add(optionsMenu);
-
+		ACMenuBar menuBar = new ACMenuBar();
 		setJMenuBar(menuBar);
-
-		cpanel = new ConnectionPanel();
-		add(cpanel, "North");
+		
 
 		mainPane = new MainPane();
 		PlanParser
@@ -137,6 +86,10 @@ public class Main extends JFrame {
 		mainPane.init();
 		add(mainPane, "Center");
 
+		
+		statusPanel = new ACStatusPanel();
+		
+		
 		aconsole = new AConsole();
 		if (Settings.SHOW_CONSOLE)
 			add(aconsole, "South");
@@ -183,7 +136,7 @@ public class Main extends JFrame {
 		return aconsole;
 	}
 
-	public static ConnectionPanel getConnectionPanel() {
-		return cpanel;
+	public static ACStatusPanel getStatusPanel() {
+		return statusPanel;
 	}
 }

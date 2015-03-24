@@ -40,7 +40,7 @@ public class ConnectionPanel extends JPanel implements Linkable {
 
 	private Link link = Link.getDefaultInstance();
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ConnectionPanel() {
 
 		setLayout(new FlowLayout());
@@ -50,11 +50,11 @@ public class ConnectionPanel extends JPanel implements Linkable {
 		add(connectionPortLabel);
 
 		connectionPortComboBox = new JComboBox();
+		connectionPortComboBox.addItem(new String("Keine Ports gefunden"));
 		add(connectionPortComboBox);
 
 		discoverButton = new JButton("");
 		discoverButton.addActionListener(new ActionListener() {
-			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				List<String> portList = link.getPortList();
 				// portList = new ArrayList<String>(); // Mock code...
@@ -64,7 +64,7 @@ public class ConnectionPanel extends JPanel implements Linkable {
 					connectionPortComboBox.setModel(new DefaultComboBoxModel(
 							portList.toArray()));
 				} else {
-					connectionPortComboBox.removeAllItems();
+					//connectionPortComboBox.removeAllItems();
 				}
 			}
 		});

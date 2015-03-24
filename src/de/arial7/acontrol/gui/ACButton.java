@@ -83,7 +83,7 @@ public class ACButton extends JButton implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (Main.getConnectionPanel().getConnectionStatus()) {
+		if (Main.getStatusPanel().getConnectionStatus()) {
 			String command;
 			if (States.states[statesNo] == Sts.L) {
 				command = "AC~" + String.valueOf(nr) + "~0";
