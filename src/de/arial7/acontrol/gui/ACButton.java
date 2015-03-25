@@ -106,7 +106,7 @@ public class ACButton extends JButton implements ActionListener {
 			warnDialog.setResizable(false);
 			warnDialog.setLayout(new GridLayout(2, 1));
 			JLabel warnText = new JLabel("<html>Bevor Sie Weichen schalten können, müssen Sie sich mit einer"
-					+ "<br>ASwitch verbinden. Drücken Sie dazu auf den Knopf &quot;Verbinden&quot;.</html>");
+					+ "<br>AControl verbinden. Drücken Sie dazu auf den Knopf &quot;Verbinden&quot;.</html>");
 			warnDialog.add(warnText);
 			JButton dismissButton = new JButton("OK");
 			dismissButton.addActionListener(new ActionListener() {

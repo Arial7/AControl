@@ -1,10 +1,16 @@
 package de.arial7.acontrol.gui;
 
+import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -23,7 +29,7 @@ public class SettingsUI extends JFrame {
 		
 		setSize(Reference.WIDTH >> 1, Reference.HEIGHT >> 1);
 		setResizable(false);
-		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		setLayout(new VerticalLayout());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		final JCheckBox show_console_checkbox = new JCheckBox(
@@ -48,6 +54,21 @@ public class SettingsUI extends JFrame {
 		restartWarn.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		add(restartWarn);
 		// /
+		JLabel updateHelpLabel = new JLabel("<html>Aktualisierungen und Hilfe finden Sie unter <a href='http://github.com/Arial7/AControl'>github.com/Arial7/AControl</a></html>");
+		updateHelpLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		updateHelpLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e){
+				try {
+					Desktop.getDesktop().browse(new URI("http://www.github.com/Arial7/AControl"));
+				} catch (URISyntaxException | IOException ex) {
+					
+				}
+			}
+			
+		});
+		add(updateHelpLabel);
+		
 		JPanel actionsPanel = new JPanel();
 		actionsPanel.setLayout(new FlowLayout());
 		// ///

@@ -11,6 +11,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import org.zu.ardulink.Link;
 
+import de.arial7.acontrol.base.Main;
 import de.arial7.acontrol.base.ProjectHandler;
 import de.arial7.acontrol.base.Settings;
 import de.arial7.acontrol.base.Utils;
@@ -62,7 +63,7 @@ public class ACMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				Link.getDefaultInstance().sendCustomMessage("disconnect");
 				Link.getDefaultInstance().disconnect();
-
+				Main.getStatusPanel().setConnectionStatus(false);
 			}
 		});
 
@@ -85,12 +86,14 @@ public class ACMenuBar extends JMenuBar {
 					Thread.sleep(2000);
 					Link.getDefaultInstance().sendCustomMessage("connect");
 					Utils.output("Verbunden", Utils.LVL_INFO);
+					Main.getStatusPanel().setConnectionStatus(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					String message = ex.getMessage();
 					if (message == null || message.trim().equals("")) {
 						message = "Generic Error on connection";
 					}
+					Main.getStatusPanel().setConnectionStatus(false);
 
 				}
 			}
@@ -134,9 +137,8 @@ public class ACMenuBar extends JMenuBar {
 		add(projectMenu);
 		add(connectionMenu);
 		add(optionsMenu);
-		
-		
-		//And then search for available ports
+
+		// And then search for available ports
 		searchPorts.doClick();
 
 	}

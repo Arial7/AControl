@@ -6,8 +6,8 @@ public class Reference {
 	
 	public static final String projectDir = "./Projekte/";
 	public static final String settingsFilePath = "./res/settings.cfg";
-	public static final int WIDTH = 1000;
-	public static final int HEIGHT = 700;
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 500;
 	public static final int TILE_SIZE = 32;
 	
 	

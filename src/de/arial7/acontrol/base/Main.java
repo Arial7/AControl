@@ -88,11 +88,11 @@ public class Main extends JFrame {
 
 		
 		statusPanel = new ACStatusPanel();
-		
+		add(statusPanel, "South");
 		
 		aconsole = new AConsole();
 		if (Settings.SHOW_CONSOLE)
-			add(aconsole, "South");
+			add(aconsole, "East");
 
 		Utils.output("AControl - Version: " + Reference.VERSION
 				+ " - © Pascal Riesinger", Utils.LVL_INFO);
