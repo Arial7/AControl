@@ -1,5 +1,6 @@
 package de.arial7.acontrol.plan.editor;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
@@ -15,6 +16,7 @@ public class PSButton extends JButton {
 	
 	public PSButton(ImageTag tag, BufferedImage image){
 		setSize(32,32);
+		setPreferredSize(new Dimension(32, 32));
 		setIcon(new ImageIcon(image));
 		this.tag = tag;
 	}

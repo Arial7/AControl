@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 
 import de.arial7.acontrol.base.Reference;
 import de.arial7.acontrol.base.States;
-import de.arial7.acontrol.base.Utils;
 import de.arial7.acontrol.plan.PlanParser;
 
 public class MainPane extends JPanel {
@@ -30,7 +29,6 @@ public class MainPane extends JPanel {
 	public void init() {
 		setMinimumSize(new Dimension(((PlanParser.loadedX + 1) * Reference.TILE_SIZE ), ((PlanParser.loadedY +1) * Reference.TILE_SIZE)));
 		setSize(new Dimension(((PlanParser.loadedX +1) * Reference.TILE_SIZE ), ((PlanParser.loadedY +1) * Reference.TILE_SIZE)));
-		Utils.output(getSize().getWidth() + "|" + getSize().getHeight(), Utils.LVL_INFO);
 	}
 	
 

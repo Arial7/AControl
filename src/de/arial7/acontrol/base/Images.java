@@ -1,5 +1,6 @@
 package de.arial7.acontrol.base;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -47,7 +48,7 @@ public class Images {
 			DD_0 = ImageIO.read(new File(dir + "DD_0.png"));
 			DD_90 = ImageIO.read(new File(dir + "DD_90.png"));
 			G_0 = ImageIO.read(new File(dir + "G_0.png"));
-			NA = ImageIO.read(new File(dir + "NA.png"));
+			NA = resize(ImageIO.read(new File(dir + "NA.png")), 32, 32);
 			P_0 = ImageIO.read(new File(dir + "P_0.png"));
 			P_180 = ImageIO.read(new File(dir + "P_180.png"));
 			W_L_0_L = ImageIO.read(new File(dir + "W_L_0_L.png"));
@@ -66,5 +67,16 @@ public class Images {
 			e.printStackTrace();
 			Main.exit(true);
 		}
+	}
+	
+	public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
+	    Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+	    BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+	    Graphics2D g2d = dimg.createGraphics();
+	    g2d.drawImage(tmp, 0, 0, null);
+	    g2d.dispose();
+
+	    return dimg;
 	}
 }

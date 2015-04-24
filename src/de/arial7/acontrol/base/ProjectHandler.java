@@ -4,17 +4,28 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import de.arial7.acontrol.plan.editor.PlanEditor;
 
 public class ProjectHandler {
 
-	public static final String PLANKEY = "planLocation";
-	public static final String STATESKEY = "statesLocation";
+	public static final String KEY_PROJECT_NAME = "projectName";
+	public static final String KEY_PLAN_LOCATION = "planLocation";
+	public static final String KEY_STATES_LOCATION = "statesLocation";
 	
 	public static String currentProject = Reference.projectDir + "MEK/mek.ac";
 
 	public static void openProject() {
-
+//		FileDialog fd = new FileDialog(new JFrame(), "Öffnen", FileDialog.LOAD);
+//		fd.setDirectory(Reference.projectDir);
+//		fd.setFile("*.ac;");
+//		fd.setVisible(true);
+		
+		JFileChooser fc = new JFileChooser(Reference.projectDir);
+		fc.setFileFilter(new FileNameExtensionFilter("AControl Project Files", "ac"));
+		fc.showOpenDialog(Main.getStatusPanel());
 	}
 
 	public static void createProject() {
@@ -22,10 +33,11 @@ public class ProjectHandler {
 	}
 
 	public static void editProject() {
-		new PlanEditor();
+		new PlanEditor(getProjectValue(KEY_PLAN_LOCATION));
+		
 	}
 
-	public static String getProjectFile(String key) {
+	public static String getProjectValue(String key) {
 		String path = null;
 
 		try {
@@ -47,6 +59,7 @@ public class ProjectHandler {
 		return path;
 	}
 	
+
 
 
 }

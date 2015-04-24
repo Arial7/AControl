@@ -14,6 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 
 import org.zu.ardulink.Link;
@@ -42,7 +43,7 @@ public class Main extends JFrame {
 				Settings.loadAllSettings();
 				Images.loadImages();
 				States.init(ProjectHandler
-						.getProjectFile(ProjectHandler.STATESKEY));
+						.getProjectValue(ProjectHandler.KEY_STATES_LOCATION));
 				States.loadStates();
 				try {
 					UIManager.setLookAndFeel(UIManager
@@ -80,8 +81,8 @@ public class Main extends JFrame {
 
 		mainPane = new MainPane();
 		PlanParser
-				.loadPlan(
-						ProjectHandler.getProjectFile(ProjectHandler.PLANKEY),
+				.loadPlanToPanel(
+						ProjectHandler.getProjectValue(ProjectHandler.KEY_PLAN_LOCATION),
 						mainPane);
 		mainPane.init();
 		add(mainPane, "Center");
@@ -92,7 +93,7 @@ public class Main extends JFrame {
 		
 		aconsole = new AConsole();
 		if (Settings.SHOW_CONSOLE)
-			add(aconsole, "East");
+			add(new JScrollPane(aconsole), "East");
 
 		Utils.output("AControl - Version: " + Reference.VERSION
 				+ " - © Pascal Riesinger", Utils.LVL_INFO);

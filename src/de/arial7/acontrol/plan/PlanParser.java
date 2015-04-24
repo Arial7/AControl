@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -23,11 +25,14 @@ public class PlanParser {
 	 * @param panel
 	 *            the JPanel, all the objects will be added to
 	 */
-	
+
 	public static int loadedX;
 	public static int loadedY;
-	
-	public static void loadPlan(String filepath, JPanel panel) {
+
+	private static List<ImageTag> planArray = new ArrayList<ImageTag>();
+	private static int planArrayIterator = 0;
+
+	public static void loadPlanToPanel(String filepath, JPanel panel) {
 		int switchID = 1;
 		int x = 0;
 		int y = 0;
@@ -50,10 +55,10 @@ public class PlanParser {
 				} else if (line.equals("D_90")) {
 					panel.add(new ACLabel(Images.D_90, x, y));
 					x++;
-				}else if (line.equals("D_180")) {
+				} else if (line.equals("D_180")) {
 					panel.add(new ACLabel(Images.D_180, x, y));
 					x++;
-				}else if (line.equals("D_270")) {
+				} else if (line.equals("D_270")) {
 					panel.add(new ACLabel(Images.D_270, x, y));
 					x++;
 				} else if (line.equals("DD_0")) {
@@ -98,15 +103,79 @@ public class PlanParser {
 				}
 				loadedX = x;
 				loadedY = y;
-				
+
 			}
-			
+
 			reader.close();
 			Utils.output("Loaded plan", Utils.LVL_INFO);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void loadPlanToArray(String filePath) {
+		planArray = new ArrayList<ImageTag>();
+		planArrayIterator = 0;
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(new File(
+					filePath)));
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				if (line.startsWith("***")) {
+					planArray.add(ImageTag.NEWLINE);
+				} else if (line.equals("-")) {
+					planArray.add(ImageTag.EMPTY);
+				} else if (line.equals("G_0")) {
+					planArray.add(ImageTag.G_0);
+				} else if (line.equals("D_0")) {
+					// planArray.add(ImageTag.D_);
+				} else if (line.equals("D_90")) {
+					planArray.add(ImageTag.D_90);
+				} else if (line.equals("D_180")) {
+					// planArray.add(ImageTag.D_180);
+				} else if (line.equals("D_270")) {
+					planArray.add(ImageTag.D_270);
+				} else if (line.equals("DD_0")) {
+					planArray.add(ImageTag.DD_0);
+				} else if (line.equals("DD_90")) {
+					planArray.add(ImageTag.DD_90);
+				} else if (line.equals("P_0")) {
+					planArray.add(ImageTag.P_0);
+				} else if (line.equals("P_180")) {
+					planArray.add(ImageTag.P_180);
+				} else if (line.equals("A_0")) {
+					planArray.add(ImageTag.A_0);
+				} else if (line.equals("A_180")) {
+					planArray.add(ImageTag.A_180);
+				} else if (line.equals("W_L_0")) {
+					planArray.add(ImageTag.W_L_0);
+				} else if (line.equals("W_L_180")) {
+					planArray.add(ImageTag.W_L_180);
+				} else if (line.equals("W_R_0")) {
+					planArray.add(ImageTag.W_R_0);
+				} else if (line.equals("W_R_180")) {
+					planArray.add(ImageTag.W_R_0);
+				} else {
+					System.err
+							.println("[WARN]Found unexpected token in plan file, skipping it: "
+									+ line);
+				}
+			}
+
+			reader.close();
+			Utils.output("Loaded plan", Utils.LVL_INFO);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static ImageTag getNextItem() {
+		planArrayIterator++;
+		if (planArrayIterator > planArray.size())
+			return ImageTag.EMPTY;
+		return planArray.get(planArrayIterator - 1);
 	}
 
 }

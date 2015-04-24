@@ -14,5 +14,6 @@ public enum ImageTag {
 	D_270,
 	DD_0,
 	DD_90,
-	EMPTY
+	EMPTY,
+	NEWLINE
 }

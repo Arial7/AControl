@@ -1,8 +1,10 @@
 #AControl
 
-##What's that?
-This is the Java Desktop application for the easy to use <b>A</b>rduino Switch <b>Control</b> System
-The Arduino Code can be found at Arial7/AControlArduino
+##Was ist AControl?
+AControl ist eine freie Sofwtware, welche in Java entwickelt wurde. Mit dieser Software kann man das AControl-System steuern, welches (bis jetzt nur) dafür konzipert wurde, Weichen zu schalten.
+##Wie benutze ich AControl?
+Nachdem Sie den Projektordner heruntergeladen haben, wechseln Sie in das Verzeichnis builds, und führen Sie die Datei AControl*.jar aus. Ein Installationsprogramm ist bereits in Planung, wird jedoch erst 
+nach der groben Fertigstellung des Hauptprogramms implementiert.
+Falls Fehler bei der Ausführung auftreten sollten (bei Windows oder Mac OSX), entfernen Sie die Verknüpfungen "lib" und "res" im Ordner "builds" und kopieren Sie dise beiden Ordner aus dem Stammverzeichnis
+nach "builds"
 
-##How does it work?
-This Java application sends commands to the Arduino via the Ardulink library. The Arduino then decodes the commands and drives the switches

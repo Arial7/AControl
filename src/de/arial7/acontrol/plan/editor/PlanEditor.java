@@ -11,7 +11,10 @@ import javax.swing.JPanel;
 
 import de.arial7.acontrol.base.ImageTag;
 import de.arial7.acontrol.base.Images;
+import de.arial7.acontrol.base.Reference;
+import de.arial7.acontrol.base.Utils;
 import de.arial7.acontrol.gui.VerticalLayout;
+import de.arial7.acontrol.plan.PlanParser;
 
 @SuppressWarnings("serial")
 public class PlanEditor extends JFrame {
@@ -19,14 +22,74 @@ public class PlanEditor extends JFrame {
 	public static ImageTag activeTag = ImageTag.EMPTY;
 	public static JLabel currentTrack = new JLabel(new ImageIcon(Images.NA));
 
+	public PlanEditor(String fileToOpen) {
+		PlanParser.loadPlanToArray(fileToOpen);
+		
+		setSize(1280, 720);
+		setResizable(true);
+		setLayout(new BorderLayout());
+		setTitle("AControl - Gleisbildeditor " + Reference.VERSION + "- © Pascal Riesinger");
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+		JPanel selectionsPanel = addControls();
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(null);
+		
+		buttonsPanel.setSize(1280 - selectionsPanel.getWidth(), 720);
+		
+		for (int y = 0; y < 18; y++) {
+			for (int x = 0; x < 35; x++) {
+				ImageTag t = PlanParser.getNextItem();
+				if (t == ImageTag.NEWLINE) {
+					for (int l = 35 - x; l > 0; l--) {
+						buttonsPanel.add(new PLButton(x, y));
+					}
+				}
+				else if (t == ImageTag.EMPTY) {
+					buttonsPanel.add(new PLButton(x, y));
+				}
+				else
+					buttonsPanel.add(new PLButton(x, y, t));
+			}
+		}
+
+		add(buttonsPanel, "Center");
+		add(selectionsPanel, "East");
+
+		// pack();
+		setVisible(true);
+	}
+	
+	
 	public PlanEditor() {
 		setSize(1280, 720);
 		setResizable(true);
 		setLayout(new BorderLayout());
-		setTitle("AControl - Gleisbildeditor - © Pascal Riesinger");
+		setTitle("AControl - Gleisbildeditor " + Reference.VERSION + "- © Pascal Riesinger");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+		JPanel selectionsPanel = addControls();
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(null);
+		
+		buttonsPanel.setSize(1280 - selectionsPanel.getWidth(), 720);
+		for (int x = 0; x < 35; x++) {
+			for (int y = 0; y < 18; y++) {
+				buttonsPanel.add(new PLButton(x, y));
+			}
+		}
+
+		add(buttonsPanel, "Center");
+		add(selectionsPanel, "East");
+
+		// pack();
+		setVisible(true);
+	}
+	
+	private static JPanel addControls() {
+
 		JPanel selectionsPanel = new JPanel();
+		
 		selectionsPanel.setSize(300, 720);
 		selectionsPanel.setBackground(Color.GRAY);
 		selectionsPanel.setLayout(new VerticalLayout());
@@ -39,6 +102,7 @@ public class PlanEditor extends JFrame {
 		JPanel availablePanel = new JPanel(new FlowLayout());
 		JPanel availableLeft = new JPanel(new VerticalLayout());
 		JPanel availableRight = new JPanel(new VerticalLayout());
+		
 		
 		availableLeft.add(new PSButton(ImageTag.W_L_0, Images.W_L_0_L));
 		availableLeft.add(new PSButton(ImageTag.W_L_180, Images.W_L_180_L));
@@ -53,78 +117,20 @@ public class PlanEditor extends JFrame {
 		availableRight.add(new PSButton(ImageTag.G_0, Images.G_0));
 		availableRight.add(new PSButton(ImageTag.P_0, Images.P_0));
 		availableRight.add(new PSButton(ImageTag.P_180,  Images.P_180));
+		availableRight.add(new PSButton(ImageTag.EMPTY, Images.NA));
 		
 		availablePanel.add(availableLeft);
 		availablePanel.add(availableRight);
 		
 		selectionsPanel.add(availablePanel);
 		
+		return selectionsPanel;
 		
-		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(null);
-		buttonsPanel.setSize(1280 - selectionsPanel.getWidth(), 720);
-		for (int x = 0; x < 35; x++) {
-			for (int y = 0; y < 18; y++) {
-				buttonsPanel.add(new PLButton(x, y));
-			}
-		}
-
-		add(buttonsPanel, "Center");
-		add(selectionsPanel, "East");
-
-		// pack();
-		setVisible(true);
 	}
+	
 
 	public static void changeTag() {
-		switch (activeTag) {
-		case EMPTY:
-			currentTrack.setIcon(new ImageIcon(Images.NA));
-			break;
-		case W_L_0:
-			currentTrack.setIcon(new ImageIcon(Images.W_L_0_L));
-			break;
-		case W_L_180:
-			currentTrack.setIcon(new ImageIcon(Images.W_L_180_L));
-			break;
-		case W_R_0:
-			currentTrack.setIcon(new ImageIcon(Images.W_R_0_L));
-			break;
-		case W_R_180:
-			currentTrack.setIcon(new ImageIcon(Images.W_R_180_L));
-			break;
-		case A_0:
-			currentTrack.setIcon(new ImageIcon(Images.A_0));
-			break;
-		case A_180:
-			currentTrack.setIcon(new ImageIcon(Images.A_180));
-			break;
-		case DD_0:
-			currentTrack.setIcon(new ImageIcon(Images.DD_0));
-			break;
-		case DD_90:
-			currentTrack.setIcon(new ImageIcon(Images.DD_90));
-			break;
-		case D_270:
-			currentTrack.setIcon(new ImageIcon(Images.D_270));
-			break;
-		case D_90:
-			currentTrack.setIcon(new ImageIcon(Images.D_90));
-			break;
-		case G_0:
-			currentTrack.setIcon(new ImageIcon(Images.G_0));
-			break;
-		case P_0:
-			currentTrack.setIcon(new ImageIcon(Images.P_0));
-			break;
-		case P_180:
-			currentTrack.setIcon(new ImageIcon(Images.P_180));
-			break;
-		default:
-			currentTrack.setIcon(new ImageIcon(Images.NA));
-			break;
-		
-		}
+		currentTrack.setIcon(Utils.tagToIcon(activeTag));
 	}
 
 }
