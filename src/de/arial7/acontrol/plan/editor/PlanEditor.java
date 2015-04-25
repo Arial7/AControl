@@ -3,11 +3,15 @@ package de.arial7.acontrol.plan.editor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 import de.arial7.acontrol.base.ImageTag;
 import de.arial7.acontrol.base.Images;
@@ -41,8 +45,12 @@ public class PlanEditor extends JFrame {
 			for (int x = 0; x < 35; x++) {
 				ImageTag t = PlanParser.getNextItem();
 				if (t == ImageTag.NEWLINE) {
-					for (int l = 35 - x; l > 0; l--) {
-						buttonsPanel.add(new PLButton(x, y));
+					System.out.println("FOUND NEWLINE, ADDING " +(35 - x));
+					int x35 = 35 - x;
+					x = 35;
+					for (int l = x35; l > 0; l--) {
+						buttonsPanel.add(new PLButton( x - l, y));
+						//System.out.print(" l = " + l);
 					}
 				}
 				else if (t == ImageTag.EMPTY) {
@@ -93,6 +101,7 @@ public class PlanEditor extends JFrame {
 		selectionsPanel.setSize(300, 720);
 		selectionsPanel.setBackground(Color.GRAY);
 		selectionsPanel.setLayout(new VerticalLayout());
+		
 
 		selectionsPanel.add(new JLabel("Aktuelles Gleis:"));
 		selectionsPanel.add(currentTrack);
@@ -123,6 +132,18 @@ public class PlanEditor extends JFrame {
 		availablePanel.add(availableRight);
 		
 		selectionsPanel.add(availablePanel);
+		
+		selectionsPanel.add(new JSeparator(JSeparator.HORIZONTAL));
+		
+		JButton saveButton = new JButton("Speichern");
+		saveButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		selectionsPanel.add(saveButton);
 		
 		return selectionsPanel;
 		

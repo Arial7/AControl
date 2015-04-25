@@ -68,7 +68,7 @@ public class Utils {
 	public static ImageIcon tagToIcon(ImageTag tag) {
 		switch (tag) {
 		case EMPTY:
-			return (new ImageIcon(Images.NA));
+			return null; //(new ImageIcon(Images.NA));
 
 		case W_L_0:
 			return (new ImageIcon(Images.W_L_0_L));
@@ -94,6 +94,11 @@ public class Utils {
 		case DD_90:
 			return (new ImageIcon(Images.DD_90));
 
+		case D_0:
+			return (new ImageIcon(Images.D_0));
+		case D_180:
+			return (new ImageIcon(Images.D_180));
+			
 		case D_270:
 			return (new ImageIcon(Images.D_270));
 

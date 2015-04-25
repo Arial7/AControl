@@ -129,11 +129,11 @@ public class PlanParser {
 				} else if (line.equals("G_0")) {
 					planArray.add(ImageTag.G_0);
 				} else if (line.equals("D_0")) {
-					// planArray.add(ImageTag.D_);
+					planArray.add(ImageTag.D_0);
 				} else if (line.equals("D_90")) {
 					planArray.add(ImageTag.D_90);
 				} else if (line.equals("D_180")) {
-					// planArray.add(ImageTag.D_180);
+					planArray.add(ImageTag.D_180);
 				} else if (line.equals("D_270")) {
 					planArray.add(ImageTag.D_270);
 				} else if (line.equals("DD_0")) {
@@ -155,7 +155,7 @@ public class PlanParser {
 				} else if (line.equals("W_R_0")) {
 					planArray.add(ImageTag.W_R_0);
 				} else if (line.equals("W_R_180")) {
-					planArray.add(ImageTag.W_R_0);
+					planArray.add(ImageTag.W_R_180);
 				} else {
 					System.err
 							.println("[WARN]Found unexpected token in plan file, skipping it: "
