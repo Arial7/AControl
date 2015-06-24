@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Main</class>
+ <widget class="QMainWindow" name="Main">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>988</width>
+    <height>599</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Main</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>971</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMaximumSize</enum>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+    </layout>
+   </widget>
+   <widget class="QTextBrowser" name="logpanel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>390</y>
+      <width>971</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="locale">
+     <locale language="German" country="Germany"/>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>988</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuProject">
+    <property name="title">
+     <string>Projekt</string>
+    </property>
+    <addaction name="actionOpenProject"/>
+    <addaction name="actionNewProject"/>
+    <addaction name="actionBearbeiten"/>
+   </widget>
+   <widget class="QMenu" name="menuConnection">
+    <property name="title">
+     <string>Verbindung</string>
+    </property>
+    <widget class="QMenu" name="menuConnectionPort">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>155</width>
+       <height>54</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Port</string>
+     </property>
+    </widget>
+    <addaction name="actionConnect"/>
+    <addaction name="actionDisconnect"/>
+    <addaction name="separator"/>
+    <addaction name="menuConnectionPort"/>
+    <addaction name="separator"/>
+    <addaction name="actionSearch"/>
+   </widget>
+   <addaction name="menuProject"/>
+   <addaction name="menuConnection"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionOpenProject">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Öffnen</string>
+   </property>
+  </action>
+  <action name="actionNewProject">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Neu</string>
+   </property>
+  </action>
+  <action name="actionConnect">
+   <property name="text">
+    <string>Verbinden</string>
+   </property>
+  </action>
+  <action name="actionDisconnect">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Trennen</string>
+   </property>
+  </action>
+  <action name="actionPort">
+   <property name="text">
+    <string>Port</string>
+   </property>
+  </action>
+  <action name="actionSearch">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Suchen</string>
+   </property>
+  </action>
+  <action name="actionBearbeiten">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Bearbeiten</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
