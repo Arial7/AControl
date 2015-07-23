@@ -20,7 +20,7 @@
       <x>10</x>
       <y>10</y>
       <width>971</width>
-      <height>371</height>
+      <height>391</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -36,7 +36,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>390</y>
+      <y>410</y>
       <width>971</width>
       <height>151</height>
      </rect>
@@ -67,7 +67,7 @@
      <x>0</x>
      <y>0</y>
      <width>988</width>
-     <height>27</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuProject">
@@ -87,8 +87,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>155</width>
-       <height>54</height>
+       <width>152</width>
+       <height>44</height>
       </rect>
      </property>
      <property name="title">
@@ -100,10 +100,19 @@
     <addaction name="separator"/>
     <addaction name="menuConnectionPort"/>
     <addaction name="separator"/>
-    <addaction name="actionSearch"/>
+    <addaction name="actionSearchPorts"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
    </widget>
    <addaction name="menuProject"/>
    <addaction name="menuConnection"/>
+   <addaction name="menuTools"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenProject">
@@ -140,7 +149,7 @@
     <string>Port</string>
    </property>
   </action>
-  <action name="actionSearch">
+  <action name="actionSearchPorts">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -154,6 +163,22 @@
    </property>
    <property name="text">
     <string>Bearbeiten</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Einstellungen</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Beenden</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
  </widget>

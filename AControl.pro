@@ -18,13 +18,24 @@ SOURCES += \
     main.cpp \
     acbutton.cpp \
     commanager.cpp \
-    alogger.cpp
+    alogger.cpp \
+    Projects/aplanparser.cpp \
+    aplanparser.cpp \
+    aplan.cpp
 
 HEADERS  += \
     mainwindow.h \
     acbutton.h \
     commanager.h \
-    alogger.h
+    alogger.h \
+    switchtype.h \
+    Projects/aplanparser.h \
+    aplanparser.h \
+    aplan.h
 
 FORMS    += \
     mainwindow.ui
+
+DISTFILES += \
+    AControl.log \
+    Projects/mek.acp

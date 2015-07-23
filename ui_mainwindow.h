@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.4.2
+** Created by: Qt User Interface Compiler version 5.5.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -33,8 +33,10 @@ public:
     QAction *actionConnect;
     QAction *actionDisconnect;
     QAction *actionPort;
-    QAction *actionSearch;
+    QAction *actionSearchPorts;
     QAction *actionBearbeiten;
+    QAction *actionSettings;
+    QAction *actionQuit;
     QWidget *centralWidget;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
@@ -43,6 +45,7 @@ public:
     QMenu *menuProject;
     QMenu *menuConnection;
     QMenu *menuConnectionPort;
+    QMenu *menuTools;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *Main)
@@ -63,17 +66,22 @@ public:
         actionDisconnect->setEnabled(false);
         actionPort = new QAction(Main);
         actionPort->setObjectName(QStringLiteral("actionPort"));
-        actionSearch = new QAction(Main);
-        actionSearch->setObjectName(QStringLiteral("actionSearch"));
-        actionSearch->setEnabled(false);
+        actionSearchPorts = new QAction(Main);
+        actionSearchPorts->setObjectName(QStringLiteral("actionSearchPorts"));
+        actionSearchPorts->setEnabled(false);
         actionBearbeiten = new QAction(Main);
         actionBearbeiten->setObjectName(QStringLiteral("actionBearbeiten"));
         actionBearbeiten->setEnabled(false);
+        actionSettings = new QAction(Main);
+        actionSettings->setObjectName(QStringLiteral("actionSettings"));
+        actionQuit = new QAction(Main);
+        actionQuit->setObjectName(QStringLiteral("actionQuit"));
+        actionQuit->setShortcutContext(Qt::ApplicationShortcut);
         centralWidget = new QWidget(Main);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayoutWidget = new QWidget(centralWidget);
         gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 10, 971, 371));
+        gridLayoutWidget->setGeometry(QRect(10, 10, 971, 391));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -82,7 +90,7 @@ public:
         gridLayout->setContentsMargins(0, 0, 0, 0);
         logpanel = new QTextBrowser(centralWidget);
         logpanel->setObjectName(QStringLiteral("logpanel"));
-        logpanel->setGeometry(QRect(10, 390, 971, 151));
+        logpanel->setGeometry(QRect(10, 410, 971, 151));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -95,14 +103,16 @@ public:
         Main->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Main);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 988, 27));
+        menuBar->setGeometry(QRect(0, 0, 988, 19));
         menuProject = new QMenu(menuBar);
         menuProject->setObjectName(QStringLiteral("menuProject"));
         menuConnection = new QMenu(menuBar);
         menuConnection->setObjectName(QStringLiteral("menuConnection"));
         menuConnectionPort = new QMenu(menuConnection);
         menuConnectionPort->setObjectName(QStringLiteral("menuConnectionPort"));
-        menuConnectionPort->setGeometry(QRect(0, 0, 155, 54));
+        menuConnectionPort->setGeometry(QRect(0, 0, 152, 44));
+        menuTools = new QMenu(menuBar);
+        menuTools->setObjectName(QStringLiteral("menuTools"));
         Main->setMenuBar(menuBar);
         statusBar = new QStatusBar(Main);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -110,6 +120,7 @@ public:
 
         menuBar->addAction(menuProject->menuAction());
         menuBar->addAction(menuConnection->menuAction());
+        menuBar->addAction(menuTools->menuAction());
         menuProject->addAction(actionOpenProject);
         menuProject->addAction(actionNewProject);
         menuProject->addAction(actionBearbeiten);
@@ -118,7 +129,10 @@ public:
         menuConnection->addSeparator();
         menuConnection->addAction(menuConnectionPort->menuAction());
         menuConnection->addSeparator();
-        menuConnection->addAction(actionSearch);
+        menuConnection->addAction(actionSearchPorts);
+        menuTools->addAction(actionSettings);
+        menuTools->addSeparator();
+        menuTools->addAction(actionQuit);
 
         retranslateUi(Main);
 
@@ -133,11 +147,15 @@ public:
         actionConnect->setText(QApplication::translate("Main", "Verbinden", 0));
         actionDisconnect->setText(QApplication::translate("Main", "Trennen", 0));
         actionPort->setText(QApplication::translate("Main", "Port", 0));
-        actionSearch->setText(QApplication::translate("Main", "Suchen", 0));
+        actionSearchPorts->setText(QApplication::translate("Main", "Suchen", 0));
         actionBearbeiten->setText(QApplication::translate("Main", "Bearbeiten", 0));
+        actionSettings->setText(QApplication::translate("Main", "Einstellungen", 0));
+        actionQuit->setText(QApplication::translate("Main", "Beenden", 0));
+        actionQuit->setShortcut(QApplication::translate("Main", "Ctrl+Q", 0));
         menuProject->setTitle(QApplication::translate("Main", "Projekt", 0));
         menuConnection->setTitle(QApplication::translate("Main", "Verbindung", 0));
         menuConnectionPort->setTitle(QApplication::translate("Main", "Port", 0));
+        menuTools->setTitle(QApplication::translate("Main", "Tools", 0));
     } // retranslateUi
 
 };

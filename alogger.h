@@ -2,18 +2,26 @@
 #define ALOGGER_H
 
 #include <QTextBrowser>
+#include <QFile>
+
+enum Loglevel{
+    INFO,
+    WARN,
+    ERROR,
+    FATAL
+};
 
 class ALogger
 {
 public:
     ALogger(QTextBrowser *logpane);
-    void log(/*int level, */QString message);
-    const int INFO = 1;
-    const int WARN = 2;
-    const int ERROR = 3;
-    const int FATAL = 4;
+    ~ALogger();
+    void log(Loglevel level, QString message);
+    void log(Loglevel level, QString message, bool showInConsole);
 private:
     QTextBrowser *logpane;
+    const QString logfilename = "./AControl.log";
+    QFile *logfile;
 };
 
 #endif // ALOGGER_H

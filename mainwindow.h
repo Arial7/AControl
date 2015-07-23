@@ -21,7 +21,7 @@ public:
 
 private:
     Ui::Main *ui;
-    ComManager comManager;
+    ComManager *comManager;
     QActionGroup *portsGroup;
     QLabel *connectionStatus;
     ALogger *logger;

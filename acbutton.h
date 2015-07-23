@@ -3,15 +3,18 @@
 
 #include <QPushButton>
 #include "commanager.h"
+#include "switchtype.h"
 
 class ACButton : public QPushButton
 {
     Q_OBJECT
 
 public:
-    ACButton(QWidget* parent = 0, int id = 1000, ComManager *commgr = 0);
+    ACButton(QWidget* parent = 0, int id = 1000, bool left = false, Switchtype type = Switchtype::EMPTY, ComManager *commgr = 0);
 private:
     int id;
+    bool left = false;
+    Switchtype type;
     ComManager *commgr;
 
 public slots:

@@ -3,11 +3,12 @@
 #include "acbutton.h"
 #include <QLabel>
 #include <QDebug>
+#include <QTime>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::Main),
-    comManager(this)
+    ui(new Ui::Main)
+
 {
     ui->setupUi(this);
 
@@ -17,17 +18,20 @@ MainWindow::MainWindow(QWidget *parent) :
     //setWindowState(Qt::WindowMaximized);
 
 
-    //TEMP:
-    ui->gridLayout->addWidget(new ACButton(this, 1, &comManager), 0, 0, 1, 1);
-    ui->gridLayout->addWidget(new ACButton(this, 2, &comManager), 5, 4, 1, 1);
-
     connectionStatus = new QLabel("Verbindung: Getrennt ", this);
     ui->statusBar->addWidget(connectionStatus);
 
+    //init fields
+    logger = new ALogger(ui->logpanel);
+    comManager = new ComManager(this, logger);
+
+    //TEMP:
+    ui->gridLayout->addWidget(new ACButton(this, 1, comManager), 0, 0, 1, 1);
+    ui->gridLayout->addWidget(new ACButton(this, 2, comManager), 5, 4, 1, 1);
 
     //add the ports
     QList <QAction*> portsActions;
-    QStringList portsList = comManager.getPorts();
+    QStringList portsList = comManager->getPorts();
     portsGroup = new QActionGroup(ui->menuConnectionPort);
     for (QString port : portsList) {
         QAction *action = new QAction(port, ui->menuConnectionPort);
@@ -38,19 +42,25 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->menuConnectionPort->addActions(portsActions);
 
 
-    //init fields
-    logger = new ALogger(ui->logpanel);
+
 
     //connect signals and slots
     connect(ui->actionConnect, SIGNAL(triggered(bool)), this, SLOT(connectPort()));
     connect(ui->actionDisconnect, SIGNAL(triggered(bool)), this, SLOT(disconnectPort()));
-    connect(&comManager, SIGNAL(connectionChanged(bool)), this, SLOT(changeConnectionStatus(bool)));
-    connect(&comManager, SIGNAL(dataReceived(QString)), this, SLOT(dataReceived(QString)));
+    connect(comManager, SIGNAL(connectionChanged(bool)), this, SLOT(changeConnectionStatus(bool)));
+    connect(comManager, SIGNAL(dataReceived(QString)), this, SLOT(dataReceived(QString)));
+    connect(ui->actionQuit, SIGNAL(triggered(bool)), QApplication::instance(), SLOT(quit()));
 }
 
 MainWindow::~MainWindow()
 {
+    logger->log(Loglevel::INFO, "Exiting nominally", false);
+
     delete ui;
+    delete logger;
+    delete comManager;
+    delete connectionStatus;
+    delete portsGroup;
 }
 
 void MainWindow::connectPort() {
@@ -65,11 +75,11 @@ void MainWindow::connectPort() {
         qDebug() << "No port selected" << endl;
         return;
     }
-    comManager.connect(selectedPort);
+    comManager->connect(selectedPort);
 }
 
 void MainWindow::disconnectPort() {
-    comManager.disconnect();
+    comManager->disconnect();
 }
 
 void MainWindow::changeConnectionStatus(bool connected) {
@@ -78,7 +88,7 @@ void MainWindow::changeConnectionStatus(bool connected) {
         ui->actionConnect->setEnabled(false);
         ui->actionDisconnect->setEnabled(true);
 
-        logger->log(/*ALogger::INFO,*/ "Verbindung hergestellt");
+        logger->log(Loglevel::INFO, "Verbindung hergestellt");
 
 
     }
@@ -87,12 +97,12 @@ void MainWindow::changeConnectionStatus(bool connected) {
         ui->actionConnect->setEnabled(true);
         ui->actionDisconnect->setEnabled(false);
 
-        logger->log(/*ALogger::INFO,*/ "Verbindung getrennt");
+        logger->log(Loglevel::INFO, "Verbindung getrennt");
 
     }
     ui->statusBar->update();
 }
 
 void MainWindow::dataReceived(QString data) {
-    logger->log(data);
+    logger->log(Loglevel::INFO, "[ABase]" + data);
 }

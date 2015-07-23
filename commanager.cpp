@@ -7,26 +7,30 @@
 #include <iostream>
 #include <string>
 
-ComManager::ComManager(QObject *parent)
+ComManager::ComManager(QObject *parent, ALogger *logger)
 {
     this->parent = parent;
     srand(time(NULL));
+    this->logger = logger;
 }
 ComManager::~ComManager(){
-    //delete parent;
-    if(activePort != nullptr)
+    if(activePort != nullptr) {
+        activePort->close();
         delete activePort;
+    }
 }
 
 void ComManager::sendCommand(QString command)
 {
     //Generate a random id for the command
     int id = rand() % 999;
-    cout << id << endl;
+    lastID = id;
     string msg = command.toStdString() + "?" + to_string(id);
     activePort->write(msg.c_str(), msg.size());
+    cout << "running command" << endl;
+    logger->log(Loglevel::INFO, command);
 
-    cout << msg.c_str() << endl;
+
 }
 
 void ComManager::connect(QString portname) {
@@ -38,11 +42,11 @@ void ComManager::connect(QString portname) {
         QObject::connect(activePort, SIGNAL(readyRead()), this, SLOT(receiveData()));
     }
     catch (QException ex){
-        qDebug() << "Error while connecting to Serial port:" << ex.what() << endl;
+        logger->log(Loglevel::ERROR, QString("Konnte nicht mit Port verbinden: %1").arg(ex.what()));
     }
 }
 
-void ComManager::setBauds(quint16 baudrate) {
+void ComManager::setBauds(quint32 baudrate) {
     this->baudrate = baudrate;
 }
 
@@ -64,5 +68,11 @@ QStringList ComManager::getPorts() {
 void ComManager::receiveData() {
     activePort->waitForReadyRead(500);
     QByteArray data = activePort->readAll();
-    emit dataReceived(QString(data));
+    if(QString(data) == QString("AOK?%1").arg(lastID)){
+        logger->log(Loglevel::INFO, "ABase responded OK to last command", false);
+    }
+    else {
+        emit dataReceived(QString(data));
+    }
+
 }
