@@ -19,7 +19,6 @@ SOURCES += \
     acbutton.cpp \
     commanager.cpp \
     alogger.cpp \
-    Projects/aplanparser.cpp \
     aplanparser.cpp \
     aplan.cpp
 
@@ -29,7 +28,6 @@ HEADERS  += \
     commanager.h \
     alogger.h \
     switchtype.h \
-    Projects/aplanparser.h \
     aplanparser.h \
     aplan.h
 
