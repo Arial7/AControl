@@ -20,7 +20,8 @@ SOURCES += \
     commanager.cpp \
     alogger.cpp \
     aplanparser.cpp \
-    aplan.cpp
+    aplan.cpp \
+    aclabel.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -29,7 +30,9 @@ HEADERS  += \
     alogger.h \
     switchtype.h \
     aplanparser.h \
-    aplan.h
+    aplan.h \
+    track.h \
+    aclabel.h
 
 FORMS    += \
     mainwindow.ui
