@@ -5,7 +5,7 @@
 #include "track.h"
 
 
-class ACLabel : QLabel
+class ACLabel : public QLabel
 {
     Q_OBJECT
 

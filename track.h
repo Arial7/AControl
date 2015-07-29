@@ -13,8 +13,6 @@ enum Track {
     //double diagonals
     DD0,
     DD90,
-    DD180,
-    DD270,
     //switches
     WL0,
     WL90,

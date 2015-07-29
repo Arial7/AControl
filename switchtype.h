@@ -10,7 +10,7 @@ enum Switchtype {
     W_R_90,
     W_R_180,
     W_R_270,
-    EMPTY
+    NONE
 };
 
 

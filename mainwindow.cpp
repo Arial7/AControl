@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "acbutton.h"
+#include "aclabel.h"
+#include "track.h"
 #include <QLabel>
 #include <QDebug>
 #include <QTime>
@@ -28,6 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //TEMP:
     ui->gridLayout->addWidget(new ACButton(this, 1, comManager), 0, 0, 1, 1);
     ui->gridLayout->addWidget(new ACButton(this, 2, comManager), 5, 4, 1, 1);
+
+    ui->gridLayout->addWidget(new ACLabel(this, Track::S0), 8, 7, 1, 1);
 
     //add the ports
     QList <QAction*> portsActions;
