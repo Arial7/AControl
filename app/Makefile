@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = AControl1.0.0
-DISTDIR = /home/pascal/development/qt/AControl/.tmp/AControl1.0.0
+DISTDIR = /home/pascal/development/AControl/app/.tmp/AControl1.0.0
 LINK          = g++
 LFLAGS        = 
 LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5SerialPort -lQt5Core -lGL -lpthread 
@@ -53,18 +53,24 @@ SOURCES       = mainwindow.cpp \
 		acbutton.cpp \
 		commanager.cpp \
 		alogger.cpp \
-		Projects/aplanparser.cpp moc_mainwindow.cpp \
+		aplanparser.cpp \
+		aplan.cpp \
+		aclabel.cpp moc_mainwindow.cpp \
 		moc_acbutton.cpp \
-		moc_commanager.cpp
+		moc_commanager.cpp \
+		moc_aclabel.cpp
 OBJECTS       = mainwindow.o \
 		main.o \
 		acbutton.o \
 		commanager.o \
 		alogger.o \
 		aplanparser.o \
+		aplan.o \
+		aclabel.o \
 		moc_mainwindow.o \
 		moc_acbutton.o \
-		moc_commanager.o
+		moc_commanager.o \
+		moc_aclabel.o
 DIST          = AControl.log \
 		Projects/mek.acp \
 		/usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -140,8 +146,6 @@ DIST          = AControl.log \
 		/usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_x11extras.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_x11extras_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xml_private.pri \
@@ -172,12 +176,17 @@ DIST          = AControl.log \
 		commanager.h \
 		alogger.h \
 		switchtype.h \
-		Projects/aplanparser.h mainwindow.cpp \
+		aplanparser.h \
+		aplan.h \
+		track.h \
+		aclabel.h mainwindow.cpp \
 		main.cpp \
 		acbutton.cpp \
 		commanager.cpp \
 		alogger.cpp \
-		Projects/aplanparser.cpp
+		aplanparser.cpp \
+		aplan.cpp \
+		aclabel.cpp
 QMAKE_TARGET  = AControl
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = AControl
@@ -281,8 +290,6 @@ Makefile: AControl.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 		/usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_x11extras.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_x11extras_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xml_private.pri \
@@ -387,8 +394,6 @@ Makefile: AControl.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 /usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_widgets.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_widgets_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_x11extras.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_x11extras_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_xml.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_xml_private.pri:
@@ -433,8 +438,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h acbutton.h commanager.h alogger.h switchtype.h Projects/aplanparser.h $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.cpp main.cpp acbutton.cpp commanager.cpp alogger.cpp Projects/aplanparser.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h acbutton.h commanager.h alogger.h switchtype.h aplanparser.h aplan.h track.h aclabel.h $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.cpp main.cpp acbutton.cpp commanager.cpp alogger.cpp aplanparser.cpp aplan.cpp aclabel.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
 
@@ -458,23 +463,27 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_acbutton.cpp moc_commanager.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_acbutton.cpp moc_commanager.cpp moc_aclabel.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_acbutton.cpp moc_commanager.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_acbutton.cpp moc_commanager.cpp moc_aclabel.cpp
 moc_mainwindow.cpp: commanager.h \
 		alogger.h \
 		mainwindow.h
-	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/qt/AControl -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.1.0 -I/usr/include/c++/5.1.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.1.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.1.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.1.0/include-fixed -I/usr/include mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include-fixed -I/usr/include mainwindow.h -o moc_mainwindow.cpp
 
 moc_acbutton.cpp: commanager.h \
 		alogger.h \
 		switchtype.h \
 		acbutton.h
-	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/qt/AControl -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.1.0 -I/usr/include/c++/5.1.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.1.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.1.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.1.0/include-fixed -I/usr/include acbutton.h -o moc_acbutton.cpp
+	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include-fixed -I/usr/include acbutton.h -o moc_acbutton.cpp
 
 moc_commanager.cpp: alogger.h \
 		commanager.h
-	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/qt/AControl -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.1.0 -I/usr/include/c++/5.1.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.1.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.1.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.1.0/include-fixed -I/usr/include commanager.h -o moc_commanager.cpp
+	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include-fixed -I/usr/include commanager.h -o moc_commanager.cpp
+
+moc_aclabel.cpp: track.h \
+		aclabel.h
+	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include-fixed -I/usr/include aclabel.h -o moc_aclabel.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -499,7 +508,9 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		alogger.h \
 		ui_mainwindow.h \
 		acbutton.h \
-		switchtype.h
+		switchtype.h \
+		aclabel.h \
+		track.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 main.o: main.cpp mainwindow.h \
@@ -520,8 +531,17 @@ commanager.o: commanager.cpp commanager.h \
 alogger.o: alogger.cpp alogger.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o alogger.o alogger.cpp
 
-aplanparser.o: Projects/aplanparser.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aplanparser.o Projects/aplanparser.cpp
+aplanparser.o: aplanparser.cpp aplanparser.h \
+		aplan.h \
+		track.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aplanparser.o aplanparser.cpp
+
+aplan.o: aplan.cpp aplan.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aplan.o aplan.cpp
+
+aclabel.o: aclabel.cpp aclabel.h \
+		track.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aclabel.o aclabel.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -531,6 +551,9 @@ moc_acbutton.o: moc_acbutton.cpp
 
 moc_commanager.o: moc_commanager.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_commanager.o moc_commanager.cpp
+
+moc_aclabel.o: moc_aclabel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_aclabel.o moc_aclabel.cpp
 
 ####### Install
 
