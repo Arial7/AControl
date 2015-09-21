@@ -13,9 +13,9 @@ MAKEFILE      = Makefile
 CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_CORE_LIB
-CFLAGS        = -pipe -O2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -D_REENTRANT -Wall -W -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -O2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -D_REENTRANT -std=c++0x -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I. -I. -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtSerialPort -isystem /usr/include/qt/QtCore -Iobj -I. -I/usr/lib/qt/mkspecs/linux-g++
+CFLAGS        = -pipe -O2 -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -D_REENTRANT -Wall -W -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -O2 -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -D_REENTRANT -std=c++0x -Wall -W -fPIC $(DEFINES)
+INCPATH       = -I. -I. -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtSerialPort -isystem /usr/include/qt/QtCore -Iobj -Iobj -I/usr/lib/qt/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = acontrol1.0.0
 DISTDIR = /home/pascal/development/AControl/app/obj/acontrol1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1 -Wl,-O1,--sort-common,--as-needed,-z,relro
-LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5SerialPort -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5SerialPort -lQt5Core -lGLESv2 -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -80,6 +80,8 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/g++-base.conf \
 		/usr/lib/qt/mkspecs/common/g++-unix.conf \
 		/usr/lib/qt/mkspecs/qconfig.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_bluetooth.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_bootstrap_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_clucene_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_concurrent.pri \
@@ -88,12 +90,12 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_lib_core_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_dbus.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_dbus_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_declarative.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_declarative_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_designer.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_designer_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_designercomponents_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_enginio.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_enginio_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_gui.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_gui_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_help.pri \
@@ -102,6 +104,8 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_lib_location_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_network_private.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_nfc.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_nfc_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_openglextensions.pri \
@@ -131,6 +135,8 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_lib_serialport_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sql.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sql_private.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_svg.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_svg_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_testlib.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_testlib_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_uiplugin.pri \
@@ -144,6 +150,8 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets_private.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_x11extras.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_x11extras_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xml_private.pri \
@@ -213,7 +221,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): obj/ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -225,6 +233,8 @@ Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 		/usr/lib/qt/mkspecs/common/g++-base.conf \
 		/usr/lib/qt/mkspecs/common/g++-unix.conf \
 		/usr/lib/qt/mkspecs/qconfig.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_bluetooth.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_bootstrap_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_clucene_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_concurrent.pri \
@@ -233,12 +243,12 @@ Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 		/usr/lib/qt/mkspecs/modules/qt_lib_core_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_dbus.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_dbus_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_declarative.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_declarative_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_designer.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_designer_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_designercomponents_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_enginio.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_enginio_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_gui.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_gui_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_help.pri \
@@ -247,6 +257,8 @@ Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 		/usr/lib/qt/mkspecs/modules/qt_lib_location_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_network_private.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_nfc.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_nfc_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_openglextensions.pri \
@@ -276,6 +288,8 @@ Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 		/usr/lib/qt/mkspecs/modules/qt_lib_serialport_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sql.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sql_private.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_svg.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_svg_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_testlib.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_testlib_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_uiplugin.pri \
@@ -289,6 +303,8 @@ Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 		/usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets_private.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_x11extras.pri \
+		/usr/lib/qt/mkspecs/modules/qt_lib_x11extras_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_xml_private.pri \
@@ -329,6 +345,8 @@ Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 /usr/lib/qt/mkspecs/common/g++-base.conf:
 /usr/lib/qt/mkspecs/common/g++-unix.conf:
 /usr/lib/qt/mkspecs/qconfig.pri:
+/usr/lib/qt/mkspecs/modules/qt_lib_bluetooth.pri:
+/usr/lib/qt/mkspecs/modules/qt_lib_bluetooth_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_bootstrap_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_clucene_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_concurrent.pri:
@@ -337,12 +355,12 @@ Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 /usr/lib/qt/mkspecs/modules/qt_lib_core_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_dbus.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_dbus_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_declarative.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_declarative_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_designer.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_designer_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_designercomponents_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri:
+/usr/lib/qt/mkspecs/modules/qt_lib_enginio.pri:
+/usr/lib/qt/mkspecs/modules/qt_lib_enginio_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_gui.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_gui_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_help.pri:
@@ -351,6 +369,8 @@ Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 /usr/lib/qt/mkspecs/modules/qt_lib_location_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_network.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_network_private.pri:
+/usr/lib/qt/mkspecs/modules/qt_lib_nfc.pri:
+/usr/lib/qt/mkspecs/modules/qt_lib_nfc_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_opengl.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_opengl_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_openglextensions.pri:
@@ -380,6 +400,8 @@ Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 /usr/lib/qt/mkspecs/modules/qt_lib_serialport_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_sql.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_sql_private.pri:
+/usr/lib/qt/mkspecs/modules/qt_lib_svg.pri:
+/usr/lib/qt/mkspecs/modules/qt_lib_svg_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_testlib.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_testlib_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_uiplugin.pri:
@@ -393,6 +415,8 @@ Makefile: acontrol.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mksp
 /usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_widgets.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_widgets_private.pri:
+/usr/lib/qt/mkspecs/modules/qt_lib_x11extras.pri:
+/usr/lib/qt/mkspecs/modules/qt_lib_x11extras_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_xml.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_xml_private.pri:
@@ -469,28 +493,28 @@ obj/moc_acbutton.cpp: src/commanager.h \
 		src/alogger.h \
 		src/switchtype.h \
 		src/acbutton.h
-	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include-fixed -I/usr/include src/acbutton.h -o obj/moc_acbutton.cpp
+	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/armv7l-unknown-linux-gnueabihf -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/armv7l-unknown-linux-gnueabihf/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/armv7l-unknown-linux-gnueabihf/5.2.0/include-fixed -I/usr/include src/acbutton.h -o obj/moc_acbutton.cpp
 
 obj/moc_aclabel.cpp: src/track.h \
 		src/aclabel.h
-	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include-fixed -I/usr/include src/aclabel.h -o obj/moc_aclabel.cpp
+	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/armv7l-unknown-linux-gnueabihf -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/armv7l-unknown-linux-gnueabihf/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/armv7l-unknown-linux-gnueabihf/5.2.0/include-fixed -I/usr/include src/aclabel.h -o obj/moc_aclabel.cpp
 
 obj/moc_commanager.cpp: src/alogger.h \
 		src/commanager.h
-	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include-fixed -I/usr/include src/commanager.h -o obj/moc_commanager.cpp
+	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/armv7l-unknown-linux-gnueabihf -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/armv7l-unknown-linux-gnueabihf/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/armv7l-unknown-linux-gnueabihf/5.2.0/include-fixed -I/usr/include src/commanager.h -o obj/moc_commanager.cpp
 
 obj/moc_mainwindow.cpp: src/commanager.h \
 		src/alogger.h \
 		src/mainwindow.h
-	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include-fixed -I/usr/include src/mainwindow.h -o obj/moc_mainwindow.cpp
+	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/armv7l-unknown-linux-gnueabihf -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/armv7l-unknown-linux-gnueabihf/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/armv7l-unknown-linux-gnueabihf/5.2.0/include-fixed -I/usr/include src/mainwindow.h -o obj/moc_mainwindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: obj/ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
-ui_mainwindow.h: src/mainwindow.ui
-	/usr/lib/qt/bin/uic src/mainwindow.ui -o ui_mainwindow.h
+	-$(DEL_FILE) obj/ui_mainwindow.h
+obj/ui_mainwindow.h: src/mainwindow.ui
+	/usr/lib/qt/bin/uic src/mainwindow.ui -o obj/ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:

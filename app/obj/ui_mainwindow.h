@@ -19,6 +19,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QWidget>
@@ -38,8 +39,10 @@ public:
     QAction *actionSettings;
     QAction *actionQuit;
     QWidget *centralWidget;
-    QWidget *gridLayoutWidget;
+    QGridLayout *gridLayout_2;
+    QGridLayout *gridLayout_main;
     QGridLayout *gridLayout;
+    QSpacerItem *verticalSpacer;
     QTextBrowser *logpanel;
     QMenuBar *menuBar;
     QMenu *menuProject;
@@ -79,38 +82,62 @@ public:
         actionQuit->setShortcutContext(Qt::ApplicationShortcut);
         centralWidget = new QWidget(Main);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        gridLayoutWidget = new QWidget(centralWidget);
-        gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 10, 971, 391));
-        gridLayout = new QGridLayout(gridLayoutWidget);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gridLayout->setSizeConstraint(QLayout::SetMaximumSize);
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        logpanel = new QTextBrowser(centralWidget);
-        logpanel->setObjectName(QStringLiteral("logpanel"));
-        logpanel->setGeometry(QRect(10, 410, 971, 151));
+        centralWidget->setEnabled(true);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(logpanel->sizePolicy().hasHeightForWidth());
-        logpanel->setSizePolicy(sizePolicy);
+        sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
+        centralWidget->setSizePolicy(sizePolicy);
+        gridLayout_2 = new QGridLayout(centralWidget);
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout_main = new QGridLayout();
+        gridLayout_main->setSpacing(6);
+        gridLayout_main->setObjectName(QStringLiteral("gridLayout_main"));
+        gridLayout_main->setSizeConstraint(QLayout::SetMaximumSize);
+        gridLayout_main->setContentsMargins(-1, -1, 0, -1);
+        gridLayout = new QGridLayout();
+        gridLayout->setSpacing(6);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+
+        gridLayout_main->addLayout(gridLayout, 0, 0, 1, 1);
+
+        verticalSpacer = new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Maximum);
+
+        gridLayout_main->addItem(verticalSpacer, 1, 0, 1, 1);
+
+        logpanel = new QTextBrowser(centralWidget);
+        logpanel->setObjectName(QStringLiteral("logpanel"));
+        logpanel->setEnabled(true);
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(logpanel->sizePolicy().hasHeightForWidth());
+        logpanel->setSizePolicy(sizePolicy1);
+        logpanel->setSizeIncrement(QSize(0, 0));
+        logpanel->setBaseSize(QSize(0, 0));
         logpanel->setLocale(QLocale(QLocale::German, QLocale::Germany));
         logpanel->setFrameShape(QFrame::NoFrame);
         logpanel->setFrameShadow(QFrame::Plain);
         logpanel->setLineWidth(0);
+
+        gridLayout_main->addWidget(logpanel, 2, 0, 1, 1);
+
+
+        gridLayout_2->addLayout(gridLayout_main, 0, 0, 1, 1);
+
         Main->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Main);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 988, 19));
+        menuBar->setGeometry(QRect(0, 0, 988, 15));
         menuProject = new QMenu(menuBar);
         menuProject->setObjectName(QStringLiteral("menuProject"));
         menuConnection = new QMenu(menuBar);
         menuConnection->setObjectName(QStringLiteral("menuConnection"));
         menuConnectionPort = new QMenu(menuConnection);
         menuConnectionPort->setObjectName(QStringLiteral("menuConnectionPort"));
-        menuConnectionPort->setGeometry(QRect(0, 0, 152, 44));
+        menuConnectionPort->setGeometry(QRect(0, 0, 131, 36));
         menuTools = new QMenu(menuBar);
         menuTools->setObjectName(QStringLiteral("menuTools"));
         Main->setMenuBar(menuBar);
