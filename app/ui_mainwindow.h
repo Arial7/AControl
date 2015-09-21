@@ -68,7 +68,7 @@ public:
         actionPort->setObjectName(QStringLiteral("actionPort"));
         actionSearchPorts = new QAction(Main);
         actionSearchPorts->setObjectName(QStringLiteral("actionSearchPorts"));
-        actionSearchPorts->setEnabled(false);
+        actionSearchPorts->setEnabled(true);
         actionBearbeiten = new QAction(Main);
         actionBearbeiten->setObjectName(QStringLiteral("actionBearbeiten"));
         actionBearbeiten->setEnabled(false);
@@ -103,14 +103,14 @@ public:
         Main->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Main);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 988, 25));
+        menuBar->setGeometry(QRect(0, 0, 988, 19));
         menuProject = new QMenu(menuBar);
         menuProject->setObjectName(QStringLiteral("menuProject"));
         menuConnection = new QMenu(menuBar);
         menuConnection->setObjectName(QStringLiteral("menuConnection"));
         menuConnectionPort = new QMenu(menuConnection);
         menuConnectionPort->setObjectName(QStringLiteral("menuConnectionPort"));
-        menuConnectionPort->setGeometry(QRect(0, 0, 146, 40));
+        menuConnectionPort->setGeometry(QRect(0, 0, 152, 44));
         menuTools = new QMenu(menuBar);
         menuTools->setObjectName(QStringLiteral("menuTools"));
         Main->setMenuBar(menuBar);

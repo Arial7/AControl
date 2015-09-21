@@ -25,11 +25,14 @@ private:
     QActionGroup *portsGroup;
     QLabel *connectionStatus;
     ALogger *logger;
+
+
 public slots:
     void connectPort();
     void changeConnectionStatus(bool connected);
     void disconnectPort();
     void dataReceived(QString data);
+    void refreshPortList();
 };
 
 #endif // MAIN_H

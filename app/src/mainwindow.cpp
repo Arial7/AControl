@@ -33,18 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->gridLayout->addWidget(new ACLabel(this, Track::S0), 8, 7, 1, 1);
 
-    //add the ports
-    QList <QAction*> portsActions;
-    QStringList portsList = comManager->getPorts();
-    portsGroup = new QActionGroup(ui->menuConnectionPort);
-    for (QString port : portsList) {
-        QAction *action = new QAction(port, ui->menuConnectionPort);
-        action->setCheckable(true);
-        action->setActionGroup(portsGroup);
-        portsActions.append(action);
-    }
-    ui->menuConnectionPort->addActions(portsActions);
-
+    refreshPortList();
 
 
 
@@ -54,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(comManager, SIGNAL(connectionChanged(bool)), this, SLOT(changeConnectionStatus(bool)));
     connect(comManager, SIGNAL(dataReceived(QString)), this, SLOT(dataReceived(QString)));
     connect(ui->actionQuit, SIGNAL(triggered(bool)), QApplication::instance(), SLOT(quit()));
+    connect(ui->actionSearchPorts, SIGNAL(triggered(bool)), this, SLOT(refreshPortList()));
 }
 
 MainWindow::~MainWindow()
@@ -84,6 +74,24 @@ void MainWindow::connectPort() {
 
 void MainWindow::disconnectPort() {
     comManager->disconnect();
+}
+
+void MainWindow::refreshPortList() {
+    ui->menuConnectionPort->clear();
+    //add the ports
+    QList <QAction*> portsActions;
+    QStringList portsList = comManager->getPorts();
+    portsGroup = new QActionGroup(ui->menuConnectionPort);
+    for (QString port : portsList) {
+        QAction *action = new QAction(port, ui->menuConnectionPort);
+        action->setCheckable(true);
+        action->setActionGroup(portsGroup);
+        portsActions.append(action);
+    }
+    ui->menuConnectionPort->addActions(portsActions);
+
+
+
 }
 
 void MainWindow::changeConnectionStatus(bool connected) {

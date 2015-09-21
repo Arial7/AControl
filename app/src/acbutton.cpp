@@ -18,6 +18,3 @@ void ACButton::runCommand()
 {
     commgr->sendCommand(QString("ASW~%1~%2").arg(id, left));
 }
-
-
-

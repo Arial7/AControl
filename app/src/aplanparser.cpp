@@ -1,4 +1,6 @@
 #include "aplanparser.h"
+#include <iostream>
+#include <fstream>
 
 APlanParser::APlanParser()
 {
@@ -6,7 +8,13 @@ APlanParser::APlanParser()
 }
 
 std::vector<Track> APlanParser::loadPlan(QString planPath){
+  std::vector<Track> tracks;
+  std::string line;
+  std::fstream stream(planPath.toStdString(), std::fstream::in);
+  if(stream.is_open()){
 
+
+    }
 }
 
 
