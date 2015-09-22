@@ -1,7 +1,5 @@
-#ifndef TRACK_H
-#define TRACK_H
-
-enum Track {
+#pragma once
+enum TrackType {
     //straight pieces
     S0,
     S90,
@@ -37,5 +35,22 @@ enum Track {
     EMPTY
 };
 
+enum RailType {
+    //usual track such as straight or corner pieces
+    TRACK,
+    //If switch, you also have to get the position of the switch
+    SWITCH
+};
 
-#endif // TRACK_H
+enum SwitchDirection {
+    LEFT,
+    RIGHT
+};
+
+struct Track {
+    RailType railType;
+    TrackType trackType;
+    SwitchDirection switchDirection;
+    Track(TrackType _trackType) : railType(RailType::TRACK), trackType(_trackType) {};
+    Track(RailType _railT, TrackType _trackT, SwitchDirection _switchDir) : railType(_railT), trackType(_trackT), switchDirection(_switchDir) {};
+};

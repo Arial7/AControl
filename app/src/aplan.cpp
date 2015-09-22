@@ -1,7 +1,5 @@
 #include "aplan.h"
 
-APlan::APlan()
-{
+APlan::APlan(){
 
 }
-

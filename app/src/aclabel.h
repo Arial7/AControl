@@ -1,5 +1,4 @@
-#ifndef ACLABEL_H
-#define ACLABEL_H
+#pragma once
 
 #include <QLabel>
 #include "track.h"
@@ -8,9 +7,6 @@
 class ACLabel : public QLabel
 {
     Q_OBJECT
-
 public:
-    ACLabel(QWidget *parent = 0, Track type = Track::EMPTY);
+    ACLabel(QWidget *parent = 0, TrackType type = TrackType::EMPTY);
 };
-
-#endif // ACLABEL_H
