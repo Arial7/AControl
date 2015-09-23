@@ -18,7 +18,7 @@ std::vector<Track> APlanParser::loadPlan(QString planPath){
 }
 
 
-QPixmap APlanParser::getSymbol(Track track){
+QPixmap APlanParser::getSymbol(TrackType track){
   switch(track){
     case S0:
       return loadSymbol("S0");

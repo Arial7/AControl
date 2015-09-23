@@ -6,6 +6,7 @@
 #include "alogger.h"
 #include <QActionGroup>
 #include <QLabel>
+#include "ui_mainwindow.h"
 
 namespace Ui {
 class Main;

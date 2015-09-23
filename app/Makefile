@@ -467,7 +467,7 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) obj/moc_acbutton.cpp obj/moc_aclabel.cpp obj/moc_commanager.cpp obj/moc_mainwindow.cpp
 obj/moc_acbutton.cpp: src/commanager.h \
 		src/alogger.h \
-		src/switchtype.h \
+		src/track.h \
 		src/acbutton.h
 	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include-fixed -I/usr/include src/acbutton.h -o obj/moc_acbutton.cpp
 
@@ -481,6 +481,7 @@ obj/moc_commanager.cpp: src/alogger.h \
 
 obj/moc_mainwindow.cpp: src/commanager.h \
 		src/alogger.h \
+		src/ui_mainwindow.h \
 		src/mainwindow.h
 	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/pascal/development/AControl/app -I/home/pascal/development/AControl/app -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtCore -I/usr/include/c++/5.2.0 -I/usr/include/c++/5.2.0/x86_64-unknown-linux-gnu -I/usr/include/c++/5.2.0/backward -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-unknown-linux-gnu/5.2.0/include-fixed -I/usr/include src/mainwindow.h -o obj/moc_mainwindow.cpp
 
@@ -505,7 +506,7 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 obj/acbutton.o: src/acbutton.cpp src/acbutton.h \
 		src/commanager.h \
 		src/alogger.h \
-		src/switchtype.h
+		src/track.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/acbutton.o src/acbutton.cpp
 
 obj/aclabel.o: src/aclabel.cpp src/aclabel.h \
@@ -515,7 +516,8 @@ obj/aclabel.o: src/aclabel.cpp src/aclabel.h \
 obj/alogger.o: src/alogger.cpp src/alogger.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/alogger.o src/alogger.cpp
 
-obj/aplan.o: src/aplan.cpp src/aplan.h
+obj/aplan.o: src/aplan.cpp src/aplan.h \
+		src/track.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/aplan.o src/aplan.cpp
 
 obj/aplanparser.o: src/aplanparser.cpp src/aplanparser.h \
@@ -529,7 +531,8 @@ obj/commanager.o: src/commanager.cpp src/commanager.h \
 
 obj/main.o: src/main.cpp src/mainwindow.h \
 		src/commanager.h \
-		src/alogger.h
+		src/alogger.h \
+		src/ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/mainwindow.o: src/mainwindow.cpp src/mainwindow.h \
@@ -537,9 +540,8 @@ obj/mainwindow.o: src/mainwindow.cpp src/mainwindow.h \
 		src/alogger.h \
 		src/ui_mainwindow.h \
 		src/acbutton.h \
-		src/switchtype.h \
-		src/aclabel.h \
-		src/track.h
+		src/track.h \
+		src/aclabel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/mainwindow.o src/mainwindow.cpp
 
 obj/moc_acbutton.o: obj/moc_acbutton.cpp 

@@ -14,7 +14,7 @@ class APlanParser
 public:
     APlanParser();
     APlan parse(QString filename);
-    QPixmap getSymbol(Track track);
+    QPixmap getSymbol(TrackType track);
     std::vector<Track> loadPlan(QString planPath);
 private:
     QPixmap loadSymbol(QString name);
