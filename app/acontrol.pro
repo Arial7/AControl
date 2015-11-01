@@ -12,7 +12,7 @@ CONFIG += c++11 qt
 
 OBJECTS_DIR = obj
 MOC_DIR = obj
-UI_DIR = obj
+UI_DIR = src
 
 # Input
 HEADERS += src/acbutton.h \

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -40,21 +40,21 @@ public:
     QAction *actionQuit;
     QWidget *centralWidget;
     QGridLayout *gridLayout_main;
-    QGridLayout *grid_acactions;
+    QGridLayout *grid_plan;
     QSpacerItem *verticalSpacer;
     QTextBrowser *logpanel;
     QMenuBar *menuBar;
     QMenu *menuProject;
     QMenu *menuConnection;
     QMenu *menuConnectionPort;
-    QMenu *menuTools;
+    QMenu *menuFile;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *Main)
     {
         if (Main->objectName().isEmpty())
             Main->setObjectName(QStringLiteral("Main"));
-        Main->resize(988, 599);
+        Main->resize(819, 599);
         actionOpenProject = new QAction(Main);
         actionOpenProject->setObjectName(QStringLiteral("actionOpenProject"));
         actionOpenProject->setEnabled(false);
@@ -93,11 +93,11 @@ public:
         gridLayout_main->setObjectName(QStringLiteral("gridLayout_main"));
         gridLayout_main->setSizeConstraint(QLayout::SetMaximumSize);
         gridLayout_main->setContentsMargins(-1, -1, 0, -1);
-        grid_acactions = new QGridLayout();
-        grid_acactions->setSpacing(6);
-        grid_acactions->setObjectName(QStringLiteral("grid_acactions"));
+        grid_plan = new QGridLayout();
+        grid_plan->setSpacing(6);
+        grid_plan->setObjectName(QStringLiteral("grid_plan"));
 
-        gridLayout_main->addLayout(grid_acactions, 0, 0, 1, 1);
+        gridLayout_main->addLayout(grid_plan, 0, 0, 1, 1);
 
         verticalSpacer = new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Maximum);
 
@@ -123,24 +123,24 @@ public:
         Main->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Main);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 988, 19));
+        menuBar->setGeometry(QRect(0, 0, 819, 19));
         menuProject = new QMenu(menuBar);
         menuProject->setObjectName(QStringLiteral("menuProject"));
         menuConnection = new QMenu(menuBar);
         menuConnection->setObjectName(QStringLiteral("menuConnection"));
         menuConnectionPort = new QMenu(menuConnection);
         menuConnectionPort->setObjectName(QStringLiteral("menuConnectionPort"));
-        menuConnectionPort->setGeometry(QRect(0, 0, 152, 44));
-        menuTools = new QMenu(menuBar);
-        menuTools->setObjectName(QStringLiteral("menuTools"));
+        menuConnectionPort->setGeometry(QRect(0, 0, 148, 44));
+        menuFile = new QMenu(menuBar);
+        menuFile->setObjectName(QStringLiteral("menuFile"));
         Main->setMenuBar(menuBar);
         statusBar = new QStatusBar(Main);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         Main->setStatusBar(statusBar);
 
+        menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuProject->menuAction());
         menuBar->addAction(menuConnection->menuAction());
-        menuBar->addAction(menuTools->menuAction());
         menuProject->addAction(actionOpenProject);
         menuProject->addAction(actionNewProject);
         menuProject->addAction(actionBearbeiten);
@@ -150,9 +150,9 @@ public:
         menuConnection->addAction(menuConnectionPort->menuAction());
         menuConnection->addSeparator();
         menuConnection->addAction(actionSearchPorts);
-        menuTools->addAction(actionSettings);
-        menuTools->addSeparator();
-        menuTools->addAction(actionQuit);
+        menuFile->addAction(actionSettings);
+        menuFile->addSeparator();
+        menuFile->addAction(actionQuit);
 
         retranslateUi(Main);
 
@@ -175,7 +175,7 @@ public:
         menuProject->setTitle(QApplication::translate("Main", "Projekt", 0));
         menuConnection->setTitle(QApplication::translate("Main", "Verbindung", 0));
         menuConnectionPort->setTitle(QApplication::translate("Main", "Port", 0));
-        menuTools->setTitle(QApplication::translate("Main", "Tools", 0));
+        menuFile->setTitle(QApplication::translate("Main", "Datei", 0));
     } // retranslateUi
 
 };

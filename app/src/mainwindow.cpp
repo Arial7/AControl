@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //ui->gridLayout->addWidget(new ACButton(this, 1, comManager), 0, 0, 1, 1);
     //ui->gridLayout->addWidget(new ACButton(this, 2, comManager), 5, 4, 1, 1);
 
-    ui->grid_acactions->addWidget(new ACLabel(this, TrackType::S0), 8, 7, 1, 1);
+    ui->grid_plan->addWidget(new ACLabel(this, TrackType::S0), 8, 7, 1, 1);
 
     refreshPortList();
 

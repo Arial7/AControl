@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.0
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -19,7 +19,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
@@ -40,24 +39,22 @@ public:
     QAction *actionSettings;
     QAction *actionQuit;
     QWidget *centralWidget;
-    QGridLayout *gridLayout_2;
     QGridLayout *gridLayout_main;
-    QGridLayout *gridLayout;
+    QGridLayout *grid_plan;
     QSpacerItem *verticalSpacer;
     QTextBrowser *logpanel;
-    QRadioButton *radioButton;
     QMenuBar *menuBar;
     QMenu *menuProject;
     QMenu *menuConnection;
     QMenu *menuConnectionPort;
-    QMenu *menuTools;
+    QMenu *menuFile;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *Main)
     {
         if (Main->objectName().isEmpty())
             Main->setObjectName(QStringLiteral("Main"));
-        Main->resize(988, 599);
+        Main->resize(819, 599);
         actionOpenProject = new QAction(Main);
         actionOpenProject->setObjectName(QStringLiteral("actionOpenProject"));
         actionOpenProject->setEnabled(false);
@@ -90,20 +87,17 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
         centralWidget->setSizePolicy(sizePolicy);
-        gridLayout_2 = new QGridLayout(centralWidget);
-        gridLayout_2->setSpacing(6);
-        gridLayout_2->setContentsMargins(11, 11, 11, 11);
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        gridLayout_main = new QGridLayout();
+        gridLayout_main = new QGridLayout(centralWidget);
         gridLayout_main->setSpacing(6);
+        gridLayout_main->setContentsMargins(11, 11, 11, 11);
         gridLayout_main->setObjectName(QStringLiteral("gridLayout_main"));
         gridLayout_main->setSizeConstraint(QLayout::SetMaximumSize);
         gridLayout_main->setContentsMargins(-1, -1, 0, -1);
-        gridLayout = new QGridLayout();
-        gridLayout->setSpacing(6);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        grid_plan = new QGridLayout();
+        grid_plan->setSpacing(6);
+        grid_plan->setObjectName(QStringLiteral("grid_plan"));
 
-        gridLayout_main->addLayout(gridLayout, 0, 0, 1, 1);
+        gridLayout_main->addLayout(grid_plan, 0, 0, 1, 1);
 
         verticalSpacer = new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Maximum);
 
@@ -112,47 +106,41 @@ public:
         logpanel = new QTextBrowser(centralWidget);
         logpanel->setObjectName(QStringLiteral("logpanel"));
         logpanel->setEnabled(true);
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(logpanel->sizePolicy().hasHeightForWidth());
         logpanel->setSizePolicy(sizePolicy1);
+        logpanel->setSizeIncrement(QSize(0, 0));
+        logpanel->setBaseSize(QSize(0, 0));
         logpanel->setLocale(QLocale(QLocale::German, QLocale::Germany));
         logpanel->setFrameShape(QFrame::NoFrame);
         logpanel->setFrameShadow(QFrame::Plain);
         logpanel->setLineWidth(0);
 
-        gridLayout_main->addWidget(logpanel, 3, 0, 1, 1);
-
-        radioButton = new QRadioButton(centralWidget);
-        radioButton->setObjectName(QStringLiteral("radioButton"));
-
-        gridLayout_main->addWidget(radioButton, 2, 0, 1, 1);
-
-
-        gridLayout_2->addLayout(gridLayout_main, 0, 0, 1, 1);
+        gridLayout_main->addWidget(logpanel, 2, 0, 1, 1);
 
         Main->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Main);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 988, 15));
+        menuBar->setGeometry(QRect(0, 0, 819, 19));
         menuProject = new QMenu(menuBar);
         menuProject->setObjectName(QStringLiteral("menuProject"));
         menuConnection = new QMenu(menuBar);
         menuConnection->setObjectName(QStringLiteral("menuConnection"));
         menuConnectionPort = new QMenu(menuConnection);
         menuConnectionPort->setObjectName(QStringLiteral("menuConnectionPort"));
-        menuConnectionPort->setGeometry(QRect(0, 0, 131, 36));
-        menuTools = new QMenu(menuBar);
-        menuTools->setObjectName(QStringLiteral("menuTools"));
+        menuConnectionPort->setGeometry(QRect(0, 0, 148, 44));
+        menuFile = new QMenu(menuBar);
+        menuFile->setObjectName(QStringLiteral("menuFile"));
         Main->setMenuBar(menuBar);
         statusBar = new QStatusBar(Main);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         Main->setStatusBar(statusBar);
 
+        menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuProject->menuAction());
         menuBar->addAction(menuConnection->menuAction());
-        menuBar->addAction(menuTools->menuAction());
         menuProject->addAction(actionOpenProject);
         menuProject->addAction(actionNewProject);
         menuProject->addAction(actionBearbeiten);
@@ -162,9 +150,9 @@ public:
         menuConnection->addAction(menuConnectionPort->menuAction());
         menuConnection->addSeparator();
         menuConnection->addAction(actionSearchPorts);
-        menuTools->addAction(actionSettings);
-        menuTools->addSeparator();
-        menuTools->addAction(actionQuit);
+        menuFile->addAction(actionSettings);
+        menuFile->addSeparator();
+        menuFile->addAction(actionQuit);
 
         retranslateUi(Main);
 
@@ -184,11 +172,10 @@ public:
         actionSettings->setText(QApplication::translate("Main", "Einstellungen", 0));
         actionQuit->setText(QApplication::translate("Main", "Beenden", 0));
         actionQuit->setShortcut(QApplication::translate("Main", "Ctrl+Q", 0));
-        radioButton->setText(QApplication::translate("Main", "RadioButton", 0));
         menuProject->setTitle(QApplication::translate("Main", "Projekt", 0));
         menuConnection->setTitle(QApplication::translate("Main", "Verbindung", 0));
         menuConnectionPort->setTitle(QApplication::translate("Main", "Port", 0));
-        menuTools->setTitle(QApplication::translate("Main", "Tools", 0));
+        menuFile->setTitle(QApplication::translate("Main", "Datei", 0));
     } // retranslateUi
 
 };
