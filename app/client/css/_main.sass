@@ -1,0 +1,60 @@
+html, body
+    overflow: hidden
+
+main
+    margin-top: $header-height
+
+.controls
+    overflow: auto
+    width: 100%
+    padding: 2rem 40px
+    height: calc(100vh - #{$header-height + $console-height})
+    position: relative
+    box-sizing: border-box
+    .control
+        width: $icon-size
+        height: $icon-size
+        display: block
+        border: 1px solid #666
+        position: absolute
+
+        @media screen and (max-width: 992px)
+            width: $icon-size-mobile
+            height: $icon-size-mobile
+
+
+    .toggle-btn
+        @extend .control
+        background-color: yellow
+        &:hover
+            cursor: pointer
+
+    .track-icn
+        @extend .control
+        background-color: brown
+
+.console
+    position: absolute
+    bottom: 0
+    left: 0
+    right: 0
+    padding: 1rem 40px
+    background: #e4e4e4
+    height: $console-height
+    overflow: hidden
+    box-sizing: border-box
+    h3
+        margin-top: .5rem
+        margin-bottom: .5rem
+
+    .messages
+        background: #fff
+        height: calc(100% - 4rem)
+        overflow: auto
+        margin-bottom: 1rem
+        font-weight: 400
+        font-size: .9rem
+        padding-top: 20px
+
+        *
+            margin-left: 10px

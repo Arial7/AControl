@@ -1,0 +1,88 @@
+@import url(normalize.css);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,700);
+html, body {
+  font-family: "Roboto", "Open Sans", sans-serif;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
+  color: #000; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300; }
+
+a {
+  text-decoration: none;
+  font-weight: 600;
+  color: teal; }
+
+header {
+  background: teal;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5rem;
+  padding: 1rem 40px;
+  box-sizing: border-box; }
+  header h1 {
+    margin: 0;
+    height: auto;
+    transform: translateY(15%); }
+
+html, body {
+  overflow: hidden; }
+
+main {
+  margin-top: 5rem; }
+
+.controls {
+  overflow: auto;
+  width: 100%;
+  padding: 2rem 40px;
+  height: calc(100vh - 20rem);
+  position: relative;
+  box-sizing: border-box; }
+  .controls .control, .controls .toggle-btn, .controls .track-icn {
+    width: 48px;
+    height: 48px;
+    display: block;
+    border: 1px solid #666;
+    position: absolute; }
+    @media screen and (max-width: 992px) {
+      .controls .control, .controls .toggle-btn, .controls .track-icn {
+        width: 64px;
+        height: 64px; } }
+  .controls .toggle-btn {
+    background-color: yellow; }
+    .controls .toggle-btn:hover {
+      cursor: pointer; }
+  .controls .track-icn {
+    background-color: brown; }
+
+.console {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 40px;
+  background: #e4e4e4;
+  height: 15rem;
+  overflow: hidden;
+  box-sizing: border-box; }
+  .console h3 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem; }
+  .console .messages {
+    background: #fff;
+    height: calc(100% - 4rem);
+    overflow: auto;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding-top: 20px; }
+    .console .messages * {
+      margin-left: 10px; }
+
+/*# sourceMappingURL=style.css.map */

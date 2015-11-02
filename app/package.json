@@ -1,0 +1,23 @@
+{
+  "name": "acontrol",
+  "version": "0.0.1",
+  "description": "AControl is an open-source tool for switching your model train tracks. It is the control software for an Arduino-based hardware system.",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/Arial7/AControl"
+  },
+  "keywords": [
+    "acontrol"
+  ],
+  "author": "Pascal Riesinger",
+  "license": "MIT"
+}
