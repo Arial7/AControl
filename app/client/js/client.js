@@ -22,6 +22,11 @@ $(function(){
 
     alignControls();
 
+    $('.console .toggle').on('click', function() {
+        $('.console').toggleClass('collapsed');
+        $('.controls').toggleClass('console-collapsed');
+    });
+
     console.log('Client initialized');
 });
 

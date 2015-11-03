@@ -54,6 +54,8 @@ main {
       .controls .control, .controls .toggle-btn, .controls .track-icn {
         width: 64px;
         height: 64px; } }
+  .controls.console-collapsed {
+    height: calc(100vh - 12rem); }
   .controls .toggle-btn {
     background-color: yellow; }
     .controls .toggle-btn:hover {
@@ -70,18 +72,36 @@ main {
   background: #e4e4e4;
   height: 15rem;
   overflow: hidden;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  transition: height 0.2s ease-in-out; }
+  .console.collapsed {
+    height: 7rem;
+    padding-bottom: 0.5rem; }
+    .console.collapsed .toggle {
+      transform: rotate(180deg); }
   .console h3 {
     margin-top: 0.5rem;
-    margin-bottom: 0.5rem; }
+    margin-bottom: 0.5rem;
+    display: inline; }
+  .console .toggle {
+    cursor: pointer;
+    float: right;
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+    color: #000;
+    transition: transform 0.2s ease-in-out;
+    transform: rotate(0deg); }
   .console .messages {
     background: #fff;
-    height: calc(100% - 4rem);
+    height: 100%;
     overflow: auto;
-    margin-bottom: 1rem;
     font-weight: 400;
     font-size: 0.9rem;
-    padding-top: 20px; }
+    padding-top: 20px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    box-sizing: border-box; }
     .console .messages * {
       margin-left: 10px; }
 

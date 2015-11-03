@@ -21,7 +21,9 @@ main
         @media screen and (max-width: 992px)
             width: $icon-size-mobile
             height: $icon-size-mobile
-
+        
+    &.console-collapsed
+        height: calc(100vh - #{$header-height + $console-height-collapsed})
 
     .toggle-btn
         @extend .control
@@ -43,18 +45,38 @@ main
     height: $console-height
     overflow: hidden
     box-sizing: border-box
+    transition: height 0.2s ease-in-out
+    
+    &.collapsed
+        height: $console-height-collapsed
+        padding-bottom: .5rem
+                
+        .toggle
+            transform: rotate(180deg)
+
     h3
         margin-top: .5rem
         margin-bottom: .5rem
-
+        display: inline
+    
+    .toggle
+        cursor: pointer
+        float: right
+        width: 32px
+        height: 32px
+        font-size: 32px
+        color: #000
+        transition: transform 0.2s ease-in-out
+        transform: rotate(0deg)
     .messages
         background: #fff
-        height: calc(100% - 4rem)
+        height: 100%
         overflow: auto
-        margin-bottom: 1rem
         font-weight: 400
         font-size: .9rem
         padding-top: 20px
-
+        margin-top: 20px
+        padding-bottom: 20px
+        box-sizing: border-box
         *
             margin-left: 10px

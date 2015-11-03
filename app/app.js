@@ -1,5 +1,6 @@
 var express = require('express');
 var io = require('socket.io');
+var serialPort = require('serialport');
 var app = express();
 
 var projectRoot = __dirname;
@@ -20,6 +21,12 @@ var server = app.listen(3030, function () {
     var port = server.address().port;
 
     console.log('Listening at http://%s:%s', host, port);
+});
+
+serialPort.list(function(err, ports) {
+    ports.forEach(function(port) {
+        console.log("Port: " + port.comName);
+    });
 });
 
 io = io.listen(server);
