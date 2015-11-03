@@ -11,11 +11,12 @@ main
     height: calc(100vh - #{$header-height + $console-height})
     position: relative
     box-sizing: border-box
+    transition: height 0.2s ease-in-out
     .control
         width: $icon-size
         height: $icon-size
         display: block
-        border: 1px solid #666
+        border: 1px solid $dividers
         position: absolute
 
         @media screen and (max-width: 992px)
@@ -27,7 +28,7 @@ main
 
     .toggle-btn
         @extend .control
-        background-color: yellow
+        background-color: $accent
         &:hover
             cursor: pointer
 
@@ -41,7 +42,7 @@ main
     left: 0
     right: 0
     padding: 1rem 40px
-    background: #e4e4e4
+    background: $dividers
     height: $console-height
     overflow: hidden
     box-sizing: border-box
@@ -53,6 +54,7 @@ main
                 
         .toggle
             transform: rotate(180deg)
+            
 
     h3
         margin-top: .5rem
@@ -62,12 +64,17 @@ main
     .toggle
         cursor: pointer
         float: right
-        width: 32px
-        height: 32px
-        font-size: 32px
-        color: #000
-        transition: transform 0.2s ease-in-out
+        width: 48px
+        height: 48px
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3)
+        border-radius: 50%
+        transition: transform 0.2s ease-in-out, box-shadow 0.1s linear
         transform: rotate(0deg)
+        background: 
+            image: url('/img/chevron-down-fab.png')
+            size: cover
+        &:hover
+            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4) 
     .messages
         background: #fff
         height: 100%

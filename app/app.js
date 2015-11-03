@@ -5,6 +5,7 @@ var app = express();
 
 var projectRoot = __dirname;
 
+
 //set up the express server to use static dirs
 app.use('/css', express.static(projectRoot + '/client/css'));
 app.use('/js', express.static(projectRoot + '/client/js'));
@@ -15,22 +16,21 @@ app.get('/', function (req, res) {
     res.sendFile('client/pages/main.html', {root : projectRoot});
 });
 
-
+//echo out the current port and address
 var server = app.listen(3030, function () {
     var host = server.address().address;
     var port = server.address().port;
 
     console.log('Listening at http://%s:%s', host, port);
 });
-
+//echo out all the serial ports that have been found
 serialPort.list(function(err, ports) {
     ports.forEach(function(port) {
         console.log("Port: " + port.comName);
     });
 });
-
+//set up the io socket listeners
 io = io.listen(server);
-
 io.sockets.on('connection', function(socket) {
     var msgToClient = "Connection with server established";
     //Send the data to the client -> this will trigger the message event at the client

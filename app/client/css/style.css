@@ -43,12 +43,13 @@ main {
   padding: 2rem 40px;
   height: calc(100vh - 20rem);
   position: relative;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  transition: height 0.2s ease-in-out; }
   .controls .control, .controls .toggle-btn, .controls .track-icn {
     width: 48px;
     height: 48px;
     display: block;
-    border: 1px solid #666;
+    border: 1px solid #B6B6B6;
     position: absolute; }
     @media screen and (max-width: 992px) {
       .controls .control, .controls .toggle-btn, .controls .track-icn {
@@ -57,7 +58,7 @@ main {
   .controls.console-collapsed {
     height: calc(100vh - 12rem); }
   .controls .toggle-btn {
-    background-color: yellow; }
+    background-color: #FF4081; }
     .controls .toggle-btn:hover {
       cursor: pointer; }
   .controls .track-icn {
@@ -69,7 +70,7 @@ main {
   left: 0;
   right: 0;
   padding: 1rem 40px;
-  background: #e4e4e4;
+  background: #B6B6B6;
   height: 15rem;
   overflow: hidden;
   box-sizing: border-box;
@@ -86,12 +87,16 @@ main {
   .console .toggle {
     cursor: pointer;
     float: right;
-    width: 32px;
-    height: 32px;
-    font-size: 32px;
-    color: #000;
-    transition: transform 0.2s ease-in-out;
-    transform: rotate(0deg); }
+    width: 48px;
+    height: 48px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    transition: transform 0.2s ease-in-out, box-shadow 0.1s linear;
+    transform: rotate(0deg);
+    background-image: url("/img/chevron-down-fab.png");
+    background-size: cover; }
+    .console .toggle:hover {
+      box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4); }
   .console .messages {
     background: #fff;
     height: 100%;
