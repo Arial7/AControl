@@ -1,3 +1,4 @@
+include spinner.jade
 doctype html
 html
     head
@@ -10,16 +11,12 @@ html
     body
         header
             h1 AControl
-            .spinner#ports
+            +spinner(class="inline")
         main
             .controls
-                .spinner#controls
         .console
-            h3 Console
-            .toggle 
             .messages
-                
-            
+            .toggle 
             
         script(src="/js/client.js")
         

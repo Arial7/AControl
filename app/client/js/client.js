@@ -1,3 +1,5 @@
+//TODO: a lot of cleanup
+
 var socket = io();
 socket.on('message', function(data) {
     var message = data;
@@ -31,11 +33,16 @@ $(function(){
 });
 
 function logToConsole(data) {
-    $('.console .messages').append('<div>' + data + '</div>');
+    $('.console .messages').append('<div>[' + getCurrentTime() + '] ' + data + '</div>');
     var h = 0;
     $('.console .messages').children().each(function(){ h += parseInt($(this).height());});
     h += '';
-    $('.console .messages').animate({scrollTop: h});
+    $('.console .messages').animate({scrollTop: h}, 100);
+}
+
+function getCurrentTime() {
+    var date = new Date();
+    return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(); 
 }
 
 function alignControls() {
