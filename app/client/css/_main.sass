@@ -13,28 +13,16 @@ main
     box-sizing: border-box
     transition: height 0.2s ease-in-out
     .control
-        width: $icon-size
-        height: $icon-size
-        display: block
-        border: 1px solid $dividers
-        position: absolute
-
-        @media screen and (max-width: 992px)
-            width: $icon-size-mobile
-            height: $icon-size-mobile
         
+
     &.console-collapsed
         height: calc(100vh - #{$header-height + $console-height-collapsed})
 
-    .toggle-btn
-        @extend .control
-        background-color: $accent
-        &:hover
-            cursor: pointer
-
-    .track-icn
-        @extend .control
-        background-color: brown
+.spinner.activity
+    float: right
+    transition: visibility 0.2s ease-in-out
+    &.hidden
+        visibility: hidden
 
 .console
     position: absolute
@@ -47,16 +35,16 @@ main
     box-sizing: border-box
     transition: all 0.2s ease-in-out
     display: flex
-    justify-content: space-between 
+    justify-content: space-between
     &.collapsed
         height: $console-height-collapsed
         padding-bottom: .5rem
-                
+
         .toggle
             transform: rotate(180deg)
-            box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.3) 
+            box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.3)
             &:hover
-                box-shadow: -3px -3px 7px rgba(0, 0, 0, 0.4)       
+                box-shadow: -3px -3px 7px rgba(0, 0, 0, 0.4)
 
     .toggle
         cursor: pointer
@@ -67,11 +55,11 @@ main
         border-radius: 50%
         transition: transform 0.2s ease-in-out, box-shadow 0.1s linear
         transform: rotate(0deg)
-        background: 
+        background:
             image: url('/img/chevron-down-fab.png')
             size: cover
         &:hover
-            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4) 
+            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4)
     .messages
         flex-grow: 2
         background: #fff
@@ -79,8 +67,8 @@ main
         overflow: auto
         font-weight: 400
         font-size: .95rem
-        padding-top: 15px
-        padding-bottom: 15px
+        padding-top: 10px
+        padding-bottom: 10px
         box-sizing: border-box
         margin-right: 10px
         *

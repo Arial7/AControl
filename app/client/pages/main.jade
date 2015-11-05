@@ -3,15 +3,15 @@ doctype html
 html
     head
         link(rel="stylesheet" type="text/css" href="/css/style.css")
-        script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
         script(src="/js/jquery.js")
+        script(src="/js/cookies-2.0.4.js")
         script(src="/socket.io/socket.io.js")
         title AControl
         
     body
         header
             h1 AControl
-            +spinner(class="inline")
+            +spinner(class="inline activity")
         main
             .controls
         .console

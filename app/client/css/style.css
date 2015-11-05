@@ -57,6 +57,44 @@ a {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -124; } }
+.track {
+  background: #eee;
+  transition: background 0.1s ease-in-out;
+  width: 48px;
+  height: 48px;
+  display: block;
+  border: 1px solid #B6B6B6;
+  position: absolute;
+  /* Straight tracks */
+  /* Curves / diagonals */
+  /* Stoppers */ }
+  @media screen and (max-width: 992px) {
+    .track {
+      width: 64px;
+      height: 64px; } }
+  .track.switch {
+    cursor: pointer; }
+  .track.g0 {
+    background: url("/img/tracks/g0.png"); }
+  .track.g90 {
+    background: url("/img/tracks/g90.png"); }
+  .track.d0 {
+    background: url("/img/tracks/d0.png"); }
+  .track.d90 {
+    background: url("/img/tracks/d90.png"); }
+  .track.d180 {
+    background: url("/img/tracks/d180.png"); }
+  .track.d270 {
+    background: url("/img/tracks/d270.png"); }
+  .track.p0 {
+    background: url("/img/tracks/p0.png"); }
+  .track.p90 {
+    background: url("/img/tracks/p90.png"); }
+  .track.p180 {
+    background: url("/img/tracks/p180.png"); }
+  .track.p270 {
+    background: url("/img/tracks/p270.png"); }
+
 header {
   background: teal;
   color: #fff;
@@ -87,24 +125,24 @@ main {
   position: relative;
   box-sizing: border-box;
   transition: height 0.2s ease-in-out; }
-  .controls .control, .controls .toggle-btn, .controls .track-icn {
+  .controls .control {
     width: 48px;
     height: 48px;
     display: block;
     border: 1px solid #B6B6B6;
     position: absolute; }
     @media screen and (max-width: 992px) {
-      .controls .control, .controls .toggle-btn, .controls .track-icn {
+      .controls .control {
         width: 64px;
         height: 64px; } }
   .controls.console-collapsed {
     height: calc(100vh - 10rem); }
-  .controls .toggle-btn {
-    background-color: #FF4081; }
-    .controls .toggle-btn:hover {
-      cursor: pointer; }
-  .controls .track-icn {
-    background-color: brown; }
+
+.spinner.activity {
+  float: right;
+  transition: visibility 0.2s ease-in-out; }
+  .spinner.activity.hidden {
+    visibility: hidden; }
 
 .console {
   position: absolute;
@@ -146,8 +184,8 @@ main {
     overflow: auto;
     font-weight: 400;
     font-size: 0.95rem;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     box-sizing: border-box;
     margin-right: 10px; }
     .console .messages * {

@@ -1,0 +1,41 @@
+.track
+    background: #eee
+    transition: background 0.1s ease-in-out
+    width: $icon-size
+    height: $icon-size
+    display: block
+    border: 1px solid $dividers
+    position: absolute
+
+    @media screen and (max-width: 992px)
+        width: $icon-size-mobile
+        height: $icon-size-mobile
+
+    &.switch
+        cursor: pointer
+
+    /* Straight tracks */
+    &.g0
+        background: url('/img/tracks/g0.png')
+    &.g90
+        background: url('/img/tracks/g90.png')
+
+    /* Curves / diagonals */
+    &.d0
+        background: url('/img/tracks/d0.png')
+    &.d90
+        background: url('/img/tracks/d90.png')
+    &.d180
+        background: url('/img/tracks/d180.png')
+    &.d270
+        background: url('/img/tracks/d270.png')
+
+    /* Stoppers */
+    &.p0
+        background: url('/img/tracks/p0.png')
+    &.p90
+        background: url('/img/tracks/p90.png')
+    &.p180
+        background: url('/img/tracks/p180.png')
+    &.p270
+        background: url('/img/tracks/p270.png')
