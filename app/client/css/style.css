@@ -1,5 +1,25 @@
 @import url(normalize.css);
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,700);
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/roboto.woff") format("woff");
+  font-weight: 400;
+  font-style: normal; }
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/roboto-light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal; }
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/robonto-condensed.woff") format("woff");
+  font-weight: 400;
+  font-style: condensed; }
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/roboto-condensed-light.woff") format("woff");
+  font-weight: 300;
+  font-style: condensed; }
 html, body {
   font-family: "Roboto", "Open Sans", sans-serif;
   font-size: 1rem;
@@ -125,16 +145,6 @@ main {
   position: relative;
   box-sizing: border-box;
   transition: height 0.2s ease-in-out; }
-  .controls .control {
-    width: 48px;
-    height: 48px;
-    display: block;
-    border: 1px solid #B6B6B6;
-    position: absolute; }
-    @media screen and (max-width: 992px) {
-      .controls .control {
-        width: 64px;
-        height: 64px; } }
   .controls.console-collapsed {
     height: calc(100vh - 10rem); }
 

@@ -2,6 +2,7 @@ var express = require('express');
 var io = require('socket.io');
 var serialPort = require('serialport');
 var app = express();
+var server;
 
 var projectRoot = __dirname;
 
@@ -13,6 +14,7 @@ function initializeServer() {
     app.use('/css', express.static(projectRoot + '/client/css'));
     app.use('/js', express.static(projectRoot + '/client/js'));
     app.use('/img', express.static(projectRoot + '/client/img'));
+    app.use('/fonts', express.static(projectRoot + '/client/fonts'));
 
     //send the page over, if the user requests a connection
     app.get('/', function (req, res) {
@@ -20,7 +22,7 @@ function initializeServer() {
     });
 
     //echo out the current port and address
-    var server = app.listen(3030, function () {
+    server = app.listen(3030, function () {
         var host = server.address().address;
         var port = server.address().port;
 
