@@ -6,10 +6,8 @@
         $consoleMessages = $('.console .messages'),
         $controls = $('.controls'),
         $activitySpinner = $('.spinner.activity'),
+        $portsDropdown = $('.ports-dropdown'),
         socket = io();
-
-
-
 
     //ENTRY POINT
     $(function() {
@@ -17,11 +15,68 @@
     });
 
     /**
+     * Initializes the client core
+     */
+    function initClient() {
+        setupUI();
+        setupListeners();
+        loadTracks();
+        getPorts();
+        //When done initializing, hide the activity spinner
+        $activitySpinner.addClass('hidden');
+        console.log('Client initialized');
+    }
+
+    /**
+     * Handles initialization of some UI components
+     */
+    function setupUI() {
+        if (Cookies.get('collapsedConsole') == "true") {
+            $console.addClass('collapsed');
+            $controls.addClass('console-collapsed');
+        }
+    }
+
+    /**
+     * Sets up all of the socket, click and general event handlers
+     */
+    function setupListeners() {
+        socket.on('message', function(data) {
+            var message = data;
+            console.log('Message from server: ' + message);
+            logToConsole(message);
+        });
+        socket.on('connect port result', function(data) {
+            if (data === true) {
+                logToConsole("Connected to port");
+            }
+            else {
+                logToConsole("Cannot connect to port");
+            }
+        })
+
+        //The console toggle button and the cookie function
+        $console.find('.toggle').on('click', function() {
+            $console.toggleClass('collapsed');
+            $controls.toggleClass('console-collapsed');
+
+            var collapsed = $console.hasClass('collapsed').toString();
+            Cookies.set('collapsedConsole', collapsed, {expires: 999999999});
+
+        });
+        //The port selection dropdown
+        $portsDropdown.on('click', function() {
+            $(this).toggleClass('dropped');
+        })
+
+    }
+
+    /**
      * Loads the current plan of tracks from the server and parses it
      * TODO: outsource this method to another file
      */
     function loadTracks() {
-        switch1 = new Track(0, 0, "g0");
+        switch1 = new Switch(0, 0, "wl0", false);
         $controls.append(switch1.getObject());
         //TODO: temp: generate a lot of toggle buttons
         for(var x = 1; x < 23; x++) {
@@ -45,45 +100,43 @@
     }
 
     /**
-     * Sets up all of the socket, click and general event handlers
+     * Get the list of available ports via AJAX and display them
      */
-    function setupListeners() {
-        socket.on('message', function(data) {
-            var message = data;
-            console.log('Message from server: ' + message);
-            logToConsole(message);
-        });
+     function getPorts() {
+         $.ajax({
+             url: '/getPorts',
+             type: 'GET',
+             dataType: 'json',
+             success: function(data) {
+                showPortsDropdown(data);
+            },
+            error: function() {
+                console.log("failed to get ports");
+            }
+         });
+     }
 
-        $console.find('.toggle').on('click', function() {
-            $console.toggleClass('collapsed');
-            $controls.toggleClass('console-collapsed');
+     function showPortsDropdown(data) {
+         $portsDropdown.addClass('visible');
+         console.log(data);
+         for (i = 0; i < data.length; i++) {
+             $portsDropdown.find('.items').append('<div>' + data[i].portName + "</div>");
+             $portsDropdown.find('.items > div').on('click', function() {
+                console.log("trigger");
+                selectActivePort($(this).html());
+             });
+         }
+     }
 
-            var collapsed = $console.hasClass('collapsed').toString();
-            Cookies.set('collapsedConsole', collapsed, {expires: 999999999});
+     function selectActivePort(text) {
+         $portsDropdown.find('.current').html(text);
+         logToConsole("Connecting to port: " + text);
 
-        });
-    }
+         socket.emit('connect port request', text);
 
-    /**
-     * Initializes the client core
-     */
-    function initClient() {
-        setupUI();
-        setupListeners();
-        loadTracks();
-        $activitySpinner.addClass('hidden');
-        console.log('Client initialized');
-    }
+     }
 
-    /**
-     * Handles initialization of some UI components
-     */
-    function setupUI() {
-        if (Cookies.get('collapsedConsole') == "true") {
-            $console.addClass('collapsed');
-            $controls.addClass('console-collapsed');
-        }
-    }
+//HELPER FUNCTIONS
 
     /**
      * Wrapper for adding objects or plain text to the console.

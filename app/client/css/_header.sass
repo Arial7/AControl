@@ -1,3 +1,5 @@
+$dropdown-height: 2rem
+
 header
     background: teal
     color: #fff
@@ -12,5 +14,81 @@ header
     h1
         margin: 0
         height: auto
-        transform: translateY(15%)
         display: inline-block
+        font-style: normal
+
+
+    .ports-dropdown
+        margin-left: 5%
+        background: #fff
+        color: #000
+        visibility: hidden
+        transition: visibility 0.1s linear
+        display: inline-block
+        padding: 0.5rem 7px
+        padding-right: 1.5rem
+        position: relative
+        font-size: 1rem
+        height: $dropdown-height
+        min-width: 200px
+        box-sizing: border-box
+
+        .current
+            line-height: 1
+
+        &:after
+            content: ''
+            display: block
+            position: absolute
+            top: 0
+            right: 0
+            width: $dropdown-height
+            height: $dropdown-height
+            background:
+                image: url("/img/chevron-down.png")
+                size: cover
+            transform: rotateZ(0deg)
+            transition: transform 0.2s ease-in-out
+            cursor: pointer
+
+        &.visible
+            visibility: visible
+
+        &.dropped
+            &:after
+                transform: rotateZ(180deg)
+            .items
+                visibility: visible
+                opacity: 1
+                transform: scaleY(1)
+
+
+        .items
+            background: #fff
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4)
+            position: absolute
+            top: $dropdown-height + .1rem
+            left: 0
+            visibility: hidden
+            opacity: 0
+            z-index: 998
+            transition: all 0.2s ease-in-out
+            transform: scaleY(0)
+            transform-origin: top center
+            padding: .5rem 20px
+
+            > div
+                cursor: pointer
+                position: relative
+                padding-bottom: .25rem
+                margin-bottom: .25rem
+
+                &:after
+                    content: ''
+                    display: block
+                    height: 1px
+                    background-color: $dividers
+                    position: absolute
+                    left: 2.5%
+                    right: 2.5%
+                    bottom: 0

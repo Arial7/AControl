@@ -20,6 +20,10 @@ function initializeServer() {
     app.get('/', function (req, res) {
         res.sendFile('client/pages/main.html', {root : projectRoot});
     });
+    //TODO: read all of the ports
+    app.get('/getPorts', function (req, res) {
+        res.send('[{ "portName" : "/dev/ttyACM0"}, { "portName" : "/dev/ttyACM1"}]');
+    });
 
     //echo out the current port and address
     server = app.listen(3030, function () {
@@ -57,6 +61,11 @@ function setupSocketListeners() {
 
         socket.on('disconnect', function(socket) {
             console.log('Socket.io : Client disconnected');
+        });
+
+        socket.on('connect port request', function(data) {
+            console.log("Client wants to connect to port: " + data);
+            socket.emit('connect port result', true);
         });
     });
 }

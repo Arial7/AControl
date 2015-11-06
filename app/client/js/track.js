@@ -16,7 +16,7 @@ var Switch = function(x, y, icn, left) {
     this.y = y;
     this.icn = icn;
     this.left = left;
-    this.$object = $('<div />', {class: 'track switch' + icn + " " + this.getStateString()});
+    this.$object = $('<div />', {class: 'track switch ' + icn + " " + this.getStateString()});
 };
 
 Switch.prototype.getStateString = function() {
