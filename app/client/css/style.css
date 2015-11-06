@@ -12,7 +12,7 @@
   font-style: normal; }
 @font-face {
   font-family: "Roboto";
-  src: url("/fonts/robonto-condensed.woff") format("woff");
+  src: url("/fonts/roboto-condensed.woff") format("woff");
   font-weight: 400;
   font-style: condensed; }
 @font-face {
@@ -78,7 +78,9 @@ a {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -124; } }
 .track {
-  background: #eee;
+  background-color: #eee;
+  background-size: cover;
+  background-position: 50% 50%;
   transition: background 0.1s ease-in-out;
   width: 48px;
   height: 48px;
@@ -87,7 +89,8 @@ a {
   position: absolute;
   /* Straight tracks */
   /* Curves / diagonals */
-  /* Stoppers */ }
+  /* Stoppers */
+  /* Switches */ }
   @media screen and (max-width: 992px) {
     .track {
       width: 64px;
@@ -95,25 +98,61 @@ a {
   .track.switch {
     cursor: pointer; }
   .track.g0 {
-    background: url("/img/tracks/g0.png"); }
+    background-image: url("/img/tracks/g0.png"); }
   .track.g90 {
-    background: url("/img/tracks/g90.png"); }
+    background-image: url("/img/tracks/g90.png"); }
   .track.d0 {
-    background: url("/img/tracks/d0.png"); }
+    background-image: url("/img/tracks/d0.png"); }
   .track.d90 {
-    background: url("/img/tracks/d90.png"); }
+    background-image: url("/img/tracks/d90.png"); }
   .track.d180 {
-    background: url("/img/tracks/d180.png"); }
+    background-image: url("/img/tracks/d180.png"); }
   .track.d270 {
-    background: url("/img/tracks/d270.png"); }
+    background-image: url("/img/tracks/d270.png"); }
+  .track.dd0 {
+    background-image: url("/img/tracks/dd0.png"); }
+  .track.dd90 {
+    background-image: url("/img/tracks/dd90.png"); }
   .track.p0 {
-    background: url("/img/tracks/p0.png"); }
+    background-image: url("/img/tracks/p0.png"); }
   .track.p90 {
-    background: url("/img/tracks/p90.png"); }
+    background-image: url("/img/tracks/p90.png"); }
   .track.p180 {
-    background: url("/img/tracks/p180.png"); }
+    background-image: url("/img/tracks/p180.png"); }
   .track.p270 {
-    background: url("/img/tracks/p270.png"); }
+    background-image: url("/img/tracks/p270.png"); }
+  .track.wl0.l {
+    background-image: url("/img/tracks/wl0l.png"); }
+  .track.wl0.r {
+    background-image: url("/img/tracks/wl0r.png"); }
+  .track.wl90.l {
+    background-image: url("/img/tracks/wl90l.png"); }
+  .track.wl90.r {
+    background-image: url("/img/tracks/wl90r.png"); }
+  .track.wl180.l {
+    background-image: url("/img/tracks/wl180l.png"); }
+  .track.wl180.r {
+    background-image: url("/img/tracks/wl180r.png"); }
+  .track.wl270.l {
+    background-image: url("/img/tracks/wl270l.png"); }
+  .track.wl270.r {
+    background-image: url("/img/tracks/wl270r.png"); }
+  .track.wr0.l {
+    background-image: url("/img/tracks/wr0l.png"); }
+  .track.wr0.r {
+    background-image: url("/img/tracks/wr0r.png"); }
+  .track.wr90.l {
+    background-image: url("/img/tracks/wr90l.png"); }
+  .track.wr90.r {
+    background-image: url("/img/tracks/wr90r.png"); }
+  .track.wr180.l {
+    background-image: url("/img/tracks/wr180l.png"); }
+  .track.wr180.r {
+    background-image: url("/img/tracks/wr180r.png"); }
+  .track.wr270.l {
+    background-image: url("/img/tracks/wr270l.png"); }
+  .track.wr270.r {
+    background-image: url("/img/tracks/wr270r.png"); }
 
 header {
   background: teal;

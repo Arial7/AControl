@@ -1,45 +1,28 @@
-class Track {
-    var icn;
-    var x, y;
+"use strict"
 
-    constructor(x, y, icn) {
-        this.x = x;
-        this.y = y;
-        this.icn = icn;
-    }
+var Track = function(x, y, icn) {
+    this.x = x;
+    this.y = y;
+    this.icn = icn;
+    this.$object = $('<div />', {class: 'track ' + icn});
+};
 
-    get icon() {
-        return icn;
-    }
-    
-    get x() {
-        return x;
-    }
+Track.prototype.getObject = function() {
+    return this.$object;
+};
 
-    get y() {
-        return y;
-    }
-        
+var Switch = function(x, y, icn, left) {
+    this.x = x;
+    this.y = y;
+    this.icn = icn;
+    this.left = left;
+    this.$object = $('<div />', {class: 'track switch' + icn + " " + this.getStateString()});
+};
 
+Switch.prototype.getStateString = function() {
+    return (this.left === true) ? 'l' : 'r';
+};
 
-}
-
-class Switch extends Track {
-    var state : bool;
-    
-    constructor(x, y, icn, state) {
-        this.x = x;
-        this.y = y;
-        this.icn = icn;
-        this.state = state;
-    }
-
-    get state() {
-
-    }
-
-    getStateString(state : bool) {
-        return 
-    }
-    
-}
+Switch.prototype.getObject = function() {
+    return this.$object;
+};

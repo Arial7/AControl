@@ -1,5 +1,8 @@
 .track
-    background: #eee
+    background:
+        color: #eee
+        size: cover
+        position: 50% 50%
     transition: background 0.1s ease-in-out
     width: $icon-size
     height: $icon-size
@@ -16,26 +19,72 @@
 
     /* Straight tracks */
     &.g0
-        background: url('/img/tracks/g0.png')
+        background-image: url('/img/tracks/g0.png')
     &.g90
-        background: url('/img/tracks/g90.png')
+        background-image: url('/img/tracks/g90.png')
 
     /* Curves / diagonals */
     &.d0
-        background: url('/img/tracks/d0.png')
+        background-image: url('/img/tracks/d0.png')
     &.d90
-        background: url('/img/tracks/d90.png')
+        background-image: url('/img/tracks/d90.png')
     &.d180
-        background: url('/img/tracks/d180.png')
+        background-image: url('/img/tracks/d180.png')
     &.d270
-        background: url('/img/tracks/d270.png')
+        background-image: url('/img/tracks/d270.png')
+
+    &.dd0
+        background-image: url('/img/tracks/dd0.png')
+    &.dd90
+        background-image: url('/img/tracks/dd90.png')
 
     /* Stoppers */
     &.p0
-        background: url('/img/tracks/p0.png')
+        background-image: url('/img/tracks/p0.png')
     &.p90
-        background: url('/img/tracks/p90.png')
+        background-image: url('/img/tracks/p90.png')
     &.p180
-        background: url('/img/tracks/p180.png')
+        background-image: url('/img/tracks/p180.png')
     &.p270
-        background: url('/img/tracks/p270.png')
+        background-image: url('/img/tracks/p270.png')
+
+    /* Switches */
+    &.wl0.l
+        background-image: url('/img/tracks/wl0l.png')
+    &.wl0.r
+        background-image: url('/img/tracks/wl0r.png')
+
+    &.wl90.l
+        background-image: url('/img/tracks/wl90l.png')
+    &.wl90.r
+        background-image: url('/img/tracks/wl90r.png')
+
+    &.wl180.l
+        background-image: url('/img/tracks/wl180l.png')
+    &.wl180.r
+        background-image: url('/img/tracks/wl180r.png')
+
+    &.wl270.l
+        background-image: url('/img/tracks/wl270l.png')
+    &.wl270.r
+        background-image: url('/img/tracks/wl270r.png')
+
+    &.wr0.l
+        background-image: url('/img/tracks/wr0l.png')
+    &.wr0.r
+        background-image: url('/img/tracks/wr0r.png')
+
+    &.wr90.l
+        background-image: url('/img/tracks/wr90l.png')
+    &.wr90.r
+        background-image: url('/img/tracks/wr90r.png')
+
+    &.wr180.l
+        background-image: url('/img/tracks/wr180l.png')
+    &.wr180.r
+        background-image: url('/img/tracks/wr180r.png')
+
+    &.wr270.l
+        background-image: url('/img/tracks/wr270l.png')
+    &.wr270.r
+        background-image: url('/img/tracks/wr270r.png')

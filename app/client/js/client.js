@@ -9,6 +9,8 @@
         socket = io();
 
 
+
+
     //ENTRY POINT
     $(function() {
         initClient();
@@ -19,9 +21,11 @@
      * TODO: outsource this method to another file
      */
     function loadTracks() {
+        switch1 = new Track(0, 0, "g0");
+        $controls.append(switch1.getObject());
         //TODO: temp: generate a lot of toggle buttons
-        for(var x = 0; x < 23; x++) {
-            for(var y = 0; y < 8; y++) {
+        for(var x = 1; x < 23; x++) {
+            for(var y = 1; y < 8; y++) {
                 //TODO: create skeletons for the toggle buttons and track icons
                 $controls.append('<div class="track switch" data-id="' + (x + y + 1) * (y + x + 1) + '" data-icn="g0" data-x="' + x + '" data-y="' + y + '"></div>');
             }
