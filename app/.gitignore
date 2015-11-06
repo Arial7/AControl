@@ -1,4 +1,12 @@
+#Temp files and dirs
 .sass-cache
 *.map
-node_modules
 .swp
+#Not include the dependencies
+node_modules
+#User has to compile these on his own, to keep the repo size small
+#and to not show these changed in the commits
+*.css
+*.html
+#Not ignore normalize.css, as this is not a compiled file
+!normalize.css
