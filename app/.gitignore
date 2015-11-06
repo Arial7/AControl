@@ -3,7 +3,7 @@
 *.map
 .swp
 #Not include the dependencies
-node_modules
+node_modules/*
 #User has to compile these on his own, to keep the repo size small
 #and to not show these changed in the commits
 *.css
