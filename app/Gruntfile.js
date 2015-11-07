@@ -10,6 +10,9 @@ module.exports = function(grunt) {
         },
         jade: {
             compile: {
+                options: {
+                    pretty: true
+                },
                 files: {
                     'client/pages/main.html': 'client/pages/main.jade'
                 }

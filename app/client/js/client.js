@@ -7,6 +7,7 @@
         $controls = $('.controls'),
         $activitySpinner = $('.spinner.activity'),
         $portsDropdown = $('.ports-dropdown'),
+        tracks = new Array(),
         socket = io();
 
     //ENTRY POINT
@@ -53,7 +54,11 @@
             else {
                 logToConsole("Cannot connect to port");
             }
-        })
+        });
+
+        socket.on('reconnect', function() {
+            getPorts();
+        });
 
         //The console toggle button and the cookie function
         $console.find('.toggle').on('click', function() {
@@ -67,7 +72,8 @@
         //The port selection dropdown
         $portsDropdown.on('click', function() {
             $(this).toggleClass('dropped');
-        })
+        });
+
 
     }
 
@@ -108,26 +114,34 @@
              type: 'GET',
              dataType: 'json',
              success: function(data) {
-                showPortsDropdown(data);
-            },
-            error: function() {
+                 showPortsDropdown(data);
+             },
+             error: function(err) {
                 console.log("failed to get ports");
-            }
+                console.log(err);
+             }
          });
      }
 
+     /**
+      * Called when the AJAX request from the server was succesful.
+      * Adds the ports the server returned to the dropdown and
+      * shows it.
+      */
      function showPortsDropdown(data) {
          $portsDropdown.addClass('visible');
-         console.log(data);
          for (i = 0; i < data.length; i++) {
              $portsDropdown.find('.items').append('<div>' + data[i].portName + "</div>");
              $portsDropdown.find('.items > div').on('click', function() {
-                console.log("trigger");
                 selectActivePort($(this).html());
              });
          }
      }
 
+     /**
+      * Loads the selected port to the dropdown and sends a
+      * connection message to the server
+      */
      function selectActivePort(text) {
          $portsDropdown.find('.current').html(text);
          logToConsole("Connecting to port: " + text);
@@ -136,15 +150,14 @@
 
      }
 
-//HELPER FUNCTIONS
-
     /**
      * Wrapper for adding objects or plain text to the console.
      * This adds a timestamp in front of the actual object or text
+     * @param data - the message or object to add to the console
      */
     function logToConsole(data) {
         //append the current message (or object)
-        $('.console .messages').append('<div>[' + getCurrentTime() + '] ' + data + '</div>');
+        $('.console .messages').append('<div>' + getCurrentTime() + data + '</div>');
         //calculate the height used by the objects and scroll to the bottom
         var h = 0;
         $('.console .messages').children().each(function(){ h += parseInt($(this).height());});
@@ -154,16 +167,21 @@
 
     /**
      * Function to get the current timestamp
-     * @return String of HOURS:MINUTES:SECONDS
+     * @return String of style [HOURS:MINUTES:SECONDS]
      */
     function getCurrentTime() {
         var date = new Date();
-        return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+        var mins = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getHours();
+        var secs = date.getSeconds()  < 10 ? "0" + date.getSeconds() : date.getSeconds();
+        return "[" + hours + ":" + mins + ":" + secs + "]";
     }
 
     /**
      * This puts all of the toggle buttons and track icons to their intended
-     * position based on their data-x and data-y value (these represent the grid)
+     * position based on their data-x and data-y value
+     * (these represent the grid)
+     * TODO: implement new Track class system
      */
     function alignControls() {
         $('.controls').children().each(function() {
@@ -172,4 +190,5 @@
             $(this).css('top', (50 * parseInt($(this).attr('data-y')) + 40) + 'px');
         });
     }
+
 })(jQuery)
