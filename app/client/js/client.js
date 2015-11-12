@@ -172,7 +172,7 @@
     function getCurrentTime() {
         var date = new Date();
         var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-        var mins = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getHours();
+        var mins = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
         var secs = date.getSeconds()  < 10 ? "0" + date.getSeconds() : date.getSeconds();
         return "[" + hours + ":" + mins + ":" + secs + "]";
     }
