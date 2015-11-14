@@ -3,24 +3,33 @@ doctype html
 html
     head
         link(rel="stylesheet" type="text/css" href="/css/style.css")
-        script(src="/js/jquery.js")
-        script(src="/js/cookies-2.0.4.js")
-        script(src="/js/track.js")
-        script(src="/socket.io/socket.io.js")
         title AControl
         
     body
+        .loader
+            .title AControl
+            +spinner(class="preloader")
         header
             h1 AControl
             .ports-dropdown 
                 .current Select port
                 .items
             +spinner(class="inline activity")
+            .server-settings-toggle(title="Server settings")
+            .client-settings-toggle(title="Client settings")
         main
             .controls
         .console
             .messages
-            .toggle 
-            
+            .actions
+                .toggle(title="Fold console")
+                .clear(title="Clear console")
+        
+        //-scripts
+        script(src="/js/jquery.js")
+        script(src="/js/cookies-2.0.4.js")
+        script(src="/socket.io/socket.io.js")
+        
+        script(src="/js/track.js")
         script(src="/js/client.js")
             

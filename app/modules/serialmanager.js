@@ -17,7 +17,7 @@ exports.getSerialPortsAvailable = function(httpResult) {
         //ports is undefined if no port has been found
         //TODO: improve this
         if (ports === undefined && err !== undefined) {
-            log("No ports found");
+            log.log("No ports found");
             return false;
         }
         if (err === undefined) {
@@ -44,14 +44,17 @@ exports.getSerialPortsAvailable = function(httpResult) {
  * @param socket - the socket that requested the connection
  */
 exports.connectToPort = function(name, socket) {
+    log.log("Starting to connect...");
     activePortName = name;
-    port = new SerialPort(name,
+    var port = new SerialPort(name.toString(),
         {
-            baudrate: 115200,
-            callback: function() {
-                onPortOpened(error, socket)
-            }
-        });
+            baudrate: 115200
+        },
+        function(error) {
+            onPortOpened(error, socket)
+        }
+
+    );
 }
 /**
  * Callback for when the connection to the port has been established
@@ -63,5 +66,6 @@ function onPortOpened(error, socket) {
     }
     else {
         log.error("Failed to connect to port: " + error);
+        socket.emit('connect port result', false);
     }
 }

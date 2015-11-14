@@ -1,7 +1,7 @@
 var express = require('express');
 var io = require('socket.io');
-var serialmanager = require('./serialmanager.js');
-var log = require('./log.js');
+var serialmanager = require('./modules/serialmanager.js');
+var log = require('./modules/log.js');
 var app = express();
 var server;
 
@@ -71,9 +71,7 @@ function setupSocketListeners() {
 
         socket.on('connect port request', function(data) {
             log.log("Client wants to connect to port: " + data);
-            serialmanager.connectToPort(data);
-            //TODO: try to connect to the port instead of just sending true
-            //socket.emit('connect port result', true);
+            serialmanager.connectToPort(data, socket);
         });
     });
 }

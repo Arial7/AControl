@@ -2,13 +2,14 @@
 
 (function($){
 
-    var $console = $('.console'),
+    var $header          = $('header'),
+        $console         = $('.console'),
         $consoleMessages = $('.console .messages'),
-        $controls = $('.controls'),
+        $controls        = $('.controls'),
         $activitySpinner = $('.spinner.activity'),
-        $portsDropdown = $('.ports-dropdown'),
-        tracks = new Array(),
-        socket = io();
+        $portsDropdown   = $('.ports-dropdown'),
+        tracks           = new Array(),
+        socket           = io();
 
     //ENTRY POINT
     $(function() {
@@ -24,6 +25,9 @@
         loadTracks();
         getPorts();
         //When done initializing, hide the activity spinner
+        setTimeout(function () {
+            $('body').addClass('loaded');
+        }, 500);
         $activitySpinner.addClass('hidden');
         console.log('Client initialized');
     }
@@ -45,7 +49,7 @@
         socket.on('message', function(data) {
             var message = data;
             console.log('Message from server: ' + message);
-            logToConsole(message);
+            //logToConsole(message);
         });
         socket.on('connect port result', function(data) {
             if (data === true) {
@@ -56,7 +60,17 @@
             }
         });
 
+        socket.on('connect', function() {
+            logToConsole("Connection to server established");
+        });
+
+        socket.on('disconnect', function () {
+            logToConsole("Connection to server lost");
+        });
+
         socket.on('reconnect', function() {
+            logToConsole("Reconnected to server");
+            clearPorts();
             getPorts();
         });
 
@@ -69,6 +83,24 @@
             Cookies.set('collapsedConsole', collapsed, {expires: 999999999});
 
         });
+        $console.find('.clear').on('click', function() {
+            $consoleMessages.empty();
+        });
+
+        $header.find('.server-settings-toggle').on('click', function() {
+            $(this).removeClass('play');
+            setTimeout(function () {
+                $header.find('.server-settings-toggle').addClass('play');
+            }, 10);
+        });
+
+        $header.find('.client-settings-toggle').on('click', function() {
+            $(this).removeClass('play');
+            setTimeout(function () {
+                $header.find('.client-settings-toggle').addClass('play');
+            }, 10);
+        });
+
         //The port selection dropdown
         $portsDropdown.on('click', function() {
             $(this).toggleClass('dropped');
@@ -106,6 +138,14 @@
     }
 
     /**
+     * Empties the ports list
+     */
+     function clearPorts() {
+         $portsDropdown.find('.items').empty();
+         $portsDropdown.find('.current').html("Select port");
+     }
+
+    /**
      * Get the list of available ports via AJAX and display them
      */
      function getPorts() {
@@ -121,26 +161,28 @@
                 console.log(err);
              }
          });
-     }
 
-     /**
-      * Called when the AJAX request from the server was succesful.
-      * Adds the ports the server returned to the dropdown and
-      * shows it.
-      */
-     function showPortsDropdown(data) {
-         $portsDropdown.addClass('visible');
-         for (i = 0; i < data.length; i++) {
-             $portsDropdown.find('.items').append('<div>' + data[i].portName + "</div>");
-             $portsDropdown.find('.items > div').on('click', function() {
-                selectActivePort($(this).html());
-             });
+         /**
+          * Called when the AJAX request from the server was succesful.
+          * Adds the ports the server returned to the dropdown and
+          * shows it.
+          * @param data - the AJAX response (the ports list) in JSON format
+          */
+         function showPortsDropdown(data) {
+             $portsDropdown.addClass('visible');
+             for (i = 0; i < data.length; i++) {
+                 $portsDropdown.find('.items').append('<div>' + data[i].portName + "</div>");
+                 $portsDropdown.find('.items > div').on('click', function() {
+                    selectActivePort($(this).html());
+                 });
+             }
          }
      }
 
      /**
       * Loads the selected port to the dropdown and sends a
       * connection message to the server
+      * @param text - the port name to connect to
       */
      function selectActivePort(text) {
          $portsDropdown.find('.current').html(text);

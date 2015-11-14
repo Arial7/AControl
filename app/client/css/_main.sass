@@ -13,7 +13,7 @@ main
     box-sizing: border-box
     transition: height 0.2s ease-in-out
     .control
-        
+
 
     &.console-collapsed
         height: calc(100vh - #{$header-height + $console-height-collapsed})
@@ -23,53 +23,3 @@ main
     transition: visibility 0.2s ease-in-out
     &.hidden
         visibility: hidden
-
-.console
-    position: absolute
-    bottom: 0
-    left: 0
-    right: 0
-    padding: 1rem 40px
-    background: $dividers
-    height: $console-height
-    box-sizing: border-box
-    transition: all 0.2s ease-in-out
-    display: flex
-    justify-content: space-between
-    &.collapsed
-        height: $console-height-collapsed
-        padding-bottom: .5rem
-
-        .toggle
-            transform: rotate(180deg)
-            box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.3)
-            &:hover
-                box-shadow: -3px -3px 7px rgba(0, 0, 0, 0.4)
-
-    .toggle
-        cursor: pointer
-        float: right
-        width: 48px
-        height: 48px
-        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3)
-        border-radius: 50%
-        transition: transform 0.2s ease-in-out, box-shadow 0.1s linear
-        transform: rotate(0deg)
-        background:
-            image: url('/img/chevron-down-fab.png')
-            size: cover
-        &:hover
-            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4)
-    .messages
-        flex-grow: 2
-        background: #fff
-        height: 100%
-        overflow: auto
-        font-weight: 400
-        font-size: .95rem
-        padding-top: 10px
-        padding-bottom: 10px
-        box-sizing: border-box
-        margin-right: 10px
-        *
-            margin-left: 10px
