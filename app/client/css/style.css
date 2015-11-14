@@ -341,7 +341,7 @@ header {
     header .server-settings-toggle.play {
       animation-name: wrench;
       animation-duration: 0.5s;
-      animation-iteration-count: 2;
+      animation-iteration-count: 1;
       animation-delay: 0; }
 @keyframes wrench {
   33% {
