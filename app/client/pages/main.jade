@@ -19,11 +19,17 @@ html
             .client-settings-toggle(title="Client settings")
         main
             .controls
+            
+                
         .console
             .messages
             .actions
                 .toggle(title="Fold console")
                 .clear(title="Clear console")
+        
+        include settings.jade
+        
+            
         
         //-scripts
         script(src="/js/jquery.js")

@@ -8,6 +8,7 @@
         $controls        = $('.controls'),
         $activitySpinner = $('.spinner.activity'),
         $portsDropdown   = $('.ports-dropdown'),
+        $settingsOverlay = $('.settings-overlay'),
         tracks           = new Array(),
         socket           = io();
 
@@ -92,6 +93,8 @@
             setTimeout(function () {
                 $header.find('.server-settings-toggle').addClass('play');
             }, 10);
+            $settingsOverlay.toggleClass('open');
+            $settingsOverlay.find('.server').toggleClass('open');
         });
 
         $header.find('.client-settings-toggle').on('click', function() {
@@ -99,6 +102,8 @@
             setTimeout(function () {
                 $header.find('.client-settings-toggle').addClass('play');
             }, 10);
+            $settingsOverlay.toggleClass('open');
+            $settingsOverlay.find('.client').toggleClass('open');
         });
 
         //The port selection dropdown
@@ -170,6 +175,7 @@
           */
          function showPortsDropdown(data) {
              $portsDropdown.addClass('visible');
+             
              for (i = 0; i < data.length; i++) {
                  $portsDropdown.find('.items').append('<div>' + data[i].portName + "</div>");
                  $portsDropdown.find('.items > div').on('click', function() {

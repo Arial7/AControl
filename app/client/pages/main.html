@@ -37,6 +37,42 @@
         <div title="Clear console" class="clear"></div>
       </div>
     </div>
+    <div class="settings-overlay">
+      <div class="server">
+        <h3>Please note: these settings are for advanced users only. There usually is no need to change any of them.</h3>
+        <div class="setting">
+          <div class="label">Server port:</div>
+          <input type="number" value="3030">
+        </div>
+        <div class="setting">
+          <div class="label">Baudrate:</div>
+          <input type="number" value="115200">
+        </div>
+      </div>
+      <div class="client">
+        <h3>Please note: If you clear your browser cookies, these settings will get reset to their default.</h3>
+        <div class="setting">
+          <div class="label">Clear console when reconnected to server</div>
+          <input type="checkbox">
+        </div>
+        <div class="setting">
+          <div class="label">Reload available ports each time the dropdown get triggered</div>
+          <input type="checkbox">
+        </div>
+        <div class="setting">
+          <div class="label">Autoload the last plan</div>
+          <input type="checkbox">
+        </div>
+        <div class="setting">
+          <div class="label">Base font size</div>
+          <input type="number" value="16">
+        </div>
+        <div class="setting">
+          <div class="label">Base icon size</div>
+          <input type="number" value="48">
+        </div>
+      </div>
+    </div>
     <script src="/js/jquery.js"></script>
     <script src="/js/cookies-2.0.4.js"></script>
     <script src="/socket.io/socket.io.js"></script>

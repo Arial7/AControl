@@ -248,6 +248,39 @@ body.loaded .loader {
     .console.collapsed .clear {
       display: none; }
 
+.settings-overlay {
+  position: fixed;
+  z-index: 800;
+  top: 5rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  transform: translateY(-100%);
+  transform-origin: top;
+  transition: transform 0.5s ease-in-out;
+  text-align: center;
+  overflow-y: auto;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.5); }
+  .settings-overlay.open {
+    transform: translateY(0); }
+  .settings-overlay .server {
+    display: none; }
+    .settings-overlay .server.open {
+      display: block; }
+  .settings-overlay .client {
+    display: none; }
+    .settings-overlay .client.open {
+      display: block; }
+  .settings-overlay .setting {
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 30%; }
+    .settings-overlay .setting .label {
+      text-align: left; }
+
 header {
   background: teal;
   color: #fff;
@@ -259,7 +292,8 @@ header {
   padding: 1rem 40px;
   box-sizing: border-box;
   display: flex;
-  align-items: center; }
+  align-items: center;
+  z-index: 808; }
   header h1 {
     margin: 0;
     height: auto;

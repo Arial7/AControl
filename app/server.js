@@ -1,11 +1,13 @@
-var express = require('express');
-var io = require('socket.io');
+var express       = require('express');
+var io            = require('socket.io');
 var serialmanager = require('./modules/serialmanager.js');
-var log = require('./modules/log.js');
-var app = express();
+var log           = require('./modules/log.js');
+var settings      = require('./modules/settings.js');
+
+var app           = express();
 var server;
 
-var projectRoot = __dirname;
+var projectRoot   = __dirname;
 
 var getPortsResult; //Holds the HTTP result for getting ports.
 
@@ -31,11 +33,10 @@ function initializeServer() {
     });
 
     //echo out the current port and address
-    server = app.listen(3030, function () {
-        var host = server.address().address;
+    server = app.listen(settings.get().port, function () {
         var port = server.address().port;
 
-        log.log('Listening at http://' + host + ':' + port);
+        log.log('Listening at port ' + port);
     });
 }
 
@@ -78,6 +79,6 @@ function setupSocketListeners() {
 
 
 //ENTRY POINT
-
+settings.load();
 initializeServer();
 setupSocketListeners();

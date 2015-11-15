@@ -2,6 +2,7 @@ var SerialPort = require('serialport').SerialPort;
 var serialPort = require('serialport');
 var io = require('socket.io');
 var log = require('./log.js');
+var settings = require('./settings.js')
 
 var activePortName;
 
@@ -18,6 +19,7 @@ exports.getSerialPortsAvailable = function(httpResult) {
         //TODO: improve this
         if (ports === undefined && err !== undefined) {
             log.log("No ports found");
+            //TODO: send sth to client showing that there aren't any ports
             return false;
         }
         if (err === undefined) {
@@ -48,7 +50,7 @@ exports.connectToPort = function(name, socket) {
     activePortName = name;
     var port = new SerialPort(name.toString(),
         {
-            baudrate: 115200
+            baudrate: settings.get().baudrate
         },
         function(error) {
             onPortOpened(error, socket)

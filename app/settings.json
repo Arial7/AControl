@@ -1,0 +1,5 @@
+{
+    "port" : 3030,
+    "baudrate" : 115200,
+    "maxClients" : 2
+}
