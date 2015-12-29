@@ -50,10 +50,12 @@ a {
   .spinner.inline, .loader .inline.preloader {
     display: inline-block; }
   .spinner .circular, .loader .preloader .circular {
-    animation: rotate 2s linear infinite;
+    -webkit-animation: rotate 2s linear infinite;
+            animation: rotate 2s linear infinite;
     height: 100%;
     width: 100%;
-    transform-origin: center;
+    -webkit-transform-origin: center;
+            transform-origin: center;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -64,7 +66,8 @@ a {
       stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
       stroke: #FF4081;
-      animation: dash 1.5s ease-in-out infinite;
+      -webkit-animation: dash 1.5s ease-in-out infinite;
+              animation: dash 1.5s ease-in-out infinite;
       stroke-linecap: round; }
 
 .loader {
@@ -75,7 +78,8 @@ a {
   right: 0;
   bottom: 0;
   z-index: 1000;
-  transition: all 1s ease-in-out;
+  -webkit-transition: all 1s ease-in-out;
+          transition: all 1s ease-in-out;
   text-align: center;
   opacity: 1;
   visibility: visible;
@@ -90,16 +94,33 @@ a {
     position: relative;
     top: 10%;
     left: 50%;
-    transform: translateX(-50%); }
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
 
 body.loaded .loader {
   opacity: 0;
   visibility: hidden;
   z-index: -2; }
 
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
 @keyframes rotate {
   100% {
-    transform: rotate(360deg); } }
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0; }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35; }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124; } }
 @keyframes dash {
   0% {
     stroke-dasharray: 1, 200;
@@ -114,7 +135,8 @@ body.loaded .loader {
   background-color: #eee;
   background-size: cover;
   background-position: 50% 50%;
-  transition: background 0.1s ease-in-out;
+  -webkit-transition: background 0.1s ease-in-out;
+          transition: background 0.1s ease-in-out;
   width: 48px;
   height: 48px;
   display: block;
@@ -196,11 +218,21 @@ body.loaded .loader {
   background: #B6B6B6;
   height: 15rem;
   box-sizing: border-box;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between; }
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between; }
   .console .messages {
-    flex-grow: 2;
+    -webkit-box-flex: 2;
+    -webkit-flex-grow: 2;
+        -ms-flex-positive: 2;
+            flex-grow: 2;
     background: #fff;
     height: 100%;
     overflow: auto;
@@ -213,18 +245,33 @@ body.loaded .loader {
     .console .messages * {
       margin-left: 10px; }
   .console .actions {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center; }
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center; }
     .console .actions .toggle {
       cursor: pointer;
       width: 48px;
       height: 48px;
       box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
       border-radius: 50%;
-      transition: transform 0.2s ease-in-out, box-shadow 0.1s linear;
-      transform: rotate(0deg);
+      -webkit-transition: -webkit-transform 0.2s ease-in-out, box-shadow 0.1s linear;
+              transition: transform 0.2s ease-in-out, box-shadow 0.1s linear;
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
       background-image: url("/img/chevron-down-fab.png");
       background-size: cover;
       z-index: 2; }
@@ -241,7 +288,8 @@ body.loaded .loader {
     height: 5rem;
     padding-bottom: 0.5rem; }
     .console.collapsed .toggle {
-      transform: rotate(180deg);
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg);
       box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.3); }
       .console.collapsed .toggle:hover {
         box-shadow: -3px -3px 7px rgba(0, 0, 0, 0.4); }
@@ -257,13 +305,17 @@ body.loaded .loader {
   bottom: 0;
   background: #fff;
   transform: translateY(-100%);
-  transform-origin: top;
-  transition: transform 0.5s ease-in-out;
+  -webkit-transform: translateY(-100%);
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+          transition: transform 0.5s ease-in-out;
   text-align: center;
   overflow-y: auto;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.5); }
   .settings-overlay.open {
-    transform: translateY(0); }
+    -webkit-transform: translateY(0);
+            transform: translateY(0); }
   .settings-overlay .server {
     display: none; }
     .settings-overlay .server.open {
@@ -274,9 +326,18 @@ body.loaded .loader {
       display: block; }
   .settings-overlay .setting {
     margin: 10px auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     max-width: 30%; }
     .settings-overlay .setting .label {
       text-align: left; }
@@ -291,8 +352,14 @@ header {
   height: 5rem;
   padding: 1rem 40px;
   box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   z-index: 808; }
   header h1 {
     margin: 0;
@@ -304,7 +371,8 @@ header {
     background: #fff;
     color: #000;
     visibility: hidden;
-    transition: visibility 0.1s linear;
+    -webkit-transition: visibility 0.1s linear;
+            transition: visibility 0.1s linear;
     padding: 0.5rem 7px;
     padding-right: 1.5rem;
     position: relative;
@@ -312,8 +380,13 @@ header {
     height: 2rem;
     min-width: 200px;
     box-sizing: border-box;
-    flex-basis: 200px;
-    flex-grow: 2; }
+    -webkit-flex-basis: 200px;
+        -ms-flex-preferred-size: 200px;
+            flex-basis: 200px;
+    -webkit-box-flex: 2;
+    -webkit-flex-grow: 2;
+        -ms-flex-positive: 2;
+            flex-grow: 2; }
     header .ports-dropdown .current {
       line-height: 1; }
     header .ports-dropdown:after {
@@ -326,17 +399,21 @@ header {
       height: 2rem;
       background-image: url("/img/chevron-down.png");
       background-size: cover;
-      transform: rotateZ(0deg);
-      transition: transform 0.2s ease-in-out;
+      -webkit-transform: rotateZ(0deg);
+              transform: rotateZ(0deg);
+      -webkit-transition: -webkit-transform 0.2s ease-in-out;
+              transition: transform 0.2s ease-in-out;
       cursor: pointer; }
     header .ports-dropdown.visible {
       visibility: visible; }
     header .ports-dropdown.dropped:after {
-      transform: rotateZ(180deg); }
+      -webkit-transform: rotateZ(180deg);
+              transform: rotateZ(180deg); }
     header .ports-dropdown.dropped .items {
       visibility: visible;
       opacity: 1;
-      transform: scaleY(1); }
+      -webkit-transform: scaleY(1);
+              transform: scaleY(1); }
     header .ports-dropdown .items {
       background: #fff;
       box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
@@ -346,9 +423,12 @@ header {
       visibility: hidden;
       opacity: 0;
       z-index: 998;
-      transition: all 0.2s ease-in-out;
-      transform: scaleY(0);
-      transform-origin: top center;
+      -webkit-transition: all 0.2s ease-in-out;
+              transition: all 0.2s ease-in-out;
+      -webkit-transform: scaleY(0);
+              transform: scaleY(0);
+      -webkit-transform-origin: top center;
+              transform-origin: top center;
       padding: 0.5rem 20px; }
       header .ports-dropdown .items > div {
         cursor: pointer;
@@ -371,17 +451,31 @@ header {
     background-size: cover;
     cursor: pointer;
     margin-right: 20px;
-    transform-origin: top left; }
+    -webkit-transform-origin: top left;
+            transform-origin: top left; }
     header .server-settings-toggle.play {
-      animation-name: wrench;
-      animation-duration: 0.5s;
-      animation-iteration-count: 1;
-      animation-delay: 0; }
+      -webkit-animation-name: wrench;
+              animation-name: wrench;
+      -webkit-animation-duration: 0.5s;
+              animation-duration: 0.5s;
+      -webkit-animation-iteration-count: 1;
+              animation-iteration-count: 1;
+      -webkit-animation-delay: 0;
+              animation-delay: 0; }
+@-webkit-keyframes wrench {
+  33% {
+    -webkit-transform: rotateZ(-30deg);
+            transform: rotateZ(-30deg); }
+  66% {
+    -webkit-transform: rotateZ(30deg);
+            transform: rotateZ(30deg); } }
 @keyframes wrench {
   33% {
-    transform: rotateZ(-30deg); }
+    -webkit-transform: rotateZ(-30deg);
+            transform: rotateZ(-30deg); }
   66% {
-    transform: rotateZ(30deg); } }
+    -webkit-transform: rotateZ(30deg);
+            transform: rotateZ(30deg); } }
   header .client-settings-toggle {
     height: 2rem;
     width: 2rem;
@@ -389,14 +483,26 @@ header {
     background-size: cover;
     cursor: pointer; }
     header .client-settings-toggle.play {
-      animation-name: settings-rotate;
-      animation-duration: 1s;
-      animation-iteration-count: 1; }
+      -webkit-animation-name: settings-rotate;
+              animation-name: settings-rotate;
+      -webkit-animation-duration: 1s;
+              animation-duration: 1s;
+      -webkit-animation-iteration-count: 1;
+              animation-iteration-count: 1; }
+@-webkit-keyframes settings-rotate {
+  0% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg); }
+  100% {
+    -webkit-transform: rotateZ(360deg);
+            transform: rotateZ(360deg); } }
 @keyframes settings-rotate {
   0% {
-    transform: rotateZ(0deg); }
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg); }
   100% {
-    transform: rotateZ(360deg); } }
+    -webkit-transform: rotateZ(360deg);
+            transform: rotateZ(360deg); } }
 html, body {
   overflow: hidden; }
 
@@ -410,14 +516,14 @@ main {
   height: calc(100vh - 20rem);
   position: relative;
   box-sizing: border-box;
-  transition: height 0.2s ease-in-out; }
+  -webkit-transition: height 0.2s ease-in-out;
+          transition: height 0.2s ease-in-out; }
   .controls.console-collapsed {
     height: calc(100vh - 10rem); }
 
 .spinner.activity, .loader .activity.preloader {
   float: right;
-  transition: visibility 0.2s ease-in-out; }
+  -webkit-transition: visibility 0.2s ease-in-out;
+          transition: visibility 0.2s ease-in-out; }
   .spinner.activity.hidden, .loader .activity.hidden.preloader {
     visibility: hidden; }
-
-/*# sourceMappingURL=style.css.map */

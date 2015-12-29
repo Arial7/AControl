@@ -4,7 +4,7 @@ var Track = function(x, y, icn) {
     this.x = x;
     this.y = y;
     this.icn = icn;
-    this.$object = $('<div />', {class: 'track ' + icn});
+    this.$object = $('<div />', {class: 'track ' + icn, style: 'left:' + (50 * x + 40) + 'px; top:' + (50 * y + 40) + 'px'});
 };
 
 Track.prototype.getObject = function() {
@@ -16,7 +16,7 @@ var Switch = function(x, y, icn, left) {
     this.y = y;
     this.icn = icn;
     this.left = left;
-    this.$object = $('<div />', {class: 'track switch ' + icn + " " + this.getStateString()});
+    this.$object = $('<div />', {class: 'track switch ' + icn + " " + this.getStateString(), style: 'left:' + (50 * x + 40) + 'px; top:' + (50 * y + 40) + 'px'});
 };
 
 Switch.prototype.getStateString = function() {

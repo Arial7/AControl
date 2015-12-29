@@ -1,5 +1,3 @@
-//TODO: a lot of cleanup
-
 (function($){
 
     var $header          = $('header'),
@@ -9,7 +7,6 @@
         $activitySpinner = $('.spinner.activity'),
         $portsDropdown   = $('.ports-dropdown'),
         $settingsOverlay = $('.settings-overlay'),
-        tracks           = new Array(),
         socket           = io();
 
     //ENTRY POINT
@@ -119,26 +116,33 @@
      * TODO: outsource this method to another file
      */
     function loadTracks() {
-        switch1 = new Switch(0, 0, "wl0", false);
-        $controls.append(switch1.getObject());
-        //TODO: temp: generate a lot of toggle buttons
-        for(var x = 1; x < 23; x++) {
-            for(var y = 1; y < 8; y++) {
-                //TODO: create skeletons for the toggle buttons and track icons
-                $controls.append('<div class="track switch" data-id="' + (x + y + 1) * (y + x + 1) + '" data-icn="g0" data-x="' + x + '" data-y="' + y + '"></div>');
+        socket.emit("get plan request");
+        socket.on("get plan result", function(plan) {
+            var i = 0;
+            var switchID = 0;
+            for (var x = 0; x < plan.width; x++) {
+                for (var y = 0; y < plan.height; y++) {
+                    var currentTrack = plan.plan[0];
+                    console.log(currentTrack.type);
+                    if (currentTrack.type != undefined) {
+                        var switch1 = new Switch(x, y, currentTrack.type, currentTrack.left);
+                        $controls.append(switch1.getObject());
+                        switchID++;
+                    }
+                    else {
+                        var track = new Track(x, y, currentTrack);
+                        $controls.append(track.getObject());   
+                    }                         
+                    i++;
+                }
             }
-        }
+        });
 
         //Set up the toggle buttons
         $('.track.switch').click(function(){
             socket.emit('toggle message', $(this).attr('data-id'));
         });
 
-        $('.track.switch').each(function() {
-            $(this).addClass($(this).attr('data-icn'));
-        });
-
-        alignControls();
 
     }
 
@@ -224,19 +228,4 @@
         var secs = date.getSeconds()  < 10 ? "0" + date.getSeconds() : date.getSeconds();
         return "[" + hours + ":" + mins + ":" + secs + "]";
     }
-
-    /**
-     * This puts all of the toggle buttons and track icons to their intended
-     * position based on their data-x and data-y value
-     * (these represent the grid)
-     * TODO: implement new Track class system
-     */
-    function alignControls() {
-        $('.controls').children().each(function() {
-            //TODO: get the values from somewhere, exp the width of the icons
-            $(this).css('left', (50 * parseInt($(this).attr('data-x')) + 40) + 'px');
-            $(this).css('top', (50 * parseInt($(this).attr('data-y')) + 40) + 'px');
-        });
-    }
-
 })(jQuery)

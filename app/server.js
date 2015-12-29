@@ -3,6 +3,7 @@ var io            = require('socket.io');
 var serialmanager = require('./modules/serialmanager.js');
 var log           = require('./modules/log.js');
 var settings      = require('./modules/settings.js');
+var planloader    = require('./modules/planloader.js');
 
 var app           = express();
 var server;
@@ -74,11 +75,16 @@ function setupSocketListeners() {
             log.log("Client wants to connect to port: " + data);
             serialmanager.connectToPort(data, socket);
         });
+
+        socket.on('get plan request', function() {
+            socket.emit('get plan result', planloader.getRaw());   
+        });
     });
 }
 
 
 //ENTRY POINT
 settings.load();
+planloader.load();
 initializeServer();
 setupSocketListeners();
