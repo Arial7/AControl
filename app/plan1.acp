@@ -3,9 +3,9 @@
     "width" : 4,
     "height" : 4,
     "plan" : [
-        "g0",     "g0", "g0",    "g0",
-        {"type" : "wl90", "left" : true}, "g0", "g0",    "g0",
-        "g0",     "g0", "p0",    "p0",
-        "g0",     "g0", {"type":"wr90", "left":true}, "p0"
+        "d0",     "g0", "g0",    "g0",
+        {"type" : "wl0", "left" : true}, "g0", "g0",    "g0",
+        "g0",     "g0", {"type":"wr0", "left":false},    "p0",
+        "g0",     "g0", {"type":"wr180", "left":true}, "p0"
     ]
 }

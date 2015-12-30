@@ -85,6 +85,6 @@ function setupSocketListeners() {
 
 //ENTRY POINT
 settings.load();
-planloader.load();
+planloader.load(__dirname + "/" + settings.get().lastPlanFile);
 initializeServer();
 setupSocketListeners();

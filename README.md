@@ -15,20 +15,38 @@ Hardware-side, we use custom control boards (also open-source) based on the infa
 We plan on creating packages for Ubuntu (therefore all other Debian based systems) and Arch Linux. You will unfortunately have to install AControl manually on every other system (for now) - but even then, if you already have `npm` and `grunt` installed, it is easy as pie.
 
 #### Automatic install
+*NOT YET*
+
 On Arch Linux we recommend using yaourt or your favorite AUR management tool:
 ```shell
 yaourt -S acontrol
 ```
 If you rather want to install it manually from the AUR, download the tarball and:
 ```shell
-tar -xvzf acontrol.tar.gz
+tar xvzf acontrol.tar.gz
 cd acontrol
 makepkg -s
 pacman -U acontrol*.xz
 ```
 
 #### Manual install
-Fist of all, download the source from GitHub:
+Fist of all, make sure you have `nodejs`, `npm` and `grunt-cli` installed.
+On *Debian-based* systems (Ubuntu etc.), run:
+```shell
+sudo apt-get install nodejs npm grunt-cli
+```
+
+On *Arch-based* systems (Manjaro etc.), run:
+```shell
+sudo pacman -S nodejs npm grunt-cli
+```
+
+On *RHEL-based* systems (Fedora etc.), run:
+```shell
+sudo dnf install nodejs npm grunt-cli
+```
+
+Then download the source from GitHub:
 ```shell
 git clone https://github.com/Arial7/AControl
 cd AControl/app

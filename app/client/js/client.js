@@ -120,10 +120,9 @@
         socket.on("get plan result", function(plan) {
             var i = 0;
             var switchID = 0;
-            for (var x = 0; x < plan.width; x++) {
-                for (var y = 0; y < plan.height; y++) {
-                    var currentTrack = plan.plan[0];
-                    console.log(currentTrack.type);
+            for (var y = 0; y < plan.width; y++) {
+                for (var x = 0; x < plan.height; x++) {
+                    var currentTrack = plan.plan[i];
                     if (currentTrack.type != undefined) {
                         var switch1 = new Switch(x, y, currentTrack.type, currentTrack.left);
                         $controls.append(switch1.getObject());
