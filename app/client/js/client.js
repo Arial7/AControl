@@ -27,7 +27,6 @@
             $('body').addClass('loaded');
         }, 500);
         $activitySpinner.addClass('hidden');
-        console.log('Client initialized');
     }
 
     /**
@@ -44,10 +43,12 @@
      * Sets up all of the socket, click and general event handlers
      */
     function setupListeners() {
-        socket.on('message', function(data) {
-            var message = data;
-            console.log('Message from server: ' + message);
-            //logToConsole(message);
+        socket.on('connect', function() {
+            logToConsole("Connection to server established");
+        });
+
+        socket.on('disconnect', function () {
+            logToConsole("Connection to server lost");
         });
         socket.on('connect port result', function(data) {
             if (data === true) {
@@ -57,19 +58,25 @@
                 logToConsole("Cannot connect to port");
             }
         });
-
-        socket.on('connect', function() {
-            logToConsole("Connection to server established");
-        });
-
-        socket.on('disconnect', function () {
-            logToConsole("Connection to server lost");
-        });
-
         socket.on('reconnect', function() {
             logToConsole("Reconnected to server");
             clearPorts();
             getPorts();
+        });
+        socket.on('switch toggled', function(data) {
+            logToConsole("toggled switch " + data); 
+            $('.switch').each(function() {
+                if ($(this).attr('switchid') == data) {
+                    if ($(this).hasClass("l")) {
+                        $(this).removeClass("l");
+                        $(this).addClass("r");   
+                    }
+                    else {
+                        $(this).removeClass("r");
+                        $(this).addClass("l");
+                    }
+                }
+            });
         });
 
         //The console toggle button and the cookie function
@@ -116,7 +123,7 @@
      * TODO: outsource this method to another file
      */
     function loadTracks() {
-        socket.emit("get plan request");
+        socket.emit("get plan request", "./plan1.acp");
         socket.on("get plan result", function(plan) {
             var i = 0;
             var switchID = 0;
@@ -124,7 +131,7 @@
                 for (var x = 0; x < plan.height; x++) {
                     var currentTrack = plan.plan[i];
                     if (currentTrack.type != undefined) {
-                        var switch1 = new Switch(x, y, currentTrack.type, currentTrack.left);
+                        var switch1 = new Switch(x, y, currentTrack.type, currentTrack.left, switchID);
                         $controls.append(switch1.getObject());
                         switchID++;
                     }
@@ -135,12 +142,15 @@
                     i++;
                 }
             }
+            //Set up the toggle buttons
+            $('.switch').each(function() {
+                $(this).on('click', function(){
+                    socket.emit('toggle switch', $(this).attr('switchid'));
+                });
+            });
         });
 
-        //Set up the toggle buttons
-        $('.track.switch').click(function(){
-            socket.emit('toggle message', $(this).attr('data-id'));
-        });
+        
 
 
     }

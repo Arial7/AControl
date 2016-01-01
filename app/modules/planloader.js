@@ -15,6 +15,13 @@ exports.load = function(filepath) {
 exports.getRaw = function() {
     return plan;
 }
+//TODO: this does not work
+exports.loadAsync = function(filepath, callback) {
+    log.log("Loading plan async: " + filepath);
+    jsonfile.readFile(filepath, function(err, data) {
+        callback(data);   
+    });
+}
 
 
 exports.save = function() {

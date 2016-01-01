@@ -8,11 +8,11 @@ var activePortName;
 
 /**
  * Scan for avaiable serial ports and log them to the console
- * @param httpResult - the HTTP result to write the ports found to
+ * @param callback - called when ports found. Array with ports is passed
  * @return false if no port has been found, else an array holding the ports
  * TODO: refresh the ports from time to time
  */
-exports.getSerialPortsAvailable = function(httpResult) {
+exports.getSerialPortsAvailable = function(callback) {
     //echo out all the serial ports that have been found
     serialPort.list(function(err, ports) {
         //ports is undefined if no port has been found
@@ -30,7 +30,7 @@ exports.getSerialPortsAvailable = function(httpResult) {
                 portString.push({"portName" : port.comName});
             });
 
-            httpResult.send(portString);
+            callback(portString);
 
             return portString;
         }

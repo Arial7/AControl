@@ -1,21 +1,29 @@
 var express       = require('express');
 var io            = require('socket.io');
+var args          = require('command-line-args');
 var serialmanager = require('./modules/serialmanager.js');
 var log           = require('./modules/log.js');
 var settings      = require('./modules/settings.js');
 var planloader    = require('./modules/planloader.js');
-
 var app           = express();
 var server;
 
 var projectRoot   = __dirname;
 
-var getPortsResult; //Holds the HTTP result for getting ports.
+var cliOptions = args([
+    {name : 'simulate', alias : 's', type : Boolean}
+]);
+
+var commandlineargs = cliOptions.parse();
+
 
 /**
  * This function sets up the basic HTTP server to respond to requests
  */
 function initializeServer() {
+    if (commandlineargs.simulate) {
+        log.log("Starting server in simulation mode");
+    }
     //set up the express server to use static dirs
     app.use('/css', express.static(projectRoot + '/client/css'));
     app.use('/js', express.static(projectRoot + '/client/js'));
@@ -28,9 +36,15 @@ function initializeServer() {
     });
     //TODO: read all of the ports
     app.get('/getPorts', function (req, res) {
-        serialmanager.getSerialPortsAvailable(res);
-        //getPortsResult = res;
-        //scanSerialPorts();
+        //if simulate-actions is set, send a fake-port
+        if (commandlineargs.simulate) {
+            res.send([{"portName" : "/dev/null"}]);
+        }
+        else {
+            serialmanager.getSerialPortsAvailable(function(data) {
+                res.send(data);   
+            });
+        }
     });
 
     //echo out the current port and address
@@ -62,9 +76,15 @@ function setupSocketListeners() {
             socket.send(ackToClient);
         });
 
-        socket.on('toggle message', function(data) {
+        socket.on('toggle switch', function(data) {
             log.log("Received toggle message: " + data);
-            socket.send("Toggled: " + data);
+            if (commandlineargs.simulate) {
+                socket.emit("switch toggled", data);
+            }
+            else {
+                log.err("Switch toggling not implemented yet");
+                //TODO: switch toggling in serialmanager
+            }
         });
 
         socket.on('disconnect', function(socket) {
@@ -75,9 +95,11 @@ function setupSocketListeners() {
             log.log("Client wants to connect to port: " + data);
             serialmanager.connectToPort(data, socket);
         });
-
-        socket.on('get plan request', function() {
-            socket.emit('get plan result', planloader.getRaw());   
+        //TODO: implement async loading
+        socket.on('get plan request', function(filepath) {
+            planloader.loadAsync(filepath, function(data) {
+                socket.emit('get plan result', data);   
+            });
         });
     });
 }
