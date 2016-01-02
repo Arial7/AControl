@@ -1,0 +1,39 @@
+include spinner.jade
+doctype html
+html
+    head
+        link(rel="stylesheet" type="text/css" href="/css/style.css")
+        script(src="/js/jquery.js")
+        script(src="/js/editor.js")
+        title AControl - Editor
+    body
+        header
+            h1 AControl - Editor
+            //-+spinner(class="inline activity")
+        main
+            .plan-meta
+                label(for="planWidth") Breite
+                input(type="number" min="5" max="20" value="5" name="planWidth").planWidth
+                label(for="planHeight") Höhe
+                input(type="number" min="5" max="20" value="5" name="planHeight").planHeight
+            .plan
+                a(href).button
+            .editor-controls
+                .buttons
+                    .track.g0
+                    .track.g90
+                    .track.d0
+                    .track.d90
+                    .track.d180
+                    .track.d270
+                    .track.dd0
+                    .track.dd90
+                    .track.a0
+                    .track.a90
+                    .track.a180
+                    .track.a270
+                    .track.p0
+                    .track.p90
+                    .track.p180
+                    .track.p270
+

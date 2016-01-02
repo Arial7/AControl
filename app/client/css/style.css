@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 400;
   color: teal; }
 
 .spinner, .loader .preloader {
@@ -132,7 +132,7 @@ body.loaded .loader {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -124; } }
 .track {
-  background-color: #eee;
+  background-color: #fff;
   background-size: cover;
   background-position: 50% 50%;
   -webkit-transition: background 0.1s ease-in-out;
@@ -144,6 +144,7 @@ body.loaded .loader {
   /* Straight tracks */
   /* Curves / diagonals */
   /* Stoppers */
+  /* Arrow tracks  */
   /* Switches */ }
   @media screen and (max-width: 992px) {
     .track {
@@ -175,6 +176,14 @@ body.loaded .loader {
     background-image: url("/img/tracks/p180.png"); }
   .track.p270 {
     background-image: url("/img/tracks/p270.png"); }
+  .track.a0 {
+    background-image: url("/img/tracks/a0.png"); }
+  .track.a90 {
+    background-image: url("/img/tracks/a90.png"); }
+  .track.a180 {
+    background-image: url("/img/tracks/a180.png"); }
+  .track.a270 {
+    background-image: url("/img/tracks/a270.png"); }
   .track.wl0.l {
     background-image: url("/img/tracks/wl0l.png"); }
   .track.wl0.r {
@@ -349,24 +358,39 @@ header {
   left: 0;
   right: 0;
   height: 5rem;
-  padding: 1rem 40px;
+  padding: 1rem 30px;
   box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
   z-index: 808; }
+  header > * {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 auto;
+        -ms-flex: 1 0 auto;
+            flex: 1 0 auto; }
   header h1 {
     margin: 0;
     height: auto;
     line-height: 1;
     font-size: 2rem; }
+  header a {
+    color: #fff !important;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+    margin-right: 20px; }
   header .ports-dropdown {
-    margin-left: 5%;
     background: #fff;
     color: #000;
     visibility: hidden;
@@ -377,15 +401,11 @@ header {
     position: relative;
     font-size: 1rem;
     height: 2rem;
-    min-width: 200px;
     box-sizing: border-box;
-    -webkit-flex-basis: 200px;
-        -ms-flex-preferred-size: 200px;
-            flex-basis: 200px;
     -webkit-box-flex: 2;
-    -webkit-flex-grow: 2;
-        -ms-flex-positive: 2;
-            flex-grow: 2; }
+    -webkit-flex: 2 0 auto;
+        -ms-flex: 2 0 auto;
+            flex: 2 0 auto; }
     header .ports-dropdown .current {
       line-height: 1; }
     header .ports-dropdown:after {
@@ -402,7 +422,8 @@ header {
               transform: rotateZ(0deg);
       -webkit-transition: -webkit-transform 0.2s ease-in-out;
               transition: transform 0.2s ease-in-out;
-      cursor: pointer; }
+      cursor: pointer;
+      z-index: 2; }
     header .ports-dropdown.visible {
       visibility: visible; }
     header .ports-dropdown.dropped:after {
@@ -449,9 +470,13 @@ header {
     background-image: url("/img/wrench.png");
     background-size: cover;
     cursor: pointer;
-    margin-right: 20px;
     -webkit-transform-origin: top left;
-            transform-origin: top left; }
+            transform-origin: top left;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 2rem;
+        -ms-flex: 0 0 2rem;
+            flex: 0 0 2rem;
+    margin-right: 20px; }
     header .server-settings-toggle.play {
       -webkit-animation-name: wrench;
               animation-name: wrench;
@@ -480,7 +505,11 @@ header {
     width: 2rem;
     background-image: url("/img/settings.png");
     background-size: cover;
-    cursor: pointer; }
+    cursor: pointer;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 2rem;
+        -ms-flex: 0 0 2rem;
+            flex: 0 0 2rem; }
     header .client-settings-toggle.play {
       -webkit-animation-name: settings-rotate;
               animation-name: settings-rotate;
@@ -526,3 +555,74 @@ main {
           transition: visibility 0.2s ease-in-out; }
   .spinner.activity.hidden, .loader .activity.hidden.preloader {
     visibility: hidden; }
+
+.plan-meta {
+  background-color: #eee;
+  padding: 0.5rem 30px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 3rem; }
+  .plan-meta input {
+    margin-right: 20px; }
+
+.editor-controls {
+  position: absolute;
+  right: 0;
+  top: 5rem;
+  width: 10rem;
+  box-sizing: border-box;
+  padding: 1rem 1rem;
+  background: #ccc;
+  height: calc(100% - 5rem );
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center; }
+  .editor-controls .buttons {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+    overflow-y: scroll;
+    z-index: 999; }
+    .editor-controls .buttons .track {
+      position: static;
+      cursor: pointer;
+      margin: 5px; }
+
+.plan {
+  padding: 20px;
+  box-sizing: border-box;
+  width: calc(100% - 10rem);
+  height: calc(100% - 3rem);
+  overflow: auto; }
+  .plan .button {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #333;
+    background-color: #eee;
+    display: inline-block; }
+    .plan .button:hover {
+      background-color: #ccc; }

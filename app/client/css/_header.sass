@@ -8,19 +8,27 @@ header
     left: 0
     right: 0
     height: $header-height
-    padding: 1rem 40px
+    padding: 1rem 30px 
     box-sizing: border-box
     display: flex
+    justify-content: space-between
     align-items: center
     z-index: 808
+  
+    > *
+        flex: 1 0 auto
+   
     h1
         margin: 0
         height: auto
         line-height: 1
         font-size: $dropdown-height
+    a
+        color: #fff !important
+        flex: 0 0 auto
+        margin-right: 20px
 
     .ports-dropdown
-        margin-left: 5%
         background: #fff
         color: #000
         visibility: hidden
@@ -30,11 +38,8 @@ header
         position: relative
         font-size: 1rem
         height: $dropdown-height
-        min-width: 200px
         box-sizing: border-box
-        flex-basis: 200px
-        flex-grow: 2
-
+        flex: 2 0 auto
         .current
             line-height: 1
 
@@ -52,6 +57,7 @@ header
             transform: rotateZ(0deg)
             transition: transform 0.2s ease-in-out
             cursor: pointer
+            z-index: 2
 
         &.visible
             visibility: visible
@@ -97,14 +103,15 @@ header
 
 
     .server-settings-toggle
-        height: $dropdown-height
-        width: $dropdown-height
+        height: 2rem
+        width: 2rem 
         background:
             image: url('/img/wrench.png')
             size: cover
         cursor: pointer
-        margin-right: 20px
         transform-origin: top left
+        flex: 0 0 2rem
+        margin-right: 20px
         &.play
             animation-name: wrench
             animation-duration: .5s
@@ -119,13 +126,13 @@ header
                 transform: rotateZ(30deg)
 
     .client-settings-toggle
-        height: $dropdown-height
-        width: $dropdown-height
+        height: 2rem
+        width: 2rem
         background:
             image: url('/img/settings.png')
             size: cover
         cursor: pointer
-
+        flex: 0 0 2rem
         &.play
             animation-name: settings-rotate
             animation-duration: 1s

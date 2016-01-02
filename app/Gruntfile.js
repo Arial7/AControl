@@ -14,7 +14,8 @@ module.exports = function(grunt) {
                     pretty: true
                 },
                 files: {
-                    'client/pages/main.html': 'client/pages/main.jade'
+                    'client/pages/main.html': 'client/pages/main.jade',
+                    'client/pages/editor.html' : 'client/pages/editor.jade'
                 }
             }
         },

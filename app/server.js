@@ -34,6 +34,10 @@ function initializeServer() {
     app.get('/', function (req, res) {
         res.sendFile('client/pages/main.html', {root : projectRoot});
     });
+    //send the editor page
+    app.get('/editor', function (req, res) {
+        res.sendFile('client/pages/editor.html', {root : __dirname});
+    });
     //TODO: read all of the ports
     app.get('/getPorts', function (req, res) {
         //if simulate-actions is set, send a fake-port

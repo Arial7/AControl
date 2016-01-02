@@ -4,7 +4,6 @@ html
     head
         link(rel="stylesheet" type="text/css" href="/css/style.css")
         title AControl
-        
     body
         .loader
             .title AControl
@@ -15,6 +14,7 @@ html
                 .current Select port
                 .items
             +spinner(class="inline activity")
+            a(href="/editor" target="_blank") Edit plan
             .server-settings-toggle(title="Server settings")
             .client-settings-toggle(title="Client settings")
         main
