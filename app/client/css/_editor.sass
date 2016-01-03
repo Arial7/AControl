@@ -5,18 +5,31 @@ $plan-meta-height: 3rem
     padding: .5rem 30px
     box-sizing: border-box
     width: 100%
-    height: $plan-meta-height 
-    
+    height: $plan-meta-height
+    display: flex
+    justify-content: flex-start
+    align-items: center
+
+    label
+        margin-right: 10px
+
     input
         margin-right: 20px
+
+    a.applyPlanSize
+        height: 2rem
+        width: 2rem
+        background-image: url('/img/check-black.png')
+        background-size: cover
+        cursor: pointer
 
 .editor-controls
     position: absolute
     right: 0
     top: $header-height
-    width: 10rem
-    box-sizing: border-box 
-    padding: 1rem 1rem
+    width: calc(#{$icon-size * 2} + 20px)
+    box-sizing: content-box
+    padding: 0rem .5rem
     background: #ccc
     height: calc(100% - #{$header-height} )
     display: flex
@@ -29,15 +42,15 @@ $plan-meta-height: 3rem
         display: flex
         flex-direction: row
         flex-wrap: wrap
-        overflow-y: scroll
+        overflow-y: auto
         z-index: 999
-        
+
         .track
             position: static
             cursor: pointer
             margin: 5px
 
-.plan 
+.plan
     padding: 20px
     box-sizing: border-box
     width: calc(100% - 10rem)

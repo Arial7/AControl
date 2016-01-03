@@ -2,22 +2,28 @@
 
     var $widthInput = $('input.planWidth'),
         $heightInput = $('input.planHeight'),
+        $applyPlanSizeBtn = $('.applyPlanSize'),
         $planCanvas = $('.plan'),
         $trackChooserButtons = $('.editor-controls .buttons').children();
-       
-     
-    setupEventListeners();
+
+
+    $(function(){
+        setupEventListeners();
+    });
 
 
     function setupEventListeners() {
-        $widthInput.on('change', changePlanSize);
-        $heightInput.on('change', changePlanSize);
-    }
-     
-       
-    function changePlanSize() {
-        console.log($widthInput.val() + "|" + $heightInput.val());
+        $applyPlanSizeBtn.on('click', function() {
+            changePlanSize();
+        });
 
     }
-    
+
+
+    function changePlanSize() {
+        console.log("Changing plan size");
+        console.log("Plan Size: " + $widthInput.val() + "|" + $heightInput.val());
+
+    }
+
 })(jQuery)

@@ -1,27 +1,32 @@
 /*
- *Title:        AControl - Arduino Firmware
- *Author:       Pascal Riesinger
- *Version:      3.x - Suitable for AControl Version 3.x
- *Description:  This is the firmware running on the "master" device of an AControl system.
- *Copyright:    © 2014-2015, Pascal Riesinger. For licence, see https://opensource.org/licenses/MIT
- *              Although you are free to modify and share your version of this software, please mention me
- *              and my Github page (github.com/Arial7)
+ * Title:        AControl - Arduino Firmware
+ * Author:       Pascal Riesinger
+ * Version:      3.x - Suitable for AControl Version 3.x
+ * Description:  This is the firmware running on the "master" device of an AControl system.
+ * Copyright:    © 2014-2015, Pascal Riesinger. For licence, see https://opensource.org/licenses/MIT
+ *               Although you are free to modify and share your version of this software, please mention me
+ *               and my Github page (github.com/Arial7)
  */
 
 
-//TODO: rewrite for the custom ACommand system
 //TODO: rewrite for master-slave operation
+//TODO: load the states array up with some data at initialization (need to get this data from the server or save it in EEPROM)
 
-/*
- *Error Codes:
- *	-E1 : Invalid Data received
- *	-E2 : Invalid Command received
- */
-#include <LiquidCrystal.h>
+#define LANG_EN
+//#define LANG_DE
+
+#ifdef LANG_EN
+    #define MSG_INIT_FINISHED "Successfully initialized"
+    #define MSG_INVALID_COMMAND "Invalid command received:"
+#else ifdef LANG_DE
+    #define MSG_INIT_FINISHED "Initialsierung abgeschlossen"
+    #define MSG_INVALID_COMMAND "Unbekannten Befehl empfangen:"
+#endif
 
 
-//The Baud-Rate, the Arduino uses to communicate
 #define BAUD_RATE 115200
+
+//TODO: Send this as init code
 //How many switches you have connected
 #define SWITCHES 15
 
@@ -32,29 +37,19 @@
 #define MR_PIN 2
 
 //This array holds the stats of the switches
-boolean states[SWITCHES];
+boolean states[SWITCHES * 2];
 
 //These Varaibles are used for serial communication
 String serialInput = "";
 boolean finishedRead = false;
 
-//This sets up the LCD with the following pins
-////LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
-//                RS,E, D4,D5,D6,D7
+bool isConnected = false;
 
-//These Variables hold the statuses etc
-String connectionStatus;
-int lsw;
-
-/*
- *RUN ONCE AT STARTUP
- */
 void setup(){
-    //Set all the neccesary pin modes
-    pinMode(DS_PIN, OUTPUT);
-    pinMode(ST_CP_PIN, OUTPUT);
-    pinMode(SH_CP_PIN, OUTPUT);
-    pinMode(MR_PIN, OUTPUT);
+    //set digital pins 2-7 to OUTPUT
+    DDRD = DDRD | B11111100;
+    //set digital pins 8-13 to OUTPUT
+    DDRB = DDRB | B00111111;
 
     //Set all of the Shift-Register pins to the appropriate default (and clear their contents)
     digitalWrite(MR_PIN, 0);
@@ -62,23 +57,17 @@ void setup(){
     digitalWrite(ST_CP_PIN, 1);
     digitalWrite(MR_PIN, 1);
 
-
-    //Set the status variables to their default
-    connectionStatus = "Getr";
-    lsw = 0;
-
     //Begin the serial communication
     Serial.begin(BAUD_RATE);
-    Serial.println("[AControl] Erfolgreich initialisiert!");
+    Serial.println(MSG_INIT_FINISHED);
 }
-/*
- *RUN CONTINOUSLY
- */
+
+
 void loop(){
     //Get all the available data and then compute it
     getSerial();
-    if (finishedRead){
-        computeData();
+    if (finishedRead) {
+        processCommand();
     }
 }
 
@@ -113,74 +102,86 @@ void getSerial(){
 
 }
 
-void computeData(){
-    //Every ALP-command starts with the string "alp://"
-    if(serialInput.startsWith("alp://cust")){
-        //after the whole custom command, an ID is send. This starts with a "?"
-        int messageIdPosition = serialInput.indexOf('?', 11 );
-        //The custom message is determined by reading the substring between "alp://cust:" and the message ID
-        String customMessage = serialInput.substring(11, messageIdPosition);
+void processCommand() {
+    int idPosition = serialInput.indexOf('?');
+    //Every command has to contain an ID
+    if (idPosition != -1) {
+        int messageID = serialInput.substring(idPosition + 1).toInt();
+        int dataPosition = serialInput.indexOf('-');
+        //If the command contains data
+        String data = (dataPosition != -1) ? serialInput.substring(dataPosition + 1, idPosition) : "";
+        String command = (dataPosition != -1) ? serialInput.substring(0, dataPosition) : serialInput.substring(0, idPosition);
 
-        //#DEPRECATED This was the old protocol and is only available for backwards compatibility
-        //The message for switching a switch starts with PT
-        if(customMessage.startsWith("PT")){
-            processOldProtocol(customMessage);
+
+        //Now process the command
+
+        if (command == "ACK") {
+            reply(true, messageID);
         }
-
-        //This is the new protocol and should always be used!
-        else if(customMessage.startsWith("AC")){
-             processNewProtocol(customMessage.substring(3));
+        else if (command == "ACN") {
+            if (isConnected) {
+                reply(false, messageID);
+            }
+            else {
+                isConnected = true;
+                reply(true, messageID);
+            }
         }
-
-        else if(customMessage == "connect"){
-            connectionStatus = "Verb";
-
+        else if (command == "ADC") {
+            if (isConnected) {
+                isConnected = false;
+                reply(true, messageID);
+            }
+            else {
+                reply(false, messageID);
+            }
         }
-
-        else if(customMessage == "disconnnect"){
-            connectionStatus = "Getr";
-
+        else if (command == "ASW" && data != "") {
+            if (!isConnected) {
+                reply(false, messageID);
+                return;
+            }
+            if (toggleSwitch(data.toInt())) {
+                reply(true, messageID);
+            }
+            else {
+                reply(false, messageID);
+            }
         }
-        /* IF THE COMMAND WAS NOT RECOGNIZED SUCCESFULLY */
-        else{
-            Serial.println("[AControl] Fehlerhaften Befehl empfangen: " + customMessage);
+        else if (command == "AST" && data != "") {
+            int value = data.substring(data.indexOf('~') + 1).toInt();
+            int index = data.substring(0, data.indexOf('~')).toInt();
+            if (index < SWITCHES * 2) {
+                states[index] = value;
+                reply(true, messageID);
+            }
+            else {
+                reply(false, messageID);
+            }
         }
-
+        else {
+            reply(false, messageID);
+            Serial.println(MSG_INVALID_COMMAND + serialInput);
+        }
     }
-    else{
-        Serial.println("[AControl] Fehlerhafte Daten empfangen: " + serialInput);
+    else {
+        Serial.println(MSG_INVALID_COMMAND + serialInput);
     }
+
+
 }
 
-void processNewProtocol(String customMessage){
-    /* New protocol example: AC~12~1?
-     * Explanation: AC->just and identifier for the new protocol (Has already been choped off)
-                    12->The switch id, i.e. the pin to output to the shift registers
-                    1 ->Should it be inverted? If 1, switchID += 1 and switchID will output false
-     */
-
-    int switchID = customMessage.substring(0, (customMessage.indexOf('~'))).toInt();
-    if(customMessage.substring(customMessage.indexOf('~') + 1).toInt() == 1){
-         states[switchID] = false;
-         states[switchID + 1] = true;
+bool toggleSwitch(int switchID) {
+    if (switchID * 2 >= SWITCHES && switchID > 0) {
+        states[switchID * 2] != states[switchID * 2];
+        states[switchID * 2 + 1] != states[switchID * 2 + 1];
+        writeStates();
+        return true;
     }
-    else{
-         states[switchID] = true;
-         states[switchID + 1] = false;
+    else {
+        return false;
     }
 
-    writeStates();
-
-}
-
-void processOldProtocol(String customMessage){
-    Serial.println("[AControl]Altes Protokoll erkannt, bitte aktualisieren Sie ggf. Ihre Software und die Firmware");
-    //this substring is the actual switch number. It starts at the fourth character, because there is a "~" between "PT" and the number
-    int sInt = customMessage.substring(3).toInt();
-    Serial.println("[AControl] Weiche " + String(sInt) + " geschaltet");
-    states[sInt] = !(states[sInt]);
-    writeStates();
-    lsw = sInt;
 }
 
 /*
@@ -199,4 +200,10 @@ void writeStates(){
     }
 
     digitalWrite(ST_CP_PIN, 1);
+}
+/**
+ * Helper function for sending AOK or AKO to the server
+ */
+void reply(bool success, int ID) {
+    Serial.println((success ? String("AOK") : String("AKO"))  + "?" + ID);
 }

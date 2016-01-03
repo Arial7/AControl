@@ -8,25 +8,23 @@ header
     left: 0
     right: 0
     height: $header-height
-    padding: 1rem 30px 
+    padding: 1rem 30px
     box-sizing: border-box
     display: flex
     justify-content: space-between
     align-items: center
     z-index: 808
-  
+
     > *
-        flex: 1 0 auto
-   
+        flex: 0 0 auto
+
     h1
         margin: 0
         height: auto
         line-height: 1
         font-size: $dropdown-height
-    a
-        color: #fff !important
-        flex: 0 0 auto
-        margin-right: 20px
+        margin-right: 30px
+
 
     .ports-dropdown
         background: #fff
@@ -101,10 +99,16 @@ header
                     right: 2.5%
                     bottom: 0
 
+    a.edit
+        height: 2rem
+        margin-right: 20px
+        img
+            height: 2rem
+            width: 2rem
 
     .server-settings-toggle
         height: 2rem
-        width: 2rem 
+        width: 2rem
         background:
             image: url('/img/wrench.png')
             size: cover

@@ -17,13 +17,11 @@ While requests always are in the direction AControl -> ADevice, responses always
 
 - `AKO?<id>`: The command with id `<id>` has not been executed successfully
 
-- `AOK-<data>?<id>`: This is a response with data appended to it. The data can be a simple string (has to *not* include characters '-' and '?') or a list of strings, which would be comma-separated.
-
 
 ### Requests
 - `ACK?<id>` Ping the ADevice. Can be used for heartbeat<br>
 Returns: <br>
-  - `AOK?<id>` - Always 
+  - `AOK?<id>` - Always
 - `ACN?<id>` Request connection.<br>
 Returns: <br>
   - `AOK?<id>` if connection was successful.
@@ -31,7 +29,12 @@ Returns: <br>
 - `ADC?<id>` Request disconnection. You should always request disconnection before terminating the server.<br>
 Returns: <br>
   - `AOK?<id>` if disconnected
+  - `AKO?<id>` if not disconnected (was not connected before)
 - `ASW-<switch>?<id>` Toggle the switch no. `switch`. <br>
-  Returns: <br>
+Returns: <br>
    - `AOK?<id>` if switch could be toggled.
    - `AKO?<id>` if switch could not be toggled (`switch` is out of bounds)
+- `AST-<index>~<value>?<id>` Set specific element in the switches array (temporarily used for setting it up)
+Returns: <br>
+   - `AOK?<id>` if value has been set
+   - `AKO?<id>` if value could not be set (out of bounds) 
