@@ -2,7 +2,7 @@
  * Title:        AControl - Arduino Firmware
  * Author:       Pascal Riesinger
  * Version:      3.x - Suitable for AControl Version 3.x
- * Description:  This is the firmware running on the "master" device of an AControl system.
+ * Description:  This is the firmware running on the "master" device of an AControl ABase system.
  * Copyright:    © 2014-2015, Pascal Riesinger. For licence, see https://opensource.org/licenses/MIT
  *               Although you are free to modify and share your version of this software, please mention me
  *               and my Github page (github.com/Arial7)

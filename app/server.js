@@ -1,12 +1,14 @@
 var express       = require('express');
 var io            = require('socket.io');
 var args          = require('command-line-args');
-var serialmanager = require('./modules/serialmanager.js');
+var SerialManager = require('./modules/serialmanager.js');
 var log           = require('./modules/log.js');
 var settings      = require('./modules/settings.js');
 var planloader    = require('./modules/planloader.js');
 var app           = express();
 var server;
+
+var serialManager = new SerialManager();
 
 var projectRoot   = __dirname;
 
@@ -38,18 +40,18 @@ function initializeServer() {
     app.get('/editor', function (req, res) {
         res.sendFile('client/pages/editor.html', {root : __dirname});
     });
-    //TODO: read all of the ports
     app.get('/getPorts', function (req, res) {
         //if simulate-actions is set, send a fake-port
         if (commandlineargs.simulate) {
             res.send([{"portName" : "/dev/null"}]);
         }
         else {
-            serialmanager.getSerialPortsAvailable(function(data) {
-                res.send(data);   
+            serialManager.getAvailablePorts(function(data) {
+                res.send(data);
             });
         }
     });
+
 
     //echo out the current port and address
     server = app.listen(settings.get().port, function () {
@@ -67,7 +69,9 @@ function setupSocketListeners() {
     //set up the io socket listeners
     io = io.listen(server);
     io.sockets.on('connection', function(socket) {
-
+        serialManager.on('connectedToPort', function(data) {
+            socket.emit('connect port result', data);
+        });
         //Send the data to the client -> this will trigger the message event at the client
         socket.send("Connection with server established");
         log.log('Connection with client established');
@@ -86,7 +90,7 @@ function setupSocketListeners() {
                 socket.emit("switch toggled", data);
             }
             else {
-                log.err("Switch toggling not implemented yet");
+                log.error("Switch toggling not implemented yet");
                 //TODO: switch toggling in serialmanager
             }
         });
@@ -95,16 +99,18 @@ function setupSocketListeners() {
             log.log('Client disconnected');
         });
 
-        socket.on('connect port request', function(data) {
-            log.log("Client wants to connect to port: " + data);
-            serialmanager.connectToPort(data, socket);
+        socket.on('connect port request', function(port) {
+            log.log("Client wants to connect to port: " + port);
+            serialManager.connectTo(port);
         });
         //TODO: implement async loading
         socket.on('get plan request', function(filepath) {
             planloader.loadAsync(filepath, function(data) {
-                socket.emit('get plan result', data);   
+                socket.emit('get plan result', data);
             });
         });
+
+
     });
 }
 

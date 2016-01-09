@@ -1,18 +1,21 @@
 var SerialPort = require('serialport').SerialPort;
 var serialPort = require('serialport');
-var io = require('socket.io');
 var log = require('./log.js');
-var settings = require('./settings.js')
+var settings = require('./settings.js');
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
+
+
+util.inherits(SerialManager, EventEmitter);
+
 
 var activePortName;
+var activePort;
 
-/**
- * Scan for avaiable serial ports and log them to the console
- * @param callback - called when ports found. Array with ports is passed
- * @return false if no port has been found, else an array holding the ports
- * TODO: refresh the ports from time to time
- */
-exports.getSerialPortsAvailable = function(callback) {
+function SerialManager() {
+    EventEmitter.call(this);
+}
+SerialManager.prototype.getAvailablePorts = function(callback) {
     //echo out all the serial ports that have been found
     serialPort.list(function(err, ports) {
         //ports is undefined if no port has been found
@@ -40,34 +43,36 @@ exports.getSerialPortsAvailable = function(callback) {
     });
 }
 
-/**
- * Connect to a serial port and test for a succesful connection
- * @param name - the name of the serial port (/dev/ttyACM0, COM1 f.ex.)
- * @param socket - the socket that requested the connection
- */
-exports.connectToPort = function(name, socket) {
+SerialManager.prototype.connectTo = function(name) {
     log.log("Starting to connect...");
-    activePortName = name;
-    var port = new SerialPort(name.toString(),
+    activePort = new SerialPort(
+        name.toString(),
         {
             baudrate: settings.get().baudrate
-        },
-        function(error) {
-            onPortOpened(error, socket)
         }
-
     );
+    activePort.on('open', function() {
+        writeToPort('ACN');
+        this.emit('connectedToPort', true);
+        log.log("Connected to serial device");
+    }.bind(this));
+    activePort.on('data', function(data) {
+        log.log("[ABase]" + data);
+        this.emit('dataReceived', data);
+    }.bind(this));
 }
+
+SerialManager.prototype.toggleSwitch = function(id) {
+    writeToPort("ASW-" + id);
+}
+
+module.exports = SerialManager;
+
 /**
- * Callback for when the connection to the port has been established
+ * Writes the given command to the serial port. Genrates a random ID and places it in the array;
+ * @param command - String, command to write
  */
-function onPortOpened(error, socket) {
-    if (error === undefined){
-        log.log("Connected to serial port: " + activePortName);
-        socket.emit('connect port result', true);
-    }
-    else {
-        log.error("Failed to connect to port: " + error);
-        socket.emit('connect port result', false);
-    }
+function writeToPort(command) {
+    //TODO: generate random ID
+    activePort.write(command + "?000" + "\n");
 }
