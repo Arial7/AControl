@@ -64,12 +64,12 @@
             getPorts();
         });
         socket.on('switch toggled', function(data) {
-            logToConsole("toggled switch " + data); 
+            logToConsole("toggled switch " + data);
             $('.switch').each(function() {
                 if ($(this).attr('switchid') == data) {
                     if ($(this).hasClass("l")) {
                         $(this).removeClass("l");
-                        $(this).addClass("r");   
+                        $(this).addClass("r");
                     }
                     else {
                         $(this).removeClass("r");
@@ -109,6 +109,13 @@
             $settingsOverlay.toggleClass('open');
             $settingsOverlay.find('.client').toggleClass('open');
         });
+        $header.find('.refresh-ports-list').on('click', function() {
+            $(this).removeClass('play');
+            setTimeout(function() {
+                $(this).addClass('play');
+            }.bind(this), 10);
+            getPorts();
+        });
 
         //The port selection dropdown
         $portsDropdown.on('click', function() {
@@ -137,8 +144,8 @@
                     }
                     else {
                         var track = new Track(x, y, currentTrack);
-                        $controls.append(track.getObject());   
-                    }                         
+                        $controls.append(track.getObject());
+                    }
                     i++;
                 }
             }
@@ -150,7 +157,7 @@
             });
         });
 
-        
+
 
 
     }
@@ -188,7 +195,7 @@
           */
          function showPortsDropdown(data) {
              $portsDropdown.addClass('visible');
-             
+
              for (i = 0; i < data.length; i++) {
                  $portsDropdown.find('.items').append('<div>' + data[i].portName + "</div>");
                  $portsDropdown.find('.items > div').on('click', function() {

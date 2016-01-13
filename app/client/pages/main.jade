@@ -14,9 +14,11 @@ html
                 .current Select port
                 .items
             +spinner(class="inline activity")
-            a(href="/editor" target="_blank" title="Edit plan").edit: img(src="/img/pencil.png")
-            .server-settings-toggle(title="Server settings")
-            .client-settings-toggle(title="Client settings")
+            .toolbar-actions
+                .refresh-ports-list(title="Refresh ports")
+                a(href="/editor" target="_blank" title="Edit plan").edit: img(src="/img/pencil.png")
+                .server-settings-toggle(title="Server settings")
+                .client-settings-toggle(title="Client settings")
         main
             .controls
             

@@ -464,20 +464,24 @@ header {
     header a.edit img {
       height: 2rem;
       width: 2rem; }
-  header .server-settings-toggle {
+  header .toolbar-actions * {
     height: 2rem;
     width: 2rem;
-    background-image: url("/img/wrench.png");
-    background-size: cover;
     cursor: pointer;
+    background-size: cover;
+    background-position: 50%;
+    margin-right: 20px;
+    display: inline-block; }
+  header .toolbar-actions .refresh-ports-list {
+    background-image: url("/img/refresh.png"); }
+    header .toolbar-actions .refresh-ports-list.play {
+      -webkit-animation: settings-rotate 1s 1;
+              animation: settings-rotate 1s 1; }
+  header .toolbar-actions .server-settings-toggle {
+    background-image: url("/img/wrench.png");
     -webkit-transform-origin: top left;
-            transform-origin: top left;
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 2rem;
-        -ms-flex: 0 0 2rem;
-            flex: 0 0 2rem;
-    margin-right: 20px; }
-    header .server-settings-toggle.play {
+            transform-origin: top left; }
+    header .toolbar-actions .server-settings-toggle.play {
       -webkit-animation-name: wrench;
               animation-name: wrench;
       -webkit-animation-duration: 0.5s;
@@ -500,17 +504,9 @@ header {
   66% {
     -webkit-transform: rotateZ(30deg);
             transform: rotateZ(30deg); } }
-  header .client-settings-toggle {
-    height: 2rem;
-    width: 2rem;
-    background-image: url("/img/settings.png");
-    background-size: cover;
-    cursor: pointer;
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 2rem;
-        -ms-flex: 0 0 2rem;
-            flex: 0 0 2rem; }
-    header .client-settings-toggle.play {
+  header .toolbar-actions .client-settings-toggle {
+    background-image: url("/img/settings.png"); }
+    header .toolbar-actions .client-settings-toggle.play {
       -webkit-animation-name: settings-rotate;
               animation-name: settings-rotate;
       -webkit-animation-duration: 1s;
