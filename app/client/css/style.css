@@ -252,6 +252,8 @@ body.loaded .loader {
     margin-right: 10px; }
     .console .messages * {
       margin-left: 10px; }
+      .console .messages *.error {
+        color: #F44336; }
   .console .actions {
     display: -webkit-box;
     display: -webkit-flex;
@@ -269,9 +271,10 @@ body.loaded .loader {
     -webkit-box-align: center;
     -webkit-align-items: center;
         -ms-flex-align: center;
-            align-items: center; }
+            align-items: center;
+    background-size: cover;
+    cursor: pointer; }
     .console .actions .toggle {
-      cursor: pointer;
       width: 48px;
       height: 48px;
       box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
@@ -281,16 +284,14 @@ body.loaded .loader {
       -webkit-transform: rotate(0deg);
               transform: rotate(0deg);
       background-image: url("/img/chevron-down-fab.png");
-      background-size: cover;
       z-index: 2; }
       .console .actions .toggle:hover {
         box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4); }
     .console .actions .clear {
-      cursor: pointer;
       width: 32px;
       height: 32px;
       background-image: url("/img/notification-clear-all.png");
-      background-size: cover;
+      background-size: contain;
       margin-top: 20%; }
   .console.collapsed {
     height: 5rem;
@@ -475,52 +476,44 @@ header {
   header .toolbar-actions .refresh-ports-list {
     background-image: url("/img/refresh.png"); }
     header .toolbar-actions .refresh-ports-list.play {
-      -webkit-animation: settings-rotate 1s 1;
-              animation: settings-rotate 1s 1; }
+      -webkit-animation: full-rotate 1s 1;
+              animation: full-rotate 1s 1; }
   header .toolbar-actions .server-settings-toggle {
     background-image: url("/img/wrench.png");
     -webkit-transform-origin: top left;
             transform-origin: top left; }
     header .toolbar-actions .server-settings-toggle.play {
-      -webkit-animation-name: wrench;
-              animation-name: wrench;
-      -webkit-animation-duration: 0.5s;
-              animation-duration: 0.5s;
-      -webkit-animation-iteration-count: 1;
-              animation-iteration-count: 1;
-      -webkit-animation-delay: 0;
-              animation-delay: 0; }
-@-webkit-keyframes wrench {
-  33% {
-    -webkit-transform: rotateZ(-30deg);
-            transform: rotateZ(-30deg); }
-  66% {
-    -webkit-transform: rotateZ(30deg);
-            transform: rotateZ(30deg); } }
-@keyframes wrench {
-  33% {
-    -webkit-transform: rotateZ(-30deg);
-            transform: rotateZ(-30deg); }
-  66% {
-    -webkit-transform: rotateZ(30deg);
-            transform: rotateZ(30deg); } }
+      -webkit-animation: wiggle-rotate 0.5s 1;
+              animation: wiggle-rotate 0.5s 1; }
   header .toolbar-actions .client-settings-toggle {
     background-image: url("/img/settings.png"); }
     header .toolbar-actions .client-settings-toggle.play {
-      -webkit-animation-name: settings-rotate;
-              animation-name: settings-rotate;
-      -webkit-animation-duration: 1s;
-              animation-duration: 1s;
-      -webkit-animation-iteration-count: 1;
-              animation-iteration-count: 1; }
-@-webkit-keyframes settings-rotate {
+      -webkit-animation: full-rotate 1s 1;
+              animation: full-rotate 1s 1; }
+
+@-webkit-keyframes wiggle-rotate {
+  33% {
+    -webkit-transform: rotateZ(-30deg);
+            transform: rotateZ(-30deg); }
+  66% {
+    -webkit-transform: rotateZ(30deg);
+            transform: rotateZ(30deg); } }
+
+@keyframes wiggle-rotate {
+  33% {
+    -webkit-transform: rotateZ(-30deg);
+            transform: rotateZ(-30deg); }
+  66% {
+    -webkit-transform: rotateZ(30deg);
+            transform: rotateZ(30deg); } }
+@-webkit-keyframes full-rotate {
   0% {
     -webkit-transform: rotateZ(0deg);
             transform: rotateZ(0deg); }
   100% {
     -webkit-transform: rotateZ(360deg);
             transform: rotateZ(360deg); } }
-@keyframes settings-rotate {
+@keyframes full-rotate {
   0% {
     -webkit-transform: rotateZ(0deg);
             transform: rotateZ(0deg); }

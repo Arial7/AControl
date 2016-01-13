@@ -5,6 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "command-line-args": "^2.1.4",
+    "cookies": "^0.5.1",
+    "cookies-js": "^1.2.2",
     "express": "^4.13.3",
     "grunt-autoprefixer": "^3.0.3",
     "jsonfile": "^2.2.3",
