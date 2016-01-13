@@ -59,6 +59,14 @@ function initializeServer() {
 
         log.log('Listening at port ' + port);
     });
+
+    process.on('SIGTERM', function () {
+        serialManager.once('disconnected', function() {
+            log.log("Exiting now...");
+            process.exit(0);
+        });
+        serialManager.disconnect();
+    });
 }
 
 /**
