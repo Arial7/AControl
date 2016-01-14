@@ -10,7 +10,6 @@ util.inherits(SerialManager, EventEmitter);
 
 var commandIDQueue = [];
 
-var activePortName;
 var activePort;
 
 function SerialManager() {
@@ -58,7 +57,6 @@ SerialManager.prototype.connectTo = function(name) {
         log.log("Connected to serial device");
     }.bind(this));
     activePort.on('data', function(data) {
-        log.log("[ABase]" + data);
         this.emit('dataReceived', data);
         handleResponse(data);
     }.bind(this));
@@ -84,12 +82,19 @@ function handleResponse(response) {
     var id = response.substring(idPosition + 1);
 
     if (!success) {
-        log.error("Command with ID " + id + " did not execute successful");
+        for (var i = 0; i < commandIDQueue.length; i++) {
+            var cmd = commandIDQueue[i];
+            if (cmd.id !== id) return;
+            else {
+                var command = cmd.command;
+                log.error("Command '" + command + "' did not execute successful");
+            }
+        }
     }
-    if (id === commandIDQueue[0]) {
+    if (id === commandIDQueue[0].id) { //last command has been executed succesully
         commandIDQueue.shift();
     }
-    else {
+    else { //error while executing last command
         log.error("Unexpected return ID " + id + ". Expected " + commandIDQueue[0]);
     }
 
@@ -101,7 +106,7 @@ function handleResponse(response) {
  */
 function writeToPort(command) {
     var id = randomstring.generate({length: 3, charset: 'numeric'});
-    commandIDQueue.push(id);
+    commandIDQueue.push({'command' : command, 'id' : id});
     activePort.write(command + "?" + id + "\n");
 
 }

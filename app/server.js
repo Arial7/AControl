@@ -83,7 +83,6 @@ function setupSocketListeners() {
         //Send the data to the client -> this will trigger the message event at the client
         socket.send("Connection with server established");
         log.log('Connection with client established');
-
         socket.on('message', function(data) {
             data = JSON.parse(data);
             log.log(data);
@@ -91,7 +90,6 @@ function setupSocketListeners() {
             //Send back an acknowledgement to the client
             socket.send(ackToClient);
         });
-
         socket.on('toggle switch', function(data) {
             log.log("Received toggle message: " + data);
             if (commandlineargs.simulate) {
@@ -102,21 +100,22 @@ function setupSocketListeners() {
                 //TODO: switch toggling in serialmanager
             }
         });
-
         socket.on('disconnect', function(socket) {
             log.log('Client disconnected');
         });
-
         socket.on('connect port request', function(port) {
             log.log("Client wants to connect to port: " + port);
             serialManager.connectTo(port);
         });
-        //TODO: implement async loading
         socket.on('get plan request', function(filepath) {
             planloader.loadAsync(filepath, function(data) {
                 socket.emit('get plan result', data);
             });
         });
+        socket.on('shutdownServer', function() {
+            process.kill(process.pid, 'SIGTERM');
+        });
+
 
 
     });

@@ -116,6 +116,11 @@
             }.bind(this), 10);
             getPorts();
         });
+        $header.find('.shutdown-server-button').on('click', function() {
+            if (confirm ('Are you sure to shutdown the server? It will disconnect every other client.')) {
+                socket.emit("shutdownServer");
+            }
+        });
 
         //The port selection dropdown
         $portsDropdown.on('click', function() {
@@ -134,9 +139,10 @@
         socket.on("get plan result", function(plan) {
             var i = 0;
             var switchID = 0;
-            for (var y = 0; y < plan.width; y++) {
-                for (var x = 0; x < plan.height; x++) {
+            for (var y = 0; y < plan.height; y++) {
+                for (var x = 0; x < plan.width; x++) {
                     var currentTrack = plan.plan[i];
+                    console.log(currentTrack);
                     if (currentTrack.type != undefined) {
                         var switch1 = new Switch(x, y, currentTrack.type, currentTrack.left, switchID);
                         $controls.append(switch1.getObject());

@@ -490,6 +490,8 @@ header {
     header .toolbar-actions .client-settings-toggle.play {
       -webkit-animation: full-rotate 1s 1;
               animation: full-rotate 1s 1; }
+  header .toolbar-actions .shutdown-server-button {
+    background-image: url("/img/power.png"); }
 
 @-webkit-keyframes wiggle-rotate {
   33% {

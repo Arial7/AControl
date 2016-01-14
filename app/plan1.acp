@@ -1,10 +1,10 @@
 {
     "name" : "MEK",
-    "width" : 4,
+    "width" : 22,
     "height" : 4,
     "plan" : [
-        "d0",     "g0", "g0",    "g0",
-        {"type" : "wl0", "left" : true}, "g0", "g0",    "g0",
+        "p180", "g0", "g0", {"type" : "wr0", "left" : true}, {"type" : "wr0", "left" : true}, "g0", "g0", "g0", "g0", "g0", "g0", "g0", "g0", "g0", "g0", "g0", "g0", {"type" : "wl180", "left" : false}, {"type" : "wl180", "left" : true}, "g0", "g0", "p0",
+        "p180", "g0", {"type" : "wr0", "left": false}, "dd90", "d270", "", "", "", "", "", "", "", "", "", "", "", "", "d90", "dd0", {"type" : "wl180", "left" : true}, "g0", "p0",
         "g0",     "g0", {"type":"wr0", "left":false},    "p0",
         "g0",     "g0", {"type":"wr180", "left":true}, "p0"
     ]
