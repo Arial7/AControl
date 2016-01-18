@@ -142,7 +142,6 @@
             for (var y = 0; y < plan.height; y++) {
                 for (var x = 0; x < plan.width; x++) {
                     var currentTrack = plan.plan[i];
-                    console.log(currentTrack);
                     if (currentTrack.type != undefined) {
                         var switch1 = new Switch(x, y, currentTrack.type, currentTrack.left, switchID);
                         $controls.append(switch1.getObject());
