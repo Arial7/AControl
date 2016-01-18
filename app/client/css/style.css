@@ -547,8 +547,11 @@ main {
   .spinner.activity.hidden, .loader .activity.hidden.preloader {
     visibility: hidden; }
 
+main {
+  overflow: auto;
+  position: relative; }
+
 .plan-meta {
-  background-color: #eee;
   padding: 0.5rem 30px;
   box-sizing: border-box;
   width: 100%;
@@ -564,12 +567,19 @@ main {
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
-          align-items: center; }
+          align-items: center;
+  color: #fff; }
   .plan-meta label {
     margin-right: 10px; }
   .plan-meta input {
-    margin-right: 20px; }
-  .plan-meta a.applyPlanSize {
+    margin-right: 20px;
+    background-color: teal;
+    -webkit-appearance: none;
+    border: 0;
+    border-bottom: 1px solid #fff;
+    padding: 1px 1px;
+    overflow: scroll; }
+  .plan-meta .applyPlanSize {
     height: 2rem;
     width: 2rem;
     background-image: url("/img/check-black.png");
@@ -577,14 +587,14 @@ main {
     cursor: pointer; }
 
 .editor-controls {
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 5rem;
-  width: calc(96px + 20px);
+  bottom: 0;
+  width: calc(96px + 40px);
   box-sizing: content-box;
   padding: 0rem 0.5rem;
   background: #ccc;
-  height: calc(100% - 5rem );
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -626,14 +636,32 @@ main {
 .plan {
   padding: 20px;
   box-sizing: border-box;
-  width: calc(100% - 10rem);
-  height: calc(100% - 3rem);
-  overflow: auto; }
+  width: calc(100vw - 10rem);
+  height: calc(100vh - 5rem);
+  overflow: auto;
+  position: relative; }
+  .plan .row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    box-sizing: content-box;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
   .plan .button {
     width: 48px;
     height: 48px;
     border: 1px solid #333;
     background-color: #eee;
-    display: inline-block; }
+    display: inline-block;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 48px;
+        -ms-flex: 0 0 48px;
+            flex: 0 0 48px; }
     .plan .button:hover {
       background-color: #ccc; }
