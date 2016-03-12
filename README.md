@@ -30,29 +30,15 @@ pacman -U acontrol*.xz
 ```
 
 #### Manual install
-Fist of all, make sure you have `nodejs`, `npm` and `grunt-cli` installed.
-On *Debian-based* systems (Ubuntu etc.), run:
-```shell
-sudo apt-get install nodejs npm grunt-cli
-```
-
-On *Arch-based* systems (Manjaro etc.), run:
-```shell
-sudo pacman -S nodejs npm grunt-cli
-```
-
-On *RHEL-based* systems (Fedora etc.), run:
-```shell
-sudo dnf install nodejs npm grunt-cli
-```
-
-Then download the source from GitHub:
+Download the source from GitHub:
 ```shell
 git clone https://github.com/Arial7/AControl
-cd AControl/app
+cd AControl
 npm install
 grunt build
 ```
+
+Note: You must have `nodejs`, `ruby`, `sass`, `grunt-cli` and `coffee-script` installed
 
 ## Usage
 #### Start the server
@@ -60,7 +46,7 @@ We plan on creating app launchers, but for now, you will have to AControl manual
 
 Switch to the AControl directory (where you downloaded and built it).
 ```shell
-cd app && node app.js
+cd server && node server.js
 ```
 
 This starts the server. It should give you a message like `Listening at http://<IP>:3030`
