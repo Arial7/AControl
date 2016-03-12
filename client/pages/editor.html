@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>AControl - Editor</title>
+  </head>
+  <body>
+    <header>
+      <h1>AControl - Editor</h1>
+      <div class="plan-meta">
+        <label for="planWidth">Breite</label>
+        <input type="number" min="0" max="40" value="5" name="planWidth" id="plan-width-input">
+        <label for="planHeight">Höhe</label>
+        <input type="number" min="0" max="40" value="5" name="planHeight" id="plan-height-input">
+        <div class="applyPlanSize icn-btn"></div>
+      </div>
+    </header>
+    <main>
+      <div class="plan"></div>
+      <div class="editor-controls">
+        <div class="buttons">
+          <div class="track g0"></div>
+          <div class="track g90"></div>
+          <div class="track d0"></div>
+          <div class="track d90"></div>
+          <div class="track d180"></div>
+          <div class="track d270"></div>
+          <div class="track dd0"></div>
+          <div class="track dd90"></div>
+          <div class="track a0"></div>
+          <div class="track a90"></div>
+          <div class="track a180"></div>
+          <div class="track a270"></div>
+          <div class="track p0"></div>
+          <div class="track p90"></div>
+          <div class="track p180"></div>
+          <div class="track p270"></div>
+        </div>
+      </div>
+    </main>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/editor.js"></script>
+  </body>
+</html>

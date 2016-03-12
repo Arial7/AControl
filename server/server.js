@@ -27,18 +27,18 @@ function initializeServer() {
         log.log("Starting server in simulation mode");
     }
     //set up the express server to use static dirs
-    app.use('/css', express.static(projectRoot + '/client/css'));
-    app.use('/js', express.static(projectRoot + '/client/js'));
-    app.use('/img', express.static(projectRoot + '/client/img'));
-    app.use('/fonts', express.static(projectRoot + '/client/fonts'));
+    app.use('/css', express.static(settings.get().clientDir + '/css'));
+    app.use('/js', express.static(settings.get().clientDir + '/js'));
+    app.use('/img', express.static(settings.get().clientDir + '/img'));
+    app.use('/fonts', express.static(settings.get().clientDir + '/fonts'));
 
     //send the page over, if the user requests a connection
     app.get('/', function (req, res) {
-        res.sendFile('client/pages/main.html', {root : projectRoot});
+        res.sendFile(settings.get().clientDir + '/pages/main.html');
     });
     //send the editor page
     app.get('/editor', function (req, res) {
-        res.sendFile('client/pages/editor.html', {root : __dirname});
+        res.sendFile(settings.get().clientDir + '/pages/editor.html');
     });
     app.get('/getPorts', function (req, res) {
         //if simulate-actions is set, send a fake-port
