@@ -8,17 +8,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-        jade: {
-            compile: {
-                options: {
-                    pretty: true
-                },
-                files: {
-                    'client/pages/main.html': 'client/pages/main.jade',
-                    'client/pages/editor.html' : 'client/pages/editor.jade'
-                }
-            }
-        },
         autoprefixer: {
             dist: {
                 files: {
@@ -30,18 +19,12 @@ module.exports = function(grunt) {
             css: {
                 files: 'client/css/*.sass',
                 tasks: ['sass', 'autoprefixer']
-            },
-            jade : {
-                files: 'client/pages/*.jade',
-                tasks: ['jade']
             }
-
         }
     });
     grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.registerTask('default',['watch']);
-    grunt.registerTask('build', ['sass', 'autoprefixer', 'jade']);
+    grunt.registerTask('build', ['sass', 'autoprefixer']);
 }
