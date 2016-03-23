@@ -1,10 +1,20 @@
 module.exports = function(grunt) {
+    require('time-grunt')(grunt);
+    require('grunt-task-loader')(grunt);
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        sass: {
-            dist: {
+        coffee: {
+            compile: {
                 files: {
-                    'client/css/style.css' : 'client/css/style.sass'
+                    'client/js/main.js'    : 'client/src/coffee/main.coffee',
+                    'client/js/dialogs.js' : 'client/src/coffee/dialogs.coffee'
+                }
+            }
+        },
+        sass: {
+            debug: {
+                files: {
+                    'client/css/style.css' : 'client/src/sass/style.sass'
                 }
             }
         },
@@ -17,14 +27,15 @@ module.exports = function(grunt) {
         },
         watch: {
             css: {
-                files: 'client/css/*.sass',
+                files: 'client/src/sass/*.sass',
                 tasks: ['sass', 'autoprefixer']
+            },
+            coffee: {
+                files: 'client/src/coffee/*.coffee',
+                tasks: ['coffee']
             }
         }
     });
-    grunt.loadNpmTasks('grunt-autoprefixer');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.registerTask('default',['watch']);
-    grunt.registerTask('build', ['sass', 'autoprefixer']);
+    grunt.registerTask('build', ['sass', 'autoprefixer', 'coffee']);
 }
