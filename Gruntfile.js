@@ -1,21 +1,25 @@
 module.exports = function(grunt) {
+    require('time-grunt')(grunt);
+    require('grunt-task-loader')(grunt);
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        sass: {
-            dist: {
+        coffee: {
+            compile: {
                 files: {
-                    'client/css/style.css' : 'client/css/style.sass'
+                    'client/js/main.js'    : 'client/src/coffee/main.coffee',
+                    'client/js/dialogs.js' : 'client/src/coffee/dialogs.coffee',
+
+                    'server/server.js'     : 'server/src/server.coffee',
+                    'server/log.js'        : 'server/src/log.coffee',
+                    'server/planloader.js' : 'server/src/planloader.coffee',
+                    'server/serialmanager.js': 'server/src/serialmanager.coffee'
                 }
             }
         },
-        jade: {
-            compile: {
-                options: {
-                    pretty: true
-                },
+        sass: {
+            debug: {
                 files: {
-                    'client/pages/main.html': 'client/pages/main.jade',
-                    'client/pages/editor.html' : 'client/pages/editor.jade'
+                    'client/css/style.css' : 'client/src/sass/style.sass'
                 }
             }
         },
@@ -28,20 +32,15 @@ module.exports = function(grunt) {
         },
         watch: {
             css: {
-                files: 'client/css/*.sass',
+                files: 'client/src/sass/*.sass',
                 tasks: ['sass', 'autoprefixer']
             },
-            jade : {
-                files: 'client/pages/*.jade',
-                tasks: ['jade']
+            coffee: {
+                files: ['client/src/coffee/*.coffee', 'server/src/*.coffee'],
+                tasks: ['newer:coffee']
             }
-
         }
     });
-    grunt.loadNpmTasks('grunt-autoprefixer');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.registerTask('default',['watch']);
-    grunt.registerTask('build', ['sass', 'autoprefixer', 'jade']);
+    grunt.registerTask('build', ['sass', 'autoprefixer', 'coffee']);
 }
