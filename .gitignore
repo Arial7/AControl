@@ -53,6 +53,7 @@ tags
 ### Sass ###
 .sass-cache/
 *.css.map
+*.css
 
 
 ### grunt ###
