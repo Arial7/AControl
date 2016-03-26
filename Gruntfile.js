@@ -7,7 +7,12 @@ module.exports = function(grunt) {
             compile: {
                 files: {
                     'client/js/main.js'    : 'client/src/coffee/main.coffee',
-                    'client/js/dialogs.js' : 'client/src/coffee/dialogs.coffee'
+                    'client/js/dialogs.js' : 'client/src/coffee/dialogs.coffee',
+
+                    'server/server.js'     : 'server/src/server.coffee',
+                    'server/log.js'        : 'server/src/log.coffee',
+                    'server/planloader.js' : 'server/src/planloader.coffee',
+                    'server/serialmanager.js': 'server/src/serialmanager.coffee'
                 }
             }
         },
@@ -31,8 +36,8 @@ module.exports = function(grunt) {
                 tasks: ['sass', 'autoprefixer']
             },
             coffee: {
-                files: 'client/src/coffee/*.coffee',
-                tasks: ['coffee']
+                files: ['client/src/coffee/*.coffee', 'server/src/*.coffee'],
+                tasks: ['newer:coffee']
             }
         }
     });
