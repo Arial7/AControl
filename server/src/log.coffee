@@ -88,7 +88,7 @@ class Log
             }
             writeStream.once 'open', () =>
                 async.each @writingQueue
-                ,(message, callback) =>
+                ,(message, callback) ->
                     writeStream.once 'error', (error) ->
                         callback error
                     writeStream.write message + '\n'
