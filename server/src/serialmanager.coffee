@@ -1,7 +1,6 @@
 serialPort   = require "serialport"
 SerialPort   = serialPort.SerialPort
 Log          = require "./log.js"
-settings     = require "./settings.js"
 util         = require "util"
 EventEmitter = require("events").EventEmitter
 randomstring = require "randomstring"
@@ -17,6 +16,9 @@ class SerialManager
         EventEmitter.call @
         @log = new Log()
         @commandIDQueue = []
+
+        # TODO: read this from settings file
+        @BAUDRATE = 115200
 
     # Queries the system for available serial ports to connect to.
     # Note that it cannot detect, whether an ADevice is connected to
@@ -45,7 +47,7 @@ class SerialManager
     # @emits connected - After the connection has been established.
     connect: (name) ->
         @log.info "SerialManager", "Connecting to #{name}"
-        @activePort = new SerialPort name, {baudrate: settings.get().baudrate}
+        @activePort = new SerialPort name, {baudrate: @BAUDRATE}
         @activePort.on "open", =>
             writeToPort "ACN"
             @emit "connected", true
@@ -105,4 +107,4 @@ class SerialManager
 
 
 util.inherits SerialManager, EventEmitter
-module.exports SerialManager
+module.exports = SerialManager

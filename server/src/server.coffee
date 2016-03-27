@@ -3,9 +3,8 @@ io      = require "socket.io"
 args    = require "command-line-args"
 path    = require "path"
 
-SerialManager = require "./modules/serialmanager.js"
+SerialManager = require "./serialmanager.js"
 Log           = require "./log.js"
-settings      = require "./modules/settings.js"
 PlanLoader    = require "./planloader.js"
 
 # Initialize global objects
@@ -13,6 +12,11 @@ app = express()
 serialManager = new SerialManager()
 planLoader = new PlanLoader()
 @log = new Log()
+# TODO: read this from settings file
+PORT = 3030
+
+# The client directory should be one level up
+clientDir = path.resolve "../client/"
 
 # Parse command line arguments
 commandLineOptions = args
@@ -27,13 +31,13 @@ setupSimulationMode = =>
 # Setup up the static resource paths and other routes
 setupRoutes = =>
     # TODO: replace the settings path with a parsed relative path
-    app.use "/css" , express.static "#{settings.get().clientDir}/css"
-    app.use "/js"  , express.static "#{settings.get().clientDir}/js"
-    app.use "/img" , express.static "#{settings.get().clientDir}/img"
-    app.use "/font", express.static "#{settings.get().clientDir}/font"
+    app.use "/css" , express.static "#{clientDir}/css"
+    app.use "/js"  , express.static "#{clientDir}/js"
+    app.use "/img" , express.static "#{clientDir}/img"
+    app.use "/font", express.static "#{clientDir}/font"
 
     app.get "/", (req, res) ->
-        res.sendFile "#{settings.get().clientDir}/pages/main.html"
+        res.sendFile "#{clientDir}/pages/main.html"
 
     app.get "/ports", (req, res) ->
         # If simulation mode is enabled, send a fake port
@@ -80,7 +84,7 @@ setupEventListeners = =>
 
 setupServer = =>
     # Start listening
-    port = process.env.PORT || settings.get().port
+    port = process.env.PORT || PORT
     @server = app.listen port, =>
         @log.info "Init", "Listening on port #{port}"
        
@@ -98,8 +102,7 @@ shutdownServer = =>
 
 
 # ENTRY POINT
-settings.load()
-planloader.load __dirname + "/" + settings.get().lastPlanFile
+# TODO: save the last plan file in the settings
 setupSimulationMode() if argv.simulate
 setupRoutes()
 setupServer()
