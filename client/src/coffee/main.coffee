@@ -3,7 +3,6 @@ do($ = jQuery) ->
     @socket = io()
     @mainMenu = $ 'nav#main-menu'
     @portListParent = @mainMenu.find '#port-list-parent'
-    @logList = $ ".log-list"
     @settings = []
 
     # Initialize the client base, when the page has loaded

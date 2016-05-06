@@ -1,3 +1,5 @@
+@logList = $ ".log-list"
+
 # Creates message boxes in the logging list. Can be used for
 # debugging and common messages.
 # @param message - String to be displayed
