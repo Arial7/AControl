@@ -1,9 +1,9 @@
 do($ = jQuery) ->
     
     @socket = io()
-    @mainMenu = $ 'nav#main-menu'
-    @portListParent = @mainMenu.find '#port-list-parent'
     @settings = []
+
+    @portsRadioList = new MenuRadioList "Port"
 
     # Initialize the client base, when the page has loaded
     $ ->
@@ -18,10 +18,8 @@ do($ = jQuery) ->
     loadPlan = ->
         console.log "Loading plan..."
 
-    initSettingsView = ->
+    initSettingsView = =>
         $body = $ "body"
-
-        portsRadioList = new MenuRadioList "Port"
 
         menuBar = new MenuBar "AControl"
         menuBar.attachTo $body
@@ -36,7 +34,9 @@ do($ = jQuery) ->
         menuBar.appendElement new MenuItem "Connection", [
             new MenuButton "Connect", connectToPort
             new MenuButton "Disconnect", disconnectFromPort, true
-            portsRadioList
+            @portsRadioList
+            new MenuDivider
+            new MenuButton "Refresh", loadPorts
         ]
 
         menuBar.appendElement new MenuItem "Tools", [
@@ -67,38 +67,18 @@ do($ = jQuery) ->
     # available port to connect to.
     # After getting a positive response, updatePortList() is called
     loadPorts = =>
-        # Clears the children of the port list, afterwards add the
-        # new children.
-        updatePortList = (data) =>
-            @portListParent.children().empty()
-            @portListParent.html "Ports"
-            portList = document.createElement "ul"
-            $portList = $ portList
-            for port in data
-                $portList.append "<li>#{port.portName}</li>"
-            
-            $portList.find("li").on "click", ->
-                selectActivePort this.innerHTML
-
-            @portListParent.append $portList
-
         # Send the AJAX request
         $.ajax {
             url: "/ports"
             type: "GET"
             dataType: "json"
-            success: (data) ->
-                updatePortList data
+            success: (data) =>
+                @portsRadioList.empty()
+                for port in data
+                    new RadioButton port.portName, @portsRadioList
             error: (err) =>
                 @log err, true
         }
-    
-    # Selects the currently active port, to be used later while
-    # connecting.
-    selectActivePort = (port) =>
-        @currentPort = port
-        settingsChanged()
-
 
 
     # ACTIONS -----------------------------------------------------
@@ -113,10 +93,10 @@ do($ = jQuery) ->
             @log "Shutting down Server..."
             confirmationDialog.close()
 
-        confirmationDialog = new Dialog "Do you really want to shutdown 
-            the server? This will disconnect all other clients and kill 
+        confirmationDialog = new Dialog "Do you really want to shutdown
+            the server? This will disconnect all other clients and kill
             the connection to the ABase. Note that restarting the server
-            might take some time, so killing it while trains are rolling 
+            might take some time, so killing it while trains are rolling
             could be dangerous."
         confirmationDialog.setTitle "Shutdown Server"
         confirmationDialog.setNegativeAction shutdown, "OK"
@@ -130,6 +110,7 @@ do($ = jQuery) ->
     # specified port.
     @connectToPort = =>
         @log "Connecting to ABase..."
+        @log "Selecetd port is: #{@portsRadioList.getSelectedValue()}"
     
     # Handler for 'Connection/Disconnect'
     # Sends the disconnect request to the server.
@@ -142,7 +123,7 @@ do($ = jQuery) ->
         # TODO: reimplement the plan editor
         @log "Editing Plan..."
     
-    # Hanlder for 'File/Load Plan'
+    # Handler for 'File/Load Plan'
     # Shows a dialog to the user, asking for a plan file to be
     # opened.
     @loadPlan = =>

@@ -117,9 +117,55 @@ class MenuCheckbox extends UIElement
         @action @checked
 
 class MenuRadioList extends UIElement
-    constructor: (@label, @items) ->
+    constructor: (@label) ->
         super()
         @$.addClass "menu-radiolist"
         @$.text @label
+        @list = $ "<ul class='menu-radiolist-list'></ul>"
+        @$.append @list
+        @items = []
 
+    addItem: (item) ->
+        @items.push item
+        @list.append item.$
 
+    addItems: (items) ->
+        for item in items
+            @items.push item
+            @list.append item.$
+
+    getSelectedItem: ->
+        for item in @items
+            if item.selected
+                return item
+
+    getSelectedValue: ->
+        for item in @items
+            if item.selected
+                return item.text
+
+    empty: ->
+        @items = []
+        @list.empty()
+
+class RadioButton extends Button
+    constructor: (@text, @parent) ->
+        super @text
+        @$.addClass "radio-button"
+        @parent.addItem @
+        @on "click", @click
+
+    attachTo: (parent) ->
+        @parent = parent
+
+    deselect: ->
+        @selected = false
+        @$.removeClass "selected"
+
+    click: =>
+        item.deselect() for item in @parent.items
+        @selected = true
+        @$.addClass "selected"
+        
+        
+    
