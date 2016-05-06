@@ -11,46 +11,40 @@ do($ = jQuery) ->
         initBase()
     
     # Initialize base system, such as the settings, load the ports
-    initBase = =>
+    initBase = ->
         initSettingsView()
         setupSocketListeners()
         loadPorts()
 
-    # Initialize the settings inside of the main navigation
-    initSettingsView = =>
-        $settings = @mainMenu.children().find('li').each (i) =>
-            self = @mainMenu.children().find('li').eq i
-            $this = $ self
-            # Save the settings state, this will be used for
-            # updating the views
-            settingName = $this.attr "id"
-            # Note that dividers do not have an ID
-            if settingName?
-                settingName = settingName.substring 2
-                @settings.push
-                    name: settingName
-                    disabled: $this.attr("data-disabled")?
-                    action: $this.attr "data-action"
-                    type: $this.attr "data-type"
+    loadPlan = ->
+        console.log "Loading plan..."
 
-            # Add the disabled class - disabling pointer events
-            if $this.attr("data-disabled")?
-                $this.addClass "disabled"
-            
-            # Add the type's class for styling
-            type = $this.attr "data-type"
-            $this.addClass type
+    initSettingsView = ->
+        $body = $ "body"
 
-            if type is "button"
-                actionName = $this.attr "data-action"
-                $this.on "click", @[actionName]
-            
-            # TODO: handle checkboxes
+        portsRadioList = new MenuRadioList "Port"
 
-    # Should be called when one or more settings have been changed.
-    # This will update the views accordingly.
-    settingsChanged = =>
+        menuBar = new MenuBar "AControl"
+        menuBar.attachTo $body
 
+        menuBar.appendElement new MenuItem "File", [
+            new MenuButton "Load Plan", loadPlan
+            new MenuButton "Edit Plan", editPlan
+            new MenuDivider
+            new MenuButton "Shutdown Server", shutdownServer
+        ]
+
+        menuBar.appendElement new MenuItem "Connection", [
+            new MenuButton "Connect", connectToPort
+            new MenuButton "Disconnect", disconnectFromPort, true
+            portsRadioList
+        ]
+
+        menuBar.appendElement new MenuItem "Tools", [
+            new MenuButton "Settings", null, true
+            new MenuButton "Help", null, true
+        ]
+     
     # Connect common socket events to their handlers.
     # Note that specialized events might be listened to from
     # another location.
@@ -71,7 +65,7 @@ do($ = jQuery) ->
             @log message
 
     # Sends an AJAX request to the server, asking for a list of the
-    # available port to connect to. 
+    # available port to connect to.
     # After getting a positive response, updatePortList() is called
     loadPorts = =>
         # Clears the children of the port list, afterwards add the
@@ -91,7 +85,7 @@ do($ = jQuery) ->
 
         # Send the AJAX request
         $.ajax {
-            url: "/getPorts"
+            url: "/ports"
             type: "GET"
             dataType: "json"
             success: (data) ->

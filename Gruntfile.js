@@ -5,10 +5,15 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         coffee: {
             compile: {
+                options: {
+                    join: true
+                },
                 files: {
-                    'client/js/main.js'    : 'client/src/coffee/main.coffee',
-                    'client/js/dialogs.js' : 'client/src/coffee/dialogs.coffee',
-
+                    'client/js/main.js' : [
+                        'client/src/coffee/ui-elements.coffee',
+                        'client/src/coffee/dialogs.coffee',
+                        'client/src/coffee/main.coffee'
+                    ],
                     'server/server.js'     : 'server/src/server.coffee',
                     'server/log.js'        : 'server/src/log.coffee',
                     'server/planloader.js' : 'server/src/planloader.coffee',

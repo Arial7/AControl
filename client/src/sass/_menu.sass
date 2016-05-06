@@ -1,0 +1,78 @@
+.menu-bar
+  background-color: $primary
+  color: #fff
+  padding: .5rem 5%
+  width: 100%
+  
+  > h2
+    font-size: 2.5rem
+    margin: 5px 30px 5px 0
+
+  > *
+    margin-right: 20px
+
+
+  .menu-item 
+    position: relative
+    cursor: pointer
+    font-size: 1.2rem
+  
+    &::selection
+      background-color: transparent
+
+    ul
+      position: absolute
+      opacity: 0
+      visibility: hidden
+      transform: translate3d(0, -20px, 0) scaleY(.9) scaleX(.8)
+      transform-origin: left top 
+      transition: all .15s ease-in-out
+      background-color: #fff
+      padding: .5rem 1rem
+      margin: 0
+      box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.3)
+      color: #000
+      font-size: 0.9rem
+      cursor: default
+
+      > *
+        padding: 5px
+        margin: 5px 0
+        white-space: nowrap 
+
+    &.dropped > ul
+      opacity: 1
+      visibility: visible
+      transform: translate3d(0, 0, 0) scaleY(1) scaleX(1)
+      z-index: 999
+      
+
+    .menu-button
+      background: transparent
+      color: #000
+      line-height: 1.3
+      text-transform: none
+      
+      &.disabled
+        color: $dividers
+      
+      &::selection
+        background-color: transparent !important
+
+    .menu-divider
+      height: 1px
+      background: $dividers
+      padding: 0 !important
+
+
+    .menu-radiolist
+      position: relative
+      cursor: pointer
+      &::after
+        content: '‣'
+        position: absolute
+        right: 0
+        top: 50%
+        transform: translateY(-50%)
+        color: $dividers
+

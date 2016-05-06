@@ -1,59 +1,19 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <title>AControl</title>
-  </head>
-  <body>
-      <header>
-        <h1>AControl</h1>
-        <nav id="main-menu">
-            <li class="has-dropdown">
-                File
-                <ul>
-                    <li id="s-loadPlan" data-type="button" 
-                        data-action="loadPlan" data-disabled>Load&nbsp;Plan</li>
-                    <li id="s-editPlan" data-type="button" 
-                        data-action="editPlan">Edit&nbsp;Plan</li>
-                    <li data-type="divider"></li>
-                    <li id="s-shutdownServer" data-type="button" 
-                        data-action="shutdownServer">Shutdown&nbsp;Server</li>
-                </ul>
-            </li>
-            <li class="has-dropdown">
-                Connection
-                <ul>
-                    <li id="s-connect" data-type="button" 
-                        data-action="connectToPort">Connect</li>
-                    <li id="s-disconnect" data-type="button" 
-                        data-action="dicsonnectFromPort" 
-                        data-disabled>Disconnect</li>
-                    <li data-type="radiolist" id="port-list-parent">Port</li>
-                </ul>
-            </li>
-            <li class="has-dropdown">
-                Settings
-                <ul>
-                    <h2>Client</h2>
-                    <li id="s-autoLoadPlan" data-type="checkbox"
-                        data-value="false">Auto-Load&nbsp;last&nbsp;Plan</li>
-                    <h2>Server</h2>
-                    <li id="s-serverPort" data-type="input"
-                        data-value="3030">Port</li>
-                    <li id="s-serverBaudrate" data-type="input"
-                        data-value="154200">Baudrate</li>
-                </ul>
-            </li>
-        </nav>
-    </header>
-    <div class="log-list"></div>
-    <div class="controls"></div>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <title>AControl</title>
+        <script src="/js/lib/jquery.js"></script>
+        <script src="/js/lib/cookies-2.0.4.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/track.js"></script>
 
-    <script src="/js/lib/jquery.js"></script>
-    <script src="/js/lib/cookies-2.0.4.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/track.js"></script>
-    <script src="/js/dialogs.js"></script>
-    <script src="/js/main.js"></script>
-  </body>
+    </head>
+    <body>
+        <div class="log-list"></div>
+        <div class="controls"></div>
+
+        <script src="/js/main.js"></script>
+
+    </body>
 </html>
