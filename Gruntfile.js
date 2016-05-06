@@ -12,6 +12,7 @@ module.exports = function(grunt) {
                     'client/js/main.js' : [
                         'client/src/coffee/ui-elements.coffee',
                         'client/src/coffee/dialogs.coffee',
+                        'client/src/coffee/log.coffee',
                         'client/src/coffee/main.coffee'
                     ],
                     'server/server.js'     : 'server/src/server.coffee',

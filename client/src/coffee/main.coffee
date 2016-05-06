@@ -100,26 +100,6 @@ do($ = jQuery) ->
         @currentPort = port
         settingsChanged()
 
-    # Creates message boxes in the logging list. Can be used for
-    # debugging and common messages.
-    # @param message - String to be displayed
-    # @param error - Optional. If true, the box is displayed with a
-    # red background.
-    @log = (message, error) =>
-        messageBox = document.createElement "div"
-        $messageBox = $ messageBox
-        $messageBox.addClass "log-message"
-        $messageBox.addClass "log-error" if error? and error is true
-        messageBox.innerHTML = message
-
-        @logList.append $messageBox
-
-        setTimeout ->
-            $messageBox.addClass "done"
-            setTimeout ->
-                $messageBox.remove()
-            , 700
-        , 5000
 
 
     # ACTIONS -----------------------------------------------------

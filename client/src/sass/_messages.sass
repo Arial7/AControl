@@ -1,5 +1,5 @@
 .log-list
-  top: $header-height
+  top: #{$header-height - 1rem}
   right: 0
   bottom: 0
   min-width: 100px
@@ -9,29 +9,29 @@
   overflow-x: hidden
 
   .log-message
-    margin: 1rem 1rem
+    box-sizing: border-box
     background-color: #fff
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2)
-    padding: 1rem 2rem
+    padding: 0 2rem
     color: rgba(0, 0, 0, 0.8)
-    width: 200px
+    width: 250px
     z-index: 980
     text-align: left
-    animation: slide-in-right .5s
-    transition: all .3s ease-in-out, opacity .3s ease-in-out, visibility .3s ease-in-out, height .5s ease-in-out
+    transition: all .3s ease-in-out
+    height: 0
+    margin: 0 .5rem
+    visibility: hidden
+    opacity: 0
 
     &.log-error
       background-color: rgb(245, 90, 90)
 
-    &.done
-      opacity: 0
-      visibility: hidden
-
+    &.show
+      height: auto
+      margin: 1rem .5rem
+      padding: 1rem 2rem
+      visibility: visible
+      opacity: 1
   
 
-@keyframes slide-in-right
-  0%
-    transform: translateX(200%)
-  100%
-    transform: translateX(0)
 
