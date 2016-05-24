@@ -1,0 +1,15 @@
+// Overrides the default button
+.menu-button
+  background: transparent
+  color: $text
+  line-height: 1.3
+  text-transform: none
+
+  // Fix double clicking
+  &::selection
+    background-color: transparent !important
+
+  &.disabled
+    color: $text-disabled
+    background: transparent !important
+
