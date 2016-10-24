@@ -1,0 +1,20 @@
+mixin drawer-link(url, icon, text)
+    a.mdl-navigation__link(href=url)
+        | <i class="material-icons" role="presentation">#{icon}</i>
+        | #{text}
+
+.ac-drawer.mdl-layout__drawer.mdl-color--blue-grey-900.mdl-color-text--blue-grey-50
+    header
+        h3 AControl
+        div.ac-connection-status-container.flex-container
+            i.ac-connection-status-icon.material-icons sync
+            span.ac-connection-status Verbunden
+
+    nav.mdl-navigation.mdl-color--blue-grey-800
+        +drawer-link("/", "home", "Home")
+        +drawer-link("", "grid_on", "Plan")
+        +drawer-link("", "mode_edit", "Editor")
+        +drawer-link("/einstellungen", "settings", "Einstellungen")
+        .mdl-layout-spacer
+        +drawer-link("", "help_outline", "Hilfe")
+

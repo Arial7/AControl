@@ -1,0 +1,25 @@
+doctype html
+html(lang="de")
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0")
+        title AControl #{acontrolVersion}
+        link(rel="stylesheet" href="/nm/mdl/material.min.css")
+        script(async src="/nm/mdl/material.min.js")
+        script(async src="/nm/fetch/fetch.js")
+        script(src="/nm/jquery/jquery.min.js")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" )
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en")
+        link(rel="stylesheet" href="/css/style.css")
+    body
+        .mdl-layout.mdl-js-layout.mdl-layout--fixed-header.mdl-layout--fixed-drawer
+            header.mdl-layout__header.mdl-color--grey-100.mdl-color-text--grey-600
+                .mdl-layout__header-row
+                    block headerTitle
+                    .mdl-layout-spacer
+            include ./drawer.pug
+            main.mdl-layout__content
+                .page-content
+                    block main
+
+        script(async src="/js/app.js")

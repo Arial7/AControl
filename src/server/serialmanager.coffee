@@ -1,6 +1,6 @@
 serialPort   = require "serialport"
 SerialPort   = serialPort.SerialPort
-Log          = require "./log.js"
+Log          = require "loggos"
 util         = require "util"
 EventEmitter = require("events").EventEmitter
 randomstring = require "randomstring"
@@ -39,7 +39,7 @@ class SerialManager
                     portsArray = []
                     portsArray.push {portName: port.comName} for port in ports
                     callback portsArray
-    
+
     # Establishes a connection to a serial device (hopefully an
     # ADevice) and sets up the basic listeners.
     # @param name - The name of the serial device (should be like
@@ -76,7 +76,7 @@ class SerialManager
     # @param response - The raw response string sent by the ADevice.
     handleResponse: (response) ->
         response = response.toString().replace /^\s+|\s+$/g, ''
-        
+
         idPosition = response.indexOf "?"
         # FIXME: This will not work
         success = (response.substring 0, idPosition is "AOK") ? true: false

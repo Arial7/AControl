@@ -4,7 +4,7 @@ args    = require "command-line-args"
 path    = require "path"
 
 SerialManager = require "./serialmanager.js"
-Log           = require "./log.js"
+Log           = require "loggos"
 PlanLoader    = require "./planloader.js"
 
 # Initialize global objects
@@ -16,7 +16,7 @@ planLoader = new PlanLoader()
 PORT = 3030
 
 # The client directory should be one level up
-clientDir = path.resolve "../client/"
+clientDir = path.resolve "./bin/client/"
 
 # Parse command line arguments
 commandLineOptions = args
@@ -71,10 +71,10 @@ setupSocketListeners = =>
 
         socket.on "shutdown server", ->
             shutdownServer()
-        
+
         socket.on "disconnect", =>
             @log.info "Server", "Client disconnected"
-            
+
 setupEventListeners = =>
     # When a connection to a serial device is established, send the
     # result to all servers.
@@ -87,7 +87,7 @@ setupServer = =>
     port = process.env.PORT || PORT
     @server = app.listen port, =>
         @log.info "Init", "Listening on port #{port}"
-       
+
     # When killing the server, first disconnect
     process.on "SIGTERM", ->
         shutdownServer()

@@ -64,10 +64,6 @@ dist/
 .tmp/
 
 
-### CoffeeScript ###
-*.js
-
-
 ### Node ###
 # Logs
 logs
