@@ -1,4 +1,4 @@
-var serialPort   = require("serialport"),
+var SerialPort   = require("serialport"),
     loggos       = require("loggos"),
     util         = require("util"),
     EventEmitter = require("events").EventEmitter,
@@ -16,7 +16,7 @@ class SerialManager {
     getAvailablePorts() {
         this.log.info("SerialManager", "Searching Ports");
         return new Promise((resolve, reject) => {
-            serialPort.list((err, ports) => {
+            SerialPort.list((err, ports) => {
                 if (err) {
                     this.log.error("SerialManager", "Error while getting available ports: " + err);
                     reject(err);
@@ -24,12 +24,9 @@ class SerialManager {
                     if (ports) {
                         this.log.info("SerialManager", "Found ports: " + JSON.stringify(ports));
                         let portsArray = [];
-                        this.log.info("SerialManager", "Found ports: " + JSON.stringify(ports));
-                        for (port of ports) {
-                            this.log.info("SerialManager", "Found ports: " + JSON.stringify(port));
-                            portsArray.push({ portName: port.comName });
+                        for (let i = 0; i < ports.length; i++) {
+                            portsArray.push({ portName: ports[i].comName });
                         }
-                        this.log.info("SerialManager", "Found ports: " + JSON.stringify(portsArray));
                         resolve(portsArray);
                     } else {
                         this.log.info("SerialManager", "No ports found");

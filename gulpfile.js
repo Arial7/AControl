@@ -2,8 +2,9 @@ var gulp = require("gulp");
 var plugs = require("gulp-load-plugins")()
 
 function clientScripts() {
-    return gulp.src("src/client/js/**/*.js")
-        .pipe(plugs.babel({ presets: [ "es2015" ] }))
+    return gulp.src([ "src/client/js/**/*.js", "src/client/js/**/*.jsx" ])
+        .pipe(plugs.babel({ presets: [ "react", "es2015" ] }))
+        .pipe(plugs.rename({extname: ".js"}))
         .pipe(gulp.dest("dist/client/js"));
 }
 
@@ -29,7 +30,7 @@ function server() {
 }
 
 function watch() {
-    gulp.watch("src/client/js/**/*.js", clientScripts);
+    gulp.watch("src/client/js/**/*", clientScripts);
     gulp.watch("src/client/pages/**/*.pug", clientPages);
     gulp.watch("src/client/css/**/*.sass", clientStyles);
     gulp.watch("src/client/img/**/*", clientImages);

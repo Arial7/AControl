@@ -12,20 +12,8 @@ block main
             .mdl-card__supporting-text
                 p Stellen Sie zunächst eine Verbindung her und laden Sie einen Plan hoch, um anzufangen.
 
-        #ac-connection-card.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col
-            .mdl-card__title
-                h2.mdl-card__title-text Verbindung
-            .mdl-card__supporting-text
-                .mdl-textfield.mdl-js-textfield
-                    input#ac-connection-device-field.mdl-textfield__input(type="text")
-                    label.mdl-textfield__label(for="ac-connection-device-field") /dev/null
-                button#ac-connection-device-menu.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
-                    i.material-icons(role="presentation") arrow_drop_down
-                ul.mdl-menu.mdl-menu__item.mdl-js-menu.mdl-js-ripple-effect(for="ac-connection-device-menu")
-                    li.mdl-menu__item /dev/ttyS0
-                    li.mdl-menu__item /dev/ttyS88
-                    li.mdl-menu__item /dev/ttyS8
-                button#ac-connection-connect.mdl-button.mdl-js-button.mdl-button--raised Verbinden
+        #ac-connection-card
+
         #ac-load-plan-card.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col
             .mdl-card__title
                 h2.mdl-card__title-text Plan

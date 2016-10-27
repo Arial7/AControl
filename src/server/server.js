@@ -13,16 +13,13 @@ const PORT = 3030
 
 var clientDir = path.resolve(__dirname, "./client");
 log.info("Init", "The client directory is " + clientDir);
-var mdlDir = path.resolve(__dirname, "../node_modules/material-design-lite/");
-var fetchDir = path.resolve(__dirname, "../node_modules/whatwg-fetch/");
-var jqueryDir = path.resolve(__dirname, "../node_modules/jquery/dist/");
+var nodeModulesDir = path.resolve(__dirname, "..", "node_modules");
+log.info("Init", "The node modules directory is " + nodeModulesDir);
 
 // Setup client stuff
 app.set("views", clientDir + "/pages");
 app.set("view engine", "pug");
-app.use("/nm/mdl/", express.static(mdlDir));
-app.use("/nm/fetch/", express.static(fetchDir));
-app.use("/nm/jquery/", express.static(jqueryDir));
+app.use("/nm/", express.static(nodeModulesDir));
 app.use("/css/", express.static(clientDir + "/css"));
 app.use("/img/", express.static(clientDir + "/img"));
 app.use("/js/", express.static(clientDir + "/js"));
