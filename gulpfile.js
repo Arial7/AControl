@@ -1,11 +1,13 @@
 var gulp = require("gulp");
 var plugs = require("gulp-load-plugins")()
+var bs = require("browser-sync").create();
 
 function clientScripts() {
     return gulp.src([ "src/client/js/**/*.js", "src/client/js/**/*.jsx" ])
         .pipe(plugs.babel({ presets: [ "react", "es2015" ] }))
         .pipe(plugs.rename({extname: ".js"}))
-        .pipe(gulp.dest("dist/client/js"));
+        .pipe(gulp.dest("dist/client/js"))
+        .pipe(bs.stream());
 }
 
 function clientPages() {
@@ -16,7 +18,8 @@ function clientPages() {
 function clientStyles() {
     return gulp.src("src/client/css/style.sass")
         .pipe(plugs.sass().on("error", plugs.sass.logError))
-        .pipe(gulp.dest("dist/client/css"));
+        .pipe(gulp.dest("dist/client/css"))
+        .pipe(bs.stream());
 }
 
 function clientImages() {
@@ -35,6 +38,10 @@ function watch() {
     gulp.watch("src/client/css/**/*.sass", clientStyles);
     gulp.watch("src/client/img/**/*", clientImages);
     gulp.watch("src/server/**/*.js", server);
+
+    bs.init({
+        proxy: "localhost:3030"
+    })
 }
 var build = gulp.parallel(clientPages, clientScripts, clientStyles, clientImages, server);
 var buildAndWatch = gulp.series(build, watch);

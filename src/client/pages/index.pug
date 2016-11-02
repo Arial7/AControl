@@ -1,26 +1,14 @@
-extends ./template/basic.pug
-
-block headerTitle
-    span.mdl-layout-title Home
-
-block main
-    .mdl-grid
-        #ac-welcome-card.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--2-col
-            .mdl-card__title(style="padding-bottom: 0; padding-top: 200px")
-                h2.mdl-card__title-text(style="box-shadow: inset 0px -78px 31px -40px rgba(255,255,255,1)")
-                    | Willkommen bei AControl!
-            .mdl-card__supporting-text
-                p Stellen Sie zunächst eine Verbindung her und laden Sie einen Plan hoch, um anzufangen.
-
-        #ac-connection-card
-
-        #ac-load-plan-card.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col
-            .mdl-card__title
-                h2.mdl-card__title-text Plan
-            .mdl-card__supporting-text
-                .mdl-textfield.mdl-js-textfield.mdl-textfield--file
-                    input#ac-load-plan-upload-file.mdl-textfield__input(placeholder="plan.acp" type="text")
-                    .mdl-button.mdl-button--primary.mdl-button--icon.mdl-button--file
-                         i.material-icons attach_file
-                         input#ac-load-plan-upload-button(type="file")
-                button#ac-load-plan-load-button.mdl-button.mdl-js-button.mdl-button--raised Plan laden
+doctype html
+html(lang="de")
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0")
+        title AControl #{acontrolVersion}
+        link(rel="stylesheet" href="/nm/material-design-lite/material.min.css")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" )
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en")
+        link(rel="stylesheet" href="/css/style.css")
+        script(async src="/nm/material-design-lite/material.min.js")
+    body
+        #app.mdl-layout__container
+        script(data-main="/js/app" src="/nm/requirejs/require.js")

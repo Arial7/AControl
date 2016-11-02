@@ -2,7 +2,7 @@ define([ "react", "shortid"], function(React, shortid) {
     class TextField extends React.Component {
         constructor(props) {
             super(props);
-            this.id = props.id || "tf-" + shortid.generate();
+            this.id = props.id || "tf-" + shortid.gen();
             this.label = props.label;
         }
 
@@ -18,7 +18,7 @@ define([ "react", "shortid"], function(React, shortid) {
             return (
                 <div className="mdl-textfield mdl-js-textfield">
                     <input id={ this.id } className="mdl-textfield__input" type="text" onChange={ this.onChanged }/>
-                    <label for={ this.id } className="mdl-textfield__label"> { this.label } </label>
+                    <label htmlFor={ this.id } className="mdl-textfield__label"> { this.label } </label>
                 </div>
             );
         }

@@ -28,10 +28,6 @@ app.get("/", function(req, res) {
     res.render("index", { acontrolVersion: "3.0.0 Alpha 1" });
 });
 
-app.get("/einstellungen", function(req, res) {
-    res.render("settings", {acontrolVersion: "3.0.0 Alpha 1"});
-});
-
 app.get("/api/hasConnection", function(req, res) {
     res.json({ connected: serialManager.hasConnection() });
 });

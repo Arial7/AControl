@@ -3,69 +3,54 @@ requirejs.config({
     paths: {
         react: "/nm/react/dist/react.min",
         "react-dom": "/nm/react-dom/dist/react-dom",
+        "react-router": "/js/lib/react-router",
         classnames: "/nm/classnames/index",
-        shortid: "/nm/shortid/lib/index"
+        shortid: "/nm/js-shortid/lib/js-shortid"
     }
 });
 
-requirejs(["react", "react-dom", "views/connectionCard"], function(React, ReactDOM, ConnectionCard) {
-    ReactDOM.render(<ConnectionCard/>, document.getElementById("ac-connection-card"));
-});
-/*
+requirejs(["react", "react-dom", "react-router", "pages/home", "pages/plan", "views/drawer"],
+    function(React, ReactDOM, Router, Home, Plan, Drawer) {
 
-(function($) {
-    var $connectionStatusLabel = $(".ac-connection-status"),
-        $connectionStatusIcon  = $(".ac-connection-status-icon");
-
-    $(function() {
-        console.log("Hello World!");
-        setupPollers();
-        console.log("Fetching");
-        fetch("/api/getAvailablePorts")
-            .then((response) => {
-                return response.json();
-            }).then((response) => {
-                console.log(response);
-            }).catch((error) => {
-                console.log(error);
-            });
-    });
-
-    function createObject(tag, classes) {
-        return $(`<#{tag} class="#{classes}"></#{tag}>`);
-    };
-
-    function jsonFetch(url) {
-        return fetch(url).then((response) => { return response });
-    };
-
-    function setupPollers() {
-        window.setInterval(() => {
-            jsonFetch("/api/hasConnection")
-                .then((response) => {
-                    let c = response.connected;
-                    $connectionStatusLabel.text(c ? "Verbunden" : "Getrennt");
-                    $connectionStatusIcon.text(c ? "sync" : "sync_disabled");
-                });
-        }, 1000);
-    };
-
-    class RadioButton {
-        constructor(label, id) {
-            this.root = createObject("label", "mdl-radio mdl-js-radio mdl-js-ripple-effect");
-            if (id) {
-                this.id = id;
-            } else {
-                this.id = shortid.generate();
-            }
-            this.root.attr("for", this.id);
-            this.input = creteObject("input", "mdl-radio__button");
-            this.input.attr("type", "radio");
-            this.input.attr("name", this.id);
-
-
+    class App extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { currentPage: "Home" };
+            this.children = this.props.children;
         }
-    };
 
-})(jQuery)
-*/
+        render() {
+            return (
+                <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
+                    <header className="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+                        <div className="mdl-layout__header-row">
+                            <span className="mdl-layout-title">{ this.state.currentPage }</span>
+                            <div className="mdl-layout-spacer"/>
+                        </div>
+
+                    </header>
+                    <Drawer />
+                    <main className="mdl-layout__content">
+                        <div className="page-content">
+                            { this.children }
+                        </div>
+                    </main>
+                </div>
+            );
+        }
+    }
+
+
+
+    ReactDOM.render(
+            <Router.Router history={Router.browserHistory}>
+                <Router.Route path="/" component={App}>
+                    <Router.IndexRoute component={Home}/>
+                </Router.Route>
+                <Router.Route path="/plan" component={App}>
+                    <Router.IndexRoute component={Plan}/>
+                </Router.Route>
+            </Router.Router>, document.getElementById("app"));
+    componentHandler.upgradeDom();
+
+});
