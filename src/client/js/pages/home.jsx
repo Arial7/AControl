@@ -1,22 +1,42 @@
-define([ "react", "react-dom", "views/column", "views/connectionCard", "views/basicCard" ],
-    function(React, ReactDOM, Column, ConnectionCard, BasicCard) {
-        return function(props) {
+define([ "react", "react-dom", "react-mdl", "views/connectionCard", "views/basicCard" ],
+    function(React, ReactDOM, MDL, ConnectionCard, BasicCard) {
+
+    const { Grid, Cell, Card, CardTitle, CardText, CardActions, Button, List, ListItem, IconButton,
+        ListItemContent, ListItemAction } = MDL;
+
+    class Home extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+
+        render() {
             return (
-                <div className="mdl-grid">
-                    <Column width="3">
-                        <h2>Willkommen bei AControl!</h2>
-                    </Column>
-                    <Column width="4">
+                <Grid>
+                    <Cell col={6}>
                         <ConnectionCard />
-                    </Column>
-                    <Column width="5">
-                        <BasicCard title="Plan" elevation="2">
-                            <button>Plan hochladen</button>
-                            <button>Bestehenden Plan auswählen</button>
-                            <button>Plan herunterladen</button>
-                        </BasicCard>
-                    </Column>
-                </div>
+                    </Cell>
+                    <Cell col={6}>
+                        <Card shadow={1}>
+                            <CardTitle>Plan</CardTitle>
+                            <CardText>
+                                <List>
+                                    <ListItem>
+                                        <ListItemContent>MEK_V1.acp</ListItemContent>
+                                        <ListItemAction><IconButton name="send" colored/></ListItemAction>
+                                    </ListItem>
+                                </List>
+                            </CardText>
+                            <CardActions border>
+                                <Button colored>Plan hochladen</Button>
+                            </CardActions>
+                        </Card>
+                    </Cell>
+                </Grid>
             );
         }
+
+    };
+
+    return Home;
+
 });

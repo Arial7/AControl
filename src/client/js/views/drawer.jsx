@@ -1,4 +1,7 @@
-define([ "react", "react-router" ], function(React, Router) {
+define([ "react", "react-router", "react-mdl" ], function(React, Router, MDL) {
+
+    var { Header, Navigation, Icon, Spacer } = MDL;
+
     class Drawer extends React.Component {
         constructor(props) {
             super(props);
@@ -11,38 +14,38 @@ define([ "react", "react-router" ], function(React, Router) {
             let connectionIcon = this.state.isConnected ? "sync" : "sync_disabled";
 
             return (
-                <div className="ac-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+                <MDL.Drawer className="mdl-color--blue-grey-900 mdl-color-text--blue-grey-50 ac-drawer">
                     <header>
                         <h3>AControl</h3>
                         <div className="flex-container ac-connection-status-container">
-                            <i className="material-icons">{ connectionIcon }</i>
+                            <Icon name={ connectionIcon }/>
                             <span>{ connectionString }</span>
                         </div>
                     </header>
-                    <nav className="mdl-navigation mdl-color--blue-grey-800">
+                    <Navigation className="mdl-color--blue-grey-800">
                         <Router.Link className="mdl-navigation__link" to="/">
-                            <i className="material-icons" role="presentation">home</i>
+                            <Icon name="home"/>
                             Home
                         </Router.Link>
-                        <Router.Link className="mdl-navigation__link" to="/1plan">
-                            <i className="material-icons" role="presentation">grid_on</i>
+                        <Router.Link className="mdl-navigation__link" to="/plan">
+                            <Icon name="grid_on"/>
                             Plan
                         </Router.Link>
                         <Router.Link className="mdl-navigation__link" to="/editor">
-                            <i className="material-icons" role="presentation">mode_edit</i>
+                            <Icon name="mode_edit"/>
                             Editor
                         </Router.Link>
                         <Router.Link className="mdl-navigation__link" to="/einstellungen">
-                            <i className="material-icons" role="presentation">settings</i>
+                            <Icon name="settings"/>
                             Einstellungen
                         </Router.Link>
-                        <div className="mdl-layout-spacer"/>
+                        <Spacer />
                         <Router.Link className="mdl-navigation__link" to="/hilfe">
-                            <i className="material-icons" role="presentation">help_outline</i>
+                            <Icon name="help_outline"/>
                             Hilfe
                         </Router.Link>
-                    </nav>
-                </div>
+                    </Navigation>
+                </MDL.Drawer>
             );
         }
     }

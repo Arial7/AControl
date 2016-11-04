@@ -35,7 +35,11 @@ app.get("/api/hasConnection", function(req, res) {
 app.get("/api/getAvailablePorts", function(req, res) {
     serialManager.getAvailablePorts()
         .then((ports) => {
-            res.json({ ports: ports });
+            let pArray = [];
+            for (p of ports) {
+                pArray.push(p.portName);
+            }
+            res.json({ ports: pArray });
         });
 });
 
