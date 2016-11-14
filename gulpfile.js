@@ -17,12 +17,10 @@ function clientPages() {
 }
 
 function clientStyles() {
-    return gulp.dest();
-    /*return gulp.src("src/client/css/style.sass")
+    return gulp.src("src/client/css/style.sass")
         .pipe(plugs.sass().on("error", plugs.sass.logError))
         .pipe(gulp.dest("dist/client/css"))
         .pipe(bs.stream());
-        */
 }
 
 function clientImages() {
@@ -38,7 +36,7 @@ function server() {
 function watch() {
     gulp.watch("src/client/js/**/*", clientScripts);
     gulp.watch("src/client/pages/**/*.pug", clientPages);
-    //gulp.watch("src/client/css/**/*.sass", clientStyles);
+    gulp.watch("src/client/css/**/*.sass", clientStyles);
     gulp.watch("src/client/img/**/*", clientImages);
     gulp.watch("src/server/**/*.js", server);
 

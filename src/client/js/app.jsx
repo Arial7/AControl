@@ -7,6 +7,7 @@ requirejs.config({
         "react-mdl": "/nm/react-mdl/out/ReactMDL",
         classnames: "/nm/classnames/index",
         shortid: "/nm/js-shortid/lib/js-shortid",
+        EventEmitter: "/nm/wolfy87-eventemitter/EventEmitter",
         utils: "/js/utils"
     }
 });

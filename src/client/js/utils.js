@@ -5,6 +5,7 @@ define([], function() {
                 .then((response) => {
                     return response.json()
                 });
-        }
+        },
+        baseACIconSize: 48
     }
 });

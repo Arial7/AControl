@@ -1,4 +1,5 @@
-define([ "react", "react-router", "react-mdl" ], function(React, Router, MDL) {
+define([ "react", "react-router", "react-mdl", "connectionManager" ],
+    function(React, Router, MDL, connectionManager) {
 
     var { Header, Navigation, Icon, Spacer } = MDL;
 
@@ -6,7 +7,13 @@ define([ "react", "react-router", "react-mdl" ], function(React, Router, MDL) {
         constructor(props) {
             super(props);
             this.state = { isConnected: false };
+            this.onConnectionStatusChanged = this.onConnectionStatusChanged.bind(this);
+            connectionManager.addListener("connectionChanged", this.onConnectionStatusChanged);
 
+        }
+
+        onConnectionStatusChanged(connected) {
+            this.setState({ isConnected: connected });
         }
 
         render() {
