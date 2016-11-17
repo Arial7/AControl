@@ -1,0 +1,27 @@
+{
+    "name": "Test Plan",
+    "width": 20,
+    "height": 10,
+    "tracks": [
+        {
+            "type": "normal",
+            "icon": "G_0",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "type": "normal",
+            "icon": "G_180",
+            "x": 1,
+            "y": 0
+        },
+        {
+            "type": "switch",
+            "icon": "W_L_0",
+            "x": 1,
+            "y": 1,
+            "isLeft": true
+        }
+    ]
+
+}

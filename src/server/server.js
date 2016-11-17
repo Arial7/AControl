@@ -1,6 +1,7 @@
 var express = require("express"),
     io      = require("socket.io"),
     path    = require("path"),
+    fs      = require("fs"),
     loggos  = require("loggos");
 
 var SerialManager = require("./serialmanager");
@@ -41,6 +42,11 @@ app.get("/api/getAvailablePorts", function(req, res) {
             }
             res.json({ ports: pArray });
         });
+});
+
+app.get("/api/plan/current", function(req, res) {
+    let plan = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../", "testplan.acp"), "utf-8"));
+    res.json(plan);
 });
 
 app.listen(PORT, () => {

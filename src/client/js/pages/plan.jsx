@@ -1,14 +1,44 @@
-define(["react", "views/acImage"], function(React, ACImage) {
+define(["react", "utils", "views/acImage", "views/acbutton"], function(React, utils, ACImage, ACButton) {
+
+    const TYPE_NORMAL = "normal";
+    const TYPE_SWITCH = "switch";
+
     class Plan extends React.Component {
         constructor(props) {
             super(props);
+            this.parsePlan = this.parsePlan.bind(this);
+            this.loadCurrentPlan();
+        }
+
+        loadCurrentPlan() {
+            utils.fetchJSON("/api/plan/current")
+                .then((plan) => {
+                    this.parsePlan(plan);
+                });
+        }
+
+        parsePlan(plan) {
+            let tracks = [];
+            for (let track of plan.tracks) {
+                if (track.type == TYPE_NORMAL) {
+                    tracks.push(<ACImage x={track.x} y={track.y} name={track.icon}
+                        key={ track.x + 1 * track.y + 1 } />);
+                } else if (track.type == TYPE_SWITCH) {
+                    tracks.push(<ACButton x={track.x} y={track.y}
+                        name={ track.icon + ((track.isLeft) ? "_L" : "_R") }
+                        key={ track.x + 1 * track.y + 1 } />);
+                } else {
+                    console.error("Plan: Unrecognized track type " + track.type);
+                }
+            }
+            this.plan = tracks;
+            this.setState({ hasToRedraw: true });
         }
 
         render() {
             return (
                 <div className="ac-plan">
-                    <ACImage x={0} y={0} name="G_0"/>
-                    <ACImage x={0} y={1} name="W_L_0_L"/>
+                    { this.plan }
                 </div>
             );
         }
