@@ -12,21 +12,33 @@ requirejs.config({
     }
 });
 
-requirejs(["react", "react-dom", "react-router", "react-mdl", "pages/home", "pages/plan", "views/drawer"],
-    function(React, ReactDOM, Router, MDL, Home, Plan, Drawer) {
+requirejs(["react", "react-dom", "react-router", "react-mdl", "pages/home", "pages/plan",
+    "pages/editor", "pages/settings", "views/drawer"],
+    function(React, ReactDOM, Router, MDL, Home, Plan, Editor, Settings, Drawer) {
 
-    var { Layout, Header, Content } = MDL;
+    var { Layout, Header, Content, IconButton } = MDL;
 
     class App extends React.Component {
         constructor(props) {
             super(props);
-            this.state = { currentPage: "Home" };
         }
 
         render() {
+
+            let currentPage = "Home";
+            if ( this.props.location.pathname.indexOf("plan") > -1 ) {
+                currentPage = "Plan";
+            } else if ( this.props.location.pathname.indexOf("editor") > -1 ) {
+                currentPage = "Editor";
+            } else if ( this.props.location.pathname.indexOf("einstellungen") > -1 ) {
+                currentPage = "Einstellungen";
+            }
+
             return (
                 <Layout fixedHeader fixedDrawer>
-                    <Header title={ this.state.currentPage } className="mdl-color--grey-100 mdl-color-text--grey-600" />
+                    <Header title={ currentPage }
+                        className="mdl-color--grey-100 mdl-color-text--grey-600">
+                    </Header>
                     <Drawer/>
                     <Content>
                         { this.props.children }
@@ -43,6 +55,8 @@ requirejs(["react", "react-dom", "react-router", "react-mdl", "pages/home", "pag
             <Router.Route path="/" component={App}>
                 <Router.IndexRoute component={Home} />
                 <Router.Route path="plan" component={Plan} />
+                <Router.Route path="editor(/:planName)" component={Editor} />
+                <Router.Route path="settings" component={Settings} />
             </Router.Route>
         </Router.Router>
     , document.getElementById("app"));

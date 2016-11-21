@@ -6,6 +6,12 @@ define([], function() {
                     return response.json()
                 });
         },
-        baseACIconSize: 48
+        postJSON: (url, json) => {
+            let data = new FormData();
+            data.append("json", JSON.stringify(json));
+            return fetch(url, { method: "POST", body: data });
+        },
+        baseACIconSize: 48,
+        defaultPlanSize: 8
     }
 });

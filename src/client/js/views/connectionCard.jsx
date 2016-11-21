@@ -45,7 +45,6 @@ define([ "react", "utils", "react-mdl", "connectionManager" ],
         }
 
         onDeviceInputChanged(event) {
-            console.log(event.target.value);
             this.connectionDevice = event.target.value;
             this.setState({ connectionButtonEnabled: true });
 

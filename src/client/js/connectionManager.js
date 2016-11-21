@@ -1,6 +1,5 @@
 define([ "EventEmitter" ], function(EventEmitter) {
 
-
     class ConnectionManager {
         constructor() {
             this.ee = new EventEmitter();

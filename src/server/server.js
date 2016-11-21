@@ -49,6 +49,12 @@ app.get("/api/plan/current", function(req, res) {
     res.json(plan);
 });
 
+app.post("/api/plan/new", function(req, res) {
+    console.log(req);
+    res.json({ success: true });
+
+});
+
 app.listen(PORT, () => {
     log.info("Init", "Listening on port 3030");
 });

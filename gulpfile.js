@@ -4,7 +4,8 @@ var bs = require("browser-sync").create();
 
 function clientScripts() {
     return gulp.src([ "src/client/js/**/*.js", "src/client/js/**/*.jsx" ])
-        .pipe(plugs.babel({ presets: [ "react", "es2015" ] })
+        .pipe(plugs.babel({ presets: [ "react", "stage-0", "es2015" ],
+            plugins: ["transform-class-properties"]})
             .on("error", plugs.notify.onError("JS: <%= error.message %>")))
         .pipe(plugs.rename({extname: ".js"}))
         .pipe(gulp.dest("dist/client/js"))
