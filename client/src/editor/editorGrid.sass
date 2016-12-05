@@ -1,0 +1,16 @@
+@import "../utils/colors"
+
+.editor-grid
+  position: relative
+  width: 100%
+  height: 100%
+  overflow: auto
+
+  .editor-grid-cell
+    position: absolute
+    border: 1px solid $blue-grey-200
+    cursor: pointer
+    background-size: cover
+
+    &:hover
+      background-color: $blue-grey-50
